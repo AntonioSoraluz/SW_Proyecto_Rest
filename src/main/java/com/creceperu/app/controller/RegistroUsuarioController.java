@@ -1,5 +1,7 @@
 package com.creceperu.app.controller;
 
+import java.util.Date;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -32,6 +34,7 @@ public class RegistroUsuarioController {
 	
 	@PostMapping
 	public String registrarCuentaDeUsuario(@ModelAttribute("usuario") UsuarioRegistroDTO registroDTO) {
+		registroDTO.setFechaIngreso(new Date());
 		usuarioService.guardar(registroDTO);
 		return "redirect:/registro?exito";
 	}

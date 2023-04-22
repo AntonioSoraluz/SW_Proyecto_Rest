@@ -1,6 +1,7 @@
 package com.creceperu.app.model;
 
 import java.util.Collection;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -26,44 +27,73 @@ public class Usuario {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Column(name = "nombre")
-	private String nombre;
+	@Column(name = "nombres")
+	private String nombres;
 
-	@Column(name = "apellido")
-	private String apellido;
+	@Column(name = "apellidos")
+	private String apellidos;
+
+	@Column(name = "dni")
+	private String dni;
+
+	@Column(name = "ubigeo")
+	private String ubigeo;
+
+	@Column(name = "direccion")
+	private String direccion;
+
+	@Column(name = "telefono")
+	private String telefono;
 
 	private String email;
+
+	@Column(name = "emailRecuperacion")
+	private String emailRecuperacion;
+
 	private String password;
 	
-	@ManyToMany(fetch = FetchType.EAGER,cascade = CascadeType.ALL)
-	@JoinTable(
-			name = "usuarios_roles",
-			joinColumns = @JoinColumn(name = "usuario_id",referencedColumnName = "id"),
-			inverseJoinColumns = @JoinColumn(name = "rol_id",referencedColumnName = "id")
-			)
+	@Column(name = "fechaIngreso")
+	private Date fechaIngreso;
+
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
 	private Collection<Rol> roles;
 
-	public Usuario(Long id, String nombre, String apellido, String email, String password, Collection<Rol> roles) {
+	public Usuario(Long id, String nombres, String apellidos, String dni, String ubigeo, String direccion, String telefono,
+			String email, String emailRecuperacion, String password, Date fechaIngreso, Collection<Rol> roles) {
 		super();
 		this.id = id;
-		this.nombre = nombre;
-		this.apellido = apellido;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.dni = dni;
+		this.ubigeo = ubigeo;
+		this.direccion = direccion;
+		this.telefono = telefono;
 		this.email = email;
+		this.emailRecuperacion = emailRecuperacion;
 		this.password = password;
+		this.fechaIngreso = fechaIngreso;
 		this.roles = roles;
 	}
 
-	public Usuario(String nombre, String apellido, String email, String password, Collection<Rol> roles) {
+	public Usuario(String nombres, String apellidos, String dni, String ubigeo, String direccion, String telefono, String email,
+			String emailRecuperacion, String password, Date fechaIngreso, Collection<Rol> roles) {
 		super();
-		this.nombre = nombre;
-		this.apellido = apellido;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.dni = dni;
+		this.ubigeo = ubigeo;
+		this.direccion = direccion;
+		this.telefono = telefono;
 		this.email = email;
+		this.emailRecuperacion = emailRecuperacion;
 		this.password = password;
+		this.fechaIngreso = fechaIngreso;
 		this.roles = roles;
 	}
 
 	public Usuario() {
-		
+
 	}
 
 }

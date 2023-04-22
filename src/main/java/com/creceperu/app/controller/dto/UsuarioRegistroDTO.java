@@ -1,22 +1,40 @@
 package com.creceperu.app.controller.dto;
 
+import java.util.Collection;
+import java.util.Date;
+
+import com.creceperu.app.model.Rol;
+
 import lombok.Data;
 
 @Data
 public class UsuarioRegistroDTO {
 
 	private Long id;
-	private String nombre;
-	private String apellido;
+	private String nombres;
+	private String apellidos;
+	private String dni;
+	private String ubigeo;
+	private String direccion;
+	private String telefono;
 	private String email;
+	private String emailRecuperacion;
 	private String password;
+	private Date fechaIngreso;
 
-	public UsuarioRegistroDTO(String nombre, String apellido, String email, String password) {
+	public UsuarioRegistroDTO(String nombres, String apellidos, String dni, String ubigeo, String direccion, String telefono,
+			String email, String emailRecuperacion, String password, Date fechaIngreso) {
 		super();
-		this.nombre = nombre;
-		this.apellido = apellido;
+		this.nombres = nombres;
+		this.apellidos = apellidos;
+		this.dni = dni;
+		this.ubigeo = ubigeo;
+		this.direccion = direccion;
+		this.telefono = telefono;
 		this.email = email;
+		this.emailRecuperacion = emailRecuperacion;
 		this.password = password;
+		this.fechaIngreso = fechaIngreso;
 	}
 
 	public UsuarioRegistroDTO() {

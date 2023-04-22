@@ -2,6 +2,7 @@ package com.creceperu.app.service;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,12 +23,11 @@ import com.creceperu.app.repository.UsuarioRepository;
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
-	
 	private UsuarioRepository usuarioRepository;
 
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
-	
+
 	public UsuarioServiceImpl(UsuarioRepository usuarioRepository) {
 		super();
 		this.usuarioRepository = usuarioRepository;
@@ -35,25 +35,26 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	@Override
 	public Usuario guardar(UsuarioRegistroDTO registroDTO) {
-		Usuario usuario = new Usuario(registroDTO.getNombre(), 
-				registroDTO.getApellido(),registroDTO.getEmail(),
-				passwordEncoder.encode(registroDTO.getPassword()),Arrays.asList(new Rol("ROLE_USER")));
+		Usuario usuario = new Usuario(registroDTO.getNombres(), registroDTO.getApellidos(), registroDTO.getDni(),
+				registroDTO.getUbigeo(), registroDTO.getDireccion(), registroDTO.getTelefono(), registroDTO.getEmail(),
+				registroDTO.getEmailRecuperacion(), passwordEncoder.encode(registroDTO.getPassword()), registroDTO.getFechaIngreso(),
+				Arrays.asList(new Rol("ROLE_USER")));
 		return usuarioRepository.save(usuario);
 	}
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Usuario usuario = usuarioRepository.findByEmail(username);
-		if(usuario == null) {
+		if (usuario == null) {
 			throw new UsernameNotFoundException("Usuario o password inválidos");
 		}
-		return new User(usuario.getEmail(),usuario.getPassword(), mapearAutoridadesRoles(usuario.getRoles()));
+		return new User(usuario.getEmail(), usuario.getPassword(), mapearAutoridadesRoles(usuario.getRoles()));
 	}
 
-	private Collection<? extends GrantedAuthority> mapearAutoridadesRoles(Collection<Rol> roles){
+	private Collection<? extends GrantedAuthority> mapearAutoridadesRoles(Collection<Rol> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getNombre())).collect(Collectors.toList());
 	}
-	
+
 	@Override
 	public List<Usuario> listarUsuarios() {
 		return usuarioRepository.findAll();
