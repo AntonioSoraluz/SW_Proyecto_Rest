@@ -5,4 +5,7 @@ import lombok.Data;
 @Data
 public class EmpresaRegistroDTO {
 
+	public EmpresaRegistroDTO(){
+		
+	}
 }
