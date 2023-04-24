@@ -38,6 +38,9 @@ public class Usuario {
 
 	@Column(name = "ubigeo")
 	private String ubigeo;
+	
+	@Column(name = "ruc")
+	private String ruc;
 
 	@Column(name = "direccion")
 	private String direccion;
@@ -54,41 +57,48 @@ public class Usuario {
 	
 	@Column(name = "fechaIngreso")
 	private Date fechaIngreso;
+	
+	@Column(name = "estado")
+	private int estado;
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "usuarios_roles", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
 	private Collection<Rol> roles;
 
-	public Usuario(Long id, String nombres, String apellidos, String dni, String ubigeo, String direccion, String telefono,
-			String email, String emailRecuperacion, String password, Date fechaIngreso, Collection<Rol> roles) {
+	public Usuario(Long id, String nombres, String apellidos, String dni, String ubigeo, String ruc, String direccion, String telefono,
+			String email, String emailRecuperacion, String password, Date fechaIngreso, int estado, Collection<Rol> roles) {
 		super();
 		this.id = id;
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.dni = dni;
 		this.ubigeo = ubigeo;
+		this.ruc = ruc;
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.email = email;
 		this.emailRecuperacion = emailRecuperacion;
 		this.password = password;
 		this.fechaIngreso = fechaIngreso;
+		this.estado = estado;
 		this.roles = roles;
 	}
 
-	public Usuario(String nombres, String apellidos, String dni, String ubigeo, String direccion, String telefono, String email,
-			String emailRecuperacion, String password, Date fechaIngreso, Collection<Rol> roles) {
+	public Usuario(String nombres, String apellidos, String dni, String ubigeo, String ruc, String direccion, String telefono, String email,
+			String emailRecuperacion, String password, Date fechaIngreso, int estado, Collection<Rol> roles) {
 		super();
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.dni = dni;
 		this.ubigeo = ubigeo;
+		this.ruc = ruc;
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.email = email;
 		this.emailRecuperacion = emailRecuperacion;
 		this.password = password;
 		this.fechaIngreso = fechaIngreso;
+		this.estado = estado;
 		this.roles = roles;
 	}
 

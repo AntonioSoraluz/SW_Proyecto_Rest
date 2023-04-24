@@ -1,5 +1,6 @@
 package com.creceperu.app.service;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Date;
@@ -32,23 +33,21 @@ public class UsuarioServiceImpl implements UsuarioService {
 		super();
 		this.usuarioRepository = usuarioRepository;
 	}
-
 	@Override
 	public Usuario guardar(UsuarioRegistroDTO registroDTO) {
 		Usuario usuario = new Usuario(registroDTO.getNombres(), registroDTO.getApellidos(), registroDTO.getDni(),
-				registroDTO.getUbigeo(), registroDTO.getDireccion(), registroDTO.getTelefono(), registroDTO.getEmail(),
+				registroDTO.getUbigeo(), registroDTO.getRuc(),registroDTO.getDireccion(), registroDTO.getTelefono(), registroDTO.getEmail(),
 				registroDTO.getEmailRecuperacion(), passwordEncoder.encode(registroDTO.getPassword()), registroDTO.getFechaIngreso(),
-				Arrays.asList(new Rol("ROLE_USER")));
+				registroDTO.getEstado(), registroDTO.getRol());
 		return usuarioRepository.save(usuario);
-	}
-
+	} /*Arrays.asList(new Rol("ROLE_USER"))*/
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Usuario usuario = usuarioRepository.findByEmail(username);
 		if (usuario == null) {
 			throw new UsernameNotFoundException("Usuario o password inválidos");
 		}
-		return new User(usuario.getEmail(), usuario.getPassword(), mapearAutoridadesRoles(usuario.getRoles()));
+		return new User(usuario.getApellidos(), usuario.getPassword(), mapearAutoridadesRoles(usuario.getRoles()));
 	}
 
 	private Collection<? extends GrantedAuthority> mapearAutoridadesRoles(Collection<Rol> roles) {
