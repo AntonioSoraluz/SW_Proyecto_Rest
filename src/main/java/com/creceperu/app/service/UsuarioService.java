@@ -13,5 +13,7 @@ public interface UsuarioService extends UserDetailsService{
 	public Usuario guardar(UsuarioRegistroDTO registroDTO);
 	
 	public List<Usuario> listarUsuarios();
+
+	public void init();
 	
 }
