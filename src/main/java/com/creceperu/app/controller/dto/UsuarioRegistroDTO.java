@@ -1,10 +1,7 @@
 package com.creceperu.app.controller.dto;
 
-import java.util.Collection;
+
 import java.util.Date;
-
-import com.creceperu.app.model.Rol;
-
 import lombok.Data;
 
 @Data
