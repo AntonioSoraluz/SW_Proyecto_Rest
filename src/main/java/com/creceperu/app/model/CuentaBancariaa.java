@@ -16,22 +16,24 @@ import lombok.Data;
         private Long id;
 
         @ManyToOne
-        @JoinColumn(name = "id_usuario")
-        private Usuario cuentaUsuario;
+        @JoinColumn(name = "id_cuenta_usuario")
+        private Usuario id_cuenta_usuario;
 
         @Column(name = "id_banco")
-        private String banco;
+        private String id_banco;
 
         @Column(name = "id_tipo_cuenta_bancaria")
-        private String tipoCuentaBancaria;
+        private String id_tipo_cuenta_bancaria;
 
         @Column(name = "id_moneda")
-        private String moneda;
+        private String id_moneda;
 
         @Column(name = "numero_cuenta")
-        private String numeroCuenta;
+        private String numero_cuenta;
 
 
     }
+
+
 
 
