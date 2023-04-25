@@ -23,96 +23,16 @@
 	href="https://fonts.googleapis.com/css?family=Muli:300,700&display=swap"
 	rel="stylesheet">
 
+
 <!-- Ionic icons -->
 <link
 	href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css"
 	rel="stylesheet">
 
-<title>Dashboard - Templune</title>
+	<link rel="stylesheet" href="/css/index.css">
+
+<title>Crece Perú</title>
 </head>
-<style>
-:root {
-	--primary: #111B54;
-	--light: #ffffff;
-	--grey: #efefef;
-}
-
-body {
-	overflow: hidden;
-	font-family: 'Muli', sans-serif;
-	font-weight: 300;
-	color: var(--primary);
-}
-
-a:hover {
-	text-decoration: none;
-}
-
-.bg-primary {
-	background-color: var(--primary) !important;
-}
-
-.bg-light {
-	background-color: var(--light) !important;
-}
-
-.bg-grey {
-	background-color: var(--grey) !important;
-}
-
-.bg-mix {
-	background: linear-gradient(180deg, var(--light) 50%, var(--grey) 0);
-}
-
-.btn-primary {
-	background-color: var(--primary);
-	border: 0;
-}
-
-.btn-primary:hover {
-	background-color: var(--primary);
-}
-
-#sidebar-container {
-	min-height: 100vh;
-}
-
-#sidebar-container .logo {
-	padding: 0.875rem 1.25rem;
-}
-
-#sidebar-container .menu {
-	width: 18rem;
-}
-
-#content {
-	overflow-y: auto;
-	height: 100vh;
-	padding-bottom: 5rem;
-}
-
-.avatar {
-	max-width: 35px;
-}
-
-.btn-search {
-	right: 0;
-}
-
-.stat {
-	border-right: 1px solid var(--grey);
-}
-
-@media ( max-width : 768px) {
-	#sidebar-container {
-		display: none;
-	}
-	.stat {
-		border: 0;
-	}
-}
-</style>
-
 
 <body>
 	<div class="d-flex" id="content-wrapper">
@@ -123,21 +43,14 @@ a:hover {
 				<h4 class="text-light font-weight-bold mb-0">Crece Perú</h4>
 			</div>
 			<div class="menu">
-				<a href="#" th:href="@{/}" class="d-block text-light p-3 border-0"><i
-					class="icon ion-md-apps lead mr-2"></i> Inicio</a> <a href="#"
-					class="d-block text-light p-3 border-0"><i
-					class="icon ion-md-people lead mr-2"></i> Mis movimientos</a> <a
-					href="#" class="d-block text-light p-3 border-0"><i
-					class="icon ion-md-person lead mr-2"></i> Estado de cuenta</a> <a
-					href="#" class="d-block text-light p-3 border-0"><i
-					class="icon ion-md-stats lead mr-2"></i> Agregar cuenta</a> <a href="#"
-					class="d-block text-light p-3 border-0"><i
-					class="icon ion-md-person lead mr-2"></i> Depósitos</a> <a href="#"
-					class="d-block text-light p-3 border-0"><i
-					class="icon ion-md-person lead mr-2"></i> Retiros</a>
-
-
+				<a th:href="@{/}" class="d-block text-light p-3 border-0"><i class="icon ion-md-apps lead mr-2"></i> Inicio</a>
+				<a th:href="@{/movimientos}" class="d-block text-light p-3 border-0"><i class="icon ion-md-people lead mr-2"></i> Mis movimientos</a>
+				<a th:href="@{/estado-cuenta}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Estado de cuenta</a>
+				<a th:href="@{/CuentaBancaria}" class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead mr-2"></i> Cuentas Bancarias </a>
+				<a th:href="@{/depositos}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Depósitos</a>
+				<a th:href="@{/retiros}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Retiros</a>
 			</div>
+
 		</div>
 		<!-- Fin sidebar -->
 

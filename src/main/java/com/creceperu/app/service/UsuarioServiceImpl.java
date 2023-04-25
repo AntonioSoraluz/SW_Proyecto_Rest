@@ -55,4 +55,9 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public List<Usuario> listarUsuarios() {
 		return usuarioRepository.findAll();
 	}
+
+	@Override
+	public void init() {
+
+	}
 }
