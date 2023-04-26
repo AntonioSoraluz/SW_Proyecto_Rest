@@ -1,7 +1,6 @@
 package com.creceperu.app.service;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -30,6 +29,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 		super();
 		this.usuarioRepository = usuarioRepository;
 	}
+	
 	@Override
 	public Usuario guardar(UsuarioRegistroDTO registroDTO) {
 		Usuario usuario = new Usuario(registroDTO.getNombres(), registroDTO.getApellidos(), registroDTO.getDni(),
@@ -38,6 +38,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 				registroDTO.getEstado(), registroDTO.getRol());
 		return usuarioRepository.save(usuario);
 	} /*Arrays.asList(new Rol("ROLE_USER"))*/
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Usuario usuario = usuarioRepository.findByEmail(username);
@@ -46,7 +47,6 @@ public class UsuarioServiceImpl implements UsuarioService {
 		}
 		return new User(usuario.getApellidos(), usuario.getPassword(), mapearAutoridadesRoles(usuario.getRoles()));
 	}
-
 	private Collection<? extends GrantedAuthority> mapearAutoridadesRoles(Collection<Rol> roles) {
 		return roles.stream().map(role -> new SimpleGrantedAuthority(role.getNombre())).collect(Collectors.toList());
 	}
@@ -54,5 +54,10 @@ public class UsuarioServiceImpl implements UsuarioService {
 	@Override
 	public List<Usuario> listarUsuarios() {
 		return usuarioRepository.findAll();
+	}
+	
+	@Override
+	public void init() {
+		
 	}
 }

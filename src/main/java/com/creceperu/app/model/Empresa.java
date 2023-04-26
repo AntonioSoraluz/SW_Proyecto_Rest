@@ -29,7 +29,7 @@ public class Empresa {
 	private int id;
 	
 	@Column(name = "ruc_empresa", length = 11, nullable = false)
-	private int ruc;
+	private String ruc;
 	
 	@Column(name = "razon_social", length = 255, nullable = false)
 	private String razon_social;
@@ -38,7 +38,7 @@ public class Empresa {
 	private String direccion;
 	
 	@Column(name = "telefono_empresa", length = 9, nullable = false)
-	private int telefono;
+	private String telefono;
 	
 	@Column(name = "giro_comercial", length = 255, nullable = false)
 	private String giro_comercial;
@@ -81,4 +81,23 @@ public class Empresa {
         else nombreCondicion =  "Otros";
         return nombreCondicion;
     }
+
+	public Empresa(String ruc, String razon_social, String direccion, String telefono, String giro_comercial, String email, String calificacion, int estado,
+				int condicion, Date fecha_registro) {
+			super();
+			this.ruc = ruc;
+			this.razon_social = razon_social;
+			this.direccion = direccion;
+			this.telefono = telefono;
+			this.giro_comercial = giro_comercial;
+			this.email = email;
+			this.calificacion = calificacion;
+			this.estado = estado;
+			this.condicion = condicion;
+			this.fecha_registro = fecha_registro;
+		}
+		
+		public Empresa() {
+			
+		}
 }
