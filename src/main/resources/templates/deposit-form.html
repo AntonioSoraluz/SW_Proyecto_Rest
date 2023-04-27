@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Depósito</title>
+</head>
+<body>
+    <h1>Depósito</h1>
+    <form th:action="@{/deposit}" th:object="${deposit}" method="post">
+        <div>
+            <label for="accountNumber">Número de cuenta:</label>
+            <input type="text" id="accountNumber" th:field="*{accountNumber}" required>
+        </div>
+        <div>
+            <label for="amount">Monto:</label>
+            <input type="number" id="amount" th:field="*{amount}" required>
+        </div>
+        <div>
+            <label for="date">Fecha:</label>
+            <input type="datetime-local" id="date" th:field="*{date}" readonly>
+        </div>
+        <div>
+            <label for="company">Empresa:</label>
+            <select id="company" th:field="*{company}" required>
+                <option th:each="company : ${companies}" th:value="${company}" th:text="${company}"></option>
+            </select>
+        </div>
+        <button type="submit">Depositar</button>
+    </form>
+</body>
+</html>
