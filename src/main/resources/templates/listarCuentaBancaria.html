@@ -67,7 +67,7 @@
       <a th:href="@{/}" class="d-block text-light p-3 border-0"><i class="icon ion-md-apps lead mr-2"></i> Inicio</a>
       <a th:href="@{/movimientos}" class="d-block text-light p-3 border-0"><i class="icon ion-md-people lead mr-2"></i> Mis movimientos</a>
       <a th:href="@{/estado-cuenta}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Estado de cuenta</a>
-      <a th:href="@{/CuentaBancaria}" class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead mr-2"></i> Cuentas Bancarias </a>
+      <a th:href="@{/listarCuentaBancaria}" class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead mr-2"></i> Cuentas Bancarias </a>
       <a th:href="@{/depositos}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Depósitos</a>
       <a th:href="@{/retiros}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Retiros</a>
     </div>
@@ -134,10 +134,10 @@
         </thead>
         <tbody>
         <tr th:each="listarCuentaBancarias : ${lista}">
-<!--          <td th:text="${cuentaBancaria.TipoBanco}">Banco</td>-->
-<!--          <td th:text="${cuentaBancaria.TipoCuenta}">Tipo de cuenta</td>-->
-<!--          <td th:text="${cuentaBancaria.TipoMoneda}">Tipo de moneda</td>-->
-          <td th:text="${listarCuentaBancarias.numeroCuenta}">Número de cuenta</td>
+          <!--          <td th:text="${cuentaBancaria.TipoBanco}">Banco</td>-->
+          <!--          <td th:text="${cuentaBancaria.TipoCuenta}">Tipo de cuenta</td>-->
+          <!--          <td th:text="${cuentaBancaria.TipoMoneda}">Tipo de moneda</td>-->
+          <td th:text="${cuentaBancarias.numeroCuenta}">Número de cuenta</td>
           <td th:text="${cuentaBancaria.cci}">CCI</td>
         </tr>
         </tbody>
@@ -167,6 +167,6 @@
             integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="
             crossorigin="anonymous"></script>
   </div>
-  </div>
+</div>
 </body>
 </html>

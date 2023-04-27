@@ -28,9 +28,9 @@ public class CuentaBancariaa {
     @JoinColumn(name = "id_moneda")
     private TipoMoneda id_moneda;
 
-    @Column(name = "numero_cuenta")
-    private String numero_cuenta;
+    @Column(name = "numeroCuenta")
+    private String numeroCuenta;
 
-    @Column(name = "cci_CuentaBancaria")
-    private String cci_CuentaBancaria;
+    @Column(name = "cciCuentaBancaria")
+    private String cciCuentaBancaria;
 }
