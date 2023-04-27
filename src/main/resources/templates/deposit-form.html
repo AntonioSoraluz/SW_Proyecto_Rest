@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>Depósito</title>
+    <link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+	crossorigin="anonymous">
 </head>
-<body>
+
+<body class="bg-gradient-primary">
     <h1>Depósito</h1>
+    <div class="card o-hidden border-0 shadow-lg my-5">
+			<div class="card-body p-0">
+				<div class="row">
+					<div class="col-lg-5 d-none d-lg-block bg-register-image">
+						<img class="img-fluid" th:src="@{/img/registro_img.png}">
+					</div>
+					<div class="col-lg-7">
+						<div class="p-5">
     <form th:action="@{/deposit}" th:object="${deposit}" method="post">
         <div>
             <label for="accountNumber">Número de cuenta:</label>
@@ -27,5 +40,11 @@
         </div>
         <button type="submit">Depositar</button>
     </form>
+    
+    <script
+		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous">
+    </script>
 </body>
 </html>
