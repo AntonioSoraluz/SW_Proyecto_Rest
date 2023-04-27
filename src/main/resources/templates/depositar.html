@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Depositar</title>
+</head>
+<body>
+    <h1>Depositar</h1>
+    <form action="#" th:action="@{/depositar}" th:object="${deposito}" method="post">
+        <label for="numeroCuenta">Número de cuenta:</label>
+        <input type="text" id="numeroCuenta" th:field="*{numeroCuenta}" required>
+        
+        <label for="monto">Monto:</label>
+        <input type="number" id="monto" th:field="*{monto}" min="0.01" step="0.01" required>
+        
+        <input type="submit" value="Depositar">
+    </form>
+</body>
+</html>
