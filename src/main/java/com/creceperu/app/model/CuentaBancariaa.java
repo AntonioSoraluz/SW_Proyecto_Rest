@@ -11,6 +11,8 @@ import lombok.Data;
 @Table(name = "cuenta_bancaria")
 public class CuentaBancariaa {
 
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_Cuenta_Bancaria")
@@ -27,6 +29,10 @@ public class CuentaBancariaa {
     @ManyToOne
     @JoinColumn(name = "id_moneda")
     private TipoMoneda id_moneda;
+
+    @ManyToOne
+    @JoinColumn(name = "id")
+    private Usuario id_usuario;
 
     @Column(name = "numeroCuenta")
     private String numeroCuenta;

@@ -23,9 +23,5 @@ public class RegistroController {
 //		modelo.addAttribute("usuarios", servicio.listarUsuarios());
 		return "index";
 	}
-//	@GetMapping("/CuentaBancaria")
-//	public String verCueantaBancaria(Model modelo) {
-////		modelo.addAttribute("usuarios", servicio.listarUsuarios());
-//		return "CuentaBancaria";
-//	}
+
 }

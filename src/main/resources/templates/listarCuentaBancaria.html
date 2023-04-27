@@ -14,6 +14,7 @@
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
         crossorigin="anonymous">
 
+
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
   <!-- Styles -->
@@ -28,7 +29,7 @@
   <link
           href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css"
           rel="stylesheet">
-  <link rel="stylesheet" href="/css/cuentaBancaria.css">
+  <link rel="stylesheet" href="/css/listarCuentaBancaria.css">
   <title>Cuenta Bancaria</title>
 </head>
 
@@ -85,6 +86,7 @@
                 data-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false"
                 aria-label="Toggle navigation">
+
           <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -123,6 +125,7 @@
       </div>
       <br>
       <table class="table table-striped table-bordered">
+
         <thead class="table-dark">
         <tr>
           <th>Banco</th>
@@ -133,12 +136,12 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="listarCuentaBancarias : ${lista}">
-          <!--          <td th:text="${cuentaBancaria.TipoBanco}">Banco</td>-->
-          <!--          <td th:text="${cuentaBancaria.TipoCuenta}">Tipo de cuenta</td>-->
-          <!--          <td th:text="${cuentaBancaria.TipoMoneda}">Tipo de moneda</td>-->
-          <td th:text="${cuentaBancarias.numeroCuenta}">Número de cuenta</td>
-          <td th:text="${cuentaBancaria.cci}">CCI</td>
+        <tr th:each="listarCuentaBancaria : ${listar}">
+                    <td th:text="${listarCuentaBancaria.id_banco.nombreTipoBanco}">Banco</td>
+                    <td th:text="${listarCuentaBancaria.id_tipo_cuenta_bancaria.nombreTipoCuentaBancaria}">Tipo de cuenta</td>
+                    <td th:text="${listarCuentaBancaria.id_moneda.nombreTipoMoneda}">Tipo de moneda</td>
+          <td th:text="${listarCuentaBancaria.numeroCuenta}">Número de cuenta</td>
+          <td th:text="${listarCuentaBancaria.cciCuentaBancaria}">CCI</td>
         </tr>
         </tbody>
       </table>

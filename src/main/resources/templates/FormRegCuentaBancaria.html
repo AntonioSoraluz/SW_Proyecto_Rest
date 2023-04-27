@@ -96,7 +96,7 @@
     <!-- Page Content -->
     <div class="container">
       <h1>Registro de cuentas bancarias</h1>
-      <form th:action="@{/crearCuentaBancaria}" th:object="${cuentaBancariaa}" method="POST">
+      <form th:action="@{/listarCuentaBancaria}" th:object="${cuentaBancariaa}" method="POST">
         <div class="form-group">
           <label>Banco:</label>
           <select class="form-control" th:field="*{id_banco.idTipoBanco}">

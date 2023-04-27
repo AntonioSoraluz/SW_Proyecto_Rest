@@ -275,28 +275,20 @@ a:hover {
 }
 
 
-.button-create-account {
-    position: fixed;
-    margin-right: 15px;
-    padding: 10px 20px;
-    background-color: #0062cc;
-    color: white;
-    border-radius: 5px;
-    font-size: 16px;
-    text-align: center;
-    text-decoration: none;
-    display: block;
-    bottom: 20px;
-    right: 20px;
-
-}
-
 .button-create-account:hover {
     background-color: #0062cc;
     color: #efefef;
 }
 
-.d-inline-block my-2 mr-4{
-    text-align: left;
-
+.button-create-account {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }

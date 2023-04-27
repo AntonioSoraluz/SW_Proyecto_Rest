@@ -26,9 +26,10 @@ public class RegistroCuentaBancariaController {
     private final Logger logger = LoggerFactory.getLogger(RegistroCuentaBancariaController.class);
     @Autowired
     private CuentaBancariaServiceIMPL ctaIMPL;
-    @GetMapping("/listarCuentaBancaria")
-    public String ConsultarCuentasBancarias(Model model){
 
+    @GetMapping({ "/listarCuentaBancaria"})
+    public String listarCuentasBancarias(Model modelo) {
+        modelo.addAttribute("listar", ctaIMPL.ConsultarCuentaBancariaa());
         return "listarCuentaBancaria";
     }
 
@@ -40,12 +41,11 @@ public class RegistroCuentaBancariaController {
         return "FormRegCuentaBancaria";
     }
 
-
-    @PostMapping("/crearCuentaBancaria")
+    @PostMapping("/listarCuentaBancaria")
     public String CrearCuentaBancariaa(CuentaBancariaa cuenta, BindingResult result) {
         logger.info(" -- registrar cuenta --: {}",cuenta.getId_banco());
         ctaIMPL.CrearCuentaBancariaa(cuenta);
-        return "listarCuentaBancaria";
+        return "redirect:/listarCuentaBancaria";
     }
 
 
