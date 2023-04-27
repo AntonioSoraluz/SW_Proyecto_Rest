@@ -38,9 +38,6 @@ public class EmpresaServiceImpl {
 		return null;
 	}
 
-	public void init() {
-		// TODO Auto-generated method stub
-		
-	}
+
 
 }
