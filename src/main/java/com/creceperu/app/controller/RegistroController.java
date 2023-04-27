@@ -20,7 +20,12 @@ public class RegistroController {
 	
 	@GetMapping("/")
 	public String verPaginaDeInicio(Model modelo) {
-		modelo.addAttribute("usuarios", servicio.listarUsuarios());
+//		modelo.addAttribute("usuarios", servicio.listarUsuarios());
 		return "index";
 	}
+//	@GetMapping("/CuentaBancaria")
+//	public String verCueantaBancaria(Model modelo) {
+////		modelo.addAttribute("usuarios", servicio.listarUsuarios());
+//		return "CuentaBancaria";
+//	}
 }
