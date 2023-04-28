@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.creceperu.app.service.UsuarioService;
 
 @Controller
-public class RegistroController {
+public class UsuarioController {
 
 	@Autowired
 	private UsuarioService servicio;
