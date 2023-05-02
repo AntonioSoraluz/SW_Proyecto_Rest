@@ -1,7 +1,13 @@
 package com.creceperu.app.repository;
 
-import com.creceperu.app.model.CuentaBancariaa;
-import org.springframework.data.repository.CrudRepository;
+import java.util.List;
 
-public interface CuentaBancariaRepository extends CrudRepository<CuentaBancariaa,Long> {
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.creceperu.app.model.CuentaBancaria;
+
+@Repository
+public interface CuentaBancariaRepository extends JpaRepository<CuentaBancaria,Integer>{
+	List<CuentaBancaria> findByObjUsuarioId(Long id);
 }

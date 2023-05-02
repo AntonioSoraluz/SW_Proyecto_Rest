@@ -9,7 +9,6 @@
 		  content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 	<!-- Bootstrap CSS -->
-
 	<link rel="stylesheet"
 		  href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
 		  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
@@ -31,6 +30,23 @@
 
 	<link rel="stylesheet" href="/css/index.css">
 
+	<!-- Optional JavaScript -->
+	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+		crossorigin="anonymous"></script>
+	<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+			integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+			crossorigin="anonymous"></script>
+	<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+			integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+			crossorigin="anonymous"></script>
+	<script
+			src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"
+			integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="
+			crossorigin="anonymous"></script>
 	<title>Crece Perú</title>
 </head>
 
@@ -38,7 +54,7 @@
 <div class="d-flex" id="content-wrapper">
 
 	<!-- Sidebar -->
-	<div id="sidebar-container" class="bg-primary">
+	<div id="sidebar-container" class="bg-primary" th:fragment="sidebar">
 		<div class="logo">
 			<h4 class="text-light font-weight-bold mb-0">Crece Perú</h4>
 		</div>
@@ -46,8 +62,8 @@
 			<a th:href="@{/}" class="d-block text-light p-3 border-0"><i class="icon ion-md-apps lead mr-2"></i> Inicio</a>
 			<a th:href="@{/movimientos}" class="d-block text-light p-3 border-0"><i class="icon ion-md-people lead mr-2"></i> Mis movimientos</a>
 			<a th:href="@{/estado-cuenta}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Estado de cuenta</a>
-			<a th:href="@{/listarCuentaBancaria}" class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead mr-2"></i> Cuentas Bancarias </a>
-			<a th:href="@{/depositos}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Depósitos</a>
+			<a th:href="@{/registroCuentaBancaria}" class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead mr-2"></i> Cuentas Bancarias </a>
+			<a th:href="@{/registroMovimientoDeposito}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Depósitos</a>
 			<a th:href="@{/retiros}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Retiros</a>
 		</div>
 
@@ -57,8 +73,7 @@
 	<div class="w-100">
 
 		<!-- Navbar -->
-		<nav
-				class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
 			<div class="container">
 
 				<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -81,12 +96,17 @@
 								class="nav-link text-dark dropdown-toggle" href="#"
 								id="navbarDropdown" role="button" data-toggle="dropdown"
 								aria-haspopup="true" aria-expanded="false"> <span
-								class="text-dark" sec:authentication="principal.username"></span></a>
+								class="text-dark" sec:authentication="principal.nombres"></span></a>
 
 
 							<div class="dropdown-menu dropdown-menu-right"
-								 aria-labelledby="navbarDropdown">
-								<a class="dropdown-item" href="#">Mi perfil</a>
+								 aria-labelledby="navbarDropdown" >
+								 <form th:action="@{/perfilUsuario}"
+									 method="post" th:method="post">
+									<input type="hidden" name="idPerfil" th:value="${#authentication.principal.id}"/>
+									<button type="submit" class="btn btn-link link-info">
+									Mi perfil</button>
+								</form>
 								<div class="dropdown-divider"></div>
 								<form sec:authorize="isAuthenticated()" th:action="@{/logout}"
 									  method="post" th:method="post">
@@ -111,7 +131,7 @@
 					<div class="row">
 						<div class="col-lg-9 col-md-8">
 							<h1 class="font-weight-bold mb-0">
-								Bienvenido <span sec:authentication="principal.username"></span>
+								Bienvenido <span sec:authentication="principal.nombres"></span>
 							</h1>
 							<p class="lead text-muted">Nuevas facturas disponibles!</p>
 						</div>
@@ -244,49 +264,31 @@
 
 	</div>
 </div>
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-		crossorigin="anonymous"></script>
-<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-		integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-		crossorigin="anonymous"></script>
-<script
-		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-		crossorigin="anonymous"></script>
-<script
-		src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"
-		integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="
-		crossorigin="anonymous"></script>
 <script>
-	var ctx = document.getElementById('myChart').getContext('2d');
-	var myChart = new Chart(ctx, {
-		type : 'bar',
-		data : {
-			labels : [ 'Feb 2023', 'Mar 2023', 'Abr 2023' ],
-			datasets : [ {
-				label : 'Facturas emitidas',
-				data : [ 50, 100, 150 ],
-				backgroundColor : [ '#12C9E5', '#12C9E5', '#12C9E5' ],
-				maxBarThickness : 30,
-				maxBarLength : 2
-			} ]
-		},
-		options : {
-			scales : {
-				yAxes : [ {
-					ticks : {
-						beginAtZero : true
-					}
+		var ctx = document.getElementById('myChart').getContext('2d');
+		var myChart = new Chart(ctx, {
+			type : 'bar',
+			data : {
+				labels : [ 'Feb 2023', 'Mar 2023', 'Abr 2023' ],
+				datasets : [ {
+					label : 'Facturas emitidas',
+					data : [ 50, 100, 150 ],
+					backgroundColor : [ '#12C9E5', '#12C9E5', '#12C9E5' ],
+					maxBarThickness : 30,
+					maxBarLength : 2
 				} ]
+			},
+			options : {
+				scales : {
+					yAxes : [ {
+						ticks : {
+							beginAtZero : true
+						}
+					} ]
+				}
 			}
-		}
-	});
-</script>
+		});
+	</script>
 </body>
 </html>
 

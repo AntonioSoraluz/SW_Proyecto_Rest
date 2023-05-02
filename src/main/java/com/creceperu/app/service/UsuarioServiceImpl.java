@@ -23,6 +23,29 @@ public class UsuarioServiceImpl implements UsuarioService {
 
 	private UsuarioRepository usuarioRepository;
 
+	public class CustomUserDetails extends User {
+	    public final String nombres;
+	    public final String apellidos;
+	    public final Long id;
+
+	    public CustomUserDetails(String nombres, String apellidos,Long id, String username, String password, Collection<? extends GrantedAuthority> authorities) {
+	        super(apellidos, password, authorities);
+	        this.nombres = nombres;
+	        this.apellidos = apellidos;
+	        this.id = id;
+	    }
+
+	    public String getNombres() {
+	        return nombres;
+	    }
+	    public String getApellidos() {
+	        return apellidos;
+	    }
+	    public Long getId() {
+	        return id;
+	    }
+	}
+	
 	@Autowired
 	private BCryptPasswordEncoder passwordEncoder;
 
@@ -44,7 +67,8 @@ public class UsuarioServiceImpl implements UsuarioService {
 		if (usuario == null) {
 			throw new UsernameNotFoundException("Usuario o password inválidos");
 		}
-		return new User(usuario.getApellidos(), usuario.getPassword(), mapearAutoridadesRoles(usuario.getRoles()));
+		return new CustomUserDetails(usuario.getNombres(), usuario.getApellidos(), usuario.getId(),
+				usuario.getEmail(), usuario.getPassword(), mapearAutoridadesRoles(usuario.getRoles()));
 	}
 
 	private Collection<? extends GrantedAuthority> mapearAutoridadesRoles(Collection<Rol> roles) {

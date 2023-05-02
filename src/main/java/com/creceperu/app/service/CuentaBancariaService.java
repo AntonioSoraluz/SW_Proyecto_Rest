@@ -1,14 +1,16 @@
 package com.creceperu.app.service;
 
-import com.creceperu.app.model.CuentaBancariaa;
-
 import java.util.List;
 
-public interface CuentaBancariaService {
-    public List<CuentaBancariaa> ConsultarCuentaBancariaa();
-    public CuentaBancariaa CrearCuentaBancariaa(CuentaBancariaa cuentaBancariaa);
-    public CuentaBancariaa ModificarCuentaBancariaa(CuentaBancariaa cuentaBancariaa);
-    public CuentaBancariaa BuscarCuentaBancariaa(long id);
-    public void EliminarrCuentaBancariaa(long id);
+import org.springframework.security.core.userdetails.UserDetailsService;
 
+import com.creceperu.app.controller.dto.CuentaBancariaRegistroDTO;
+import com.creceperu.app.model.CuentaBancaria;
+
+public interface CuentaBancariaService{
+	
+	public CuentaBancaria guardar(CuentaBancariaRegistroDTO cuentaBancariaDTO);
+	
+	public List<CuentaBancaria> listarCuentas();
+	
 }

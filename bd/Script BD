@@ -1,0 +1,8 @@
+create database crecePeru2;
+use crecePeru2;
+insert banco values('1','BCP');
+insert banco values('2','Interbak');
+insert banco values('3','BBVA');
+insert banco values('4','Cencosud');
+insert banco values('5','ScotiaBank');
+insert banco values('6','American Express');

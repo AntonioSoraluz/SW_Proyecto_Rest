@@ -1,53 +1,56 @@
 package com.creceperu.app.controller;
 
-import com.creceperu.app.model.CuentaBancaria;
-import com.creceperu.app.model.CuentaBancariaa;
-import com.creceperu.app.model.TipoBanco;
-import com.creceperu.app.model.TipoCuentaBancaria;
-import com.creceperu.app.service.CuentaBancariaService;
-import com.creceperu.app.service.CuentaBancariaServiceIMPL;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import java.util.List;
+import java.util.Date;
 
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import com.creceperu.app.controller.dto.CuentaBancariaRegistroDTO;
+import com.creceperu.app.repository.BancoRepository;
+import com.creceperu.app.service.CuentaBancariaService;
+import com.creceperu.app.service.UsuarioServiceImpl.CustomUserDetails;
 
 @Controller
+@RequestMapping("/registroCuentaBancaria")
 public class RegistroCuentaBancariaController {
-
-    private final Logger logger = LoggerFactory.getLogger(RegistroCuentaBancariaController.class);
-    @Autowired
-    private CuentaBancariaServiceIMPL ctaIMPL;
-
-    @GetMapping({ "/listarCuentaBancaria"})
-    public String listarCuentasBancarias(Model modelo) {
-        modelo.addAttribute("listar", ctaIMPL.ConsultarCuentaBancariaa());
-        return "listarCuentaBancaria";
-    }
-
-
-    @GetMapping("/CuentaBancaria/registrar")
-    public String mostrarFormularioDeRegistrtarCuentaBancaria(Model modelo) {
-        CuentaBancariaa cuentaBancariaa = new CuentaBancariaa();
-        modelo.addAttribute("cuentaBancariaa", cuentaBancariaa);
-        return "FormRegCuentaBancaria";
-    }
-
-    @PostMapping("/listarCuentaBancaria")
-    public String CrearCuentaBancariaa(CuentaBancariaa cuenta, BindingResult result) {
-        logger.info(" -- registrar cuenta --: {}",cuenta.getId_banco());
-        ctaIMPL.CrearCuentaBancariaa(cuenta);
-        return "redirect:/listarCuentaBancaria";
-    }
-
-
-
+	
+	private CuentaBancariaService cuentaBancariaService;
+	
+	/*private CustomUserDetails usuarioTemporal;*/
+	
+	@Autowired
+	private BancoRepository bancoRepository;
+	
+	public RegistroCuentaBancariaController(CuentaBancariaService cuentaBancariaService) {
+		super();
+		this.cuentaBancariaService = cuentaBancariaService;
+	}
+	
+	@ModelAttribute("cuentaBancaria")
+	public CuentaBancariaRegistroDTO retornarNuevoCuentaBancariaDTO() {
+		return new CuentaBancariaRegistroDTO();
+	}
+	
+	@GetMapping
+	public String mostrarFormularioDeRegistroCuentaBancaria(Model model) {
+		model.addAttribute("lstBanco", bancoRepository.findAll());
+		return "cuentaBancaria";
+	}
+	
+	@PostMapping
+	public String registrarCuentaBancaria(@RequestParam("idUsuario") String idUsuario, @ModelAttribute("cuentaBancaria") CuentaBancariaRegistroDTO cuentaBancariaDTO) {
+		Long idusuario = Long.parseLong(idUsuario);
+		cuentaBancariaDTO.setId(idusuario);
+		cuentaBancariaDTO.setFechaRegistro(new Date());
+		cuentaBancariaService.guardar(cuentaBancariaDTO);
+		return "redirect:/registroCuentaBancaria?exito";
+	}
 }
