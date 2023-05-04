@@ -10,7 +10,7 @@ import com.creceperu.app.model.Usuario;
 
 public interface UsuarioService extends UserDetailsService{
 
-	public Usuario guardar(UsuarioRegistroDTO registroDTO);
+	public Usuario guardar(UsuarioRegistroDTO registroDTO, String role);
 	
 	public List<Usuario> listarUsuarios();
 

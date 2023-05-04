@@ -23,8 +23,8 @@ import com.creceperu.app.service.MovimientoService;
 import com.creceperu.app.service.UsuarioServiceImpl.CustomUserDetails;
 
 @Controller
-@RequestMapping("/registroMovimientoDeposito")
-public class RegistroMovimientoController {
+@RequestMapping("/registroMovimiento")
+public class MovimientoController {
 	
 	private MovimientoService movimientoService;
 	
@@ -34,7 +34,7 @@ public class RegistroMovimientoController {
 	@Autowired
 	private CuentaBancariaRepository cuentaBancariaRepository;
 	
-	public RegistroMovimientoController(MovimientoService movimientoService) {
+	public MovimientoController(MovimientoService movimientoService) {
 		super();
 		this.movimientoService = movimientoService;
 	}
@@ -49,7 +49,7 @@ public class RegistroMovimientoController {
 		model.addAttribute("lstCuentasBancarias", cuentaBancariaRepository.findAll());
 		return "movimiento";
 	}*/
-	@GetMapping
+	@GetMapping("/deposito")
 	public String mostrarFormularioDeRegistroMovimientoDeposito(Model model, Authentication authentication) {
 		
 		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
@@ -60,16 +60,38 @@ public class RegistroMovimientoController {
 	    // agregar la lista de cuentas bancarias al modelo
 	    model.addAttribute("lstCuentasBancarias", cuentasBancarias);
 	    
-	    return "movimiento";
+	    return "movimientoDeposito";
+	}
+	@GetMapping("/retiro")
+	public String mostrarFormularioDeRegistroMovimientoRetiro(Model model, Authentication authentication) {
+		
+		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+		
+	    // buscar todas las cuentas bancarias del usuario
+	    List<CuentaBancaria> cuentasBancarias = cuentaBancariaRepository.findByObjUsuarioId(customUserDetails.getId());
+
+	    // agregar la lista de cuentas bancarias al modelo
+	    model.addAttribute("lstCuentasBancarias", cuentasBancarias);
+	    
+	    return "movimientoRetiro";
 	}
 	
-	@PostMapping
-	public String registrarMovimiento(@RequestParam("idUsuario") String idUsuario, @ModelAttribute("movimiento") MovimientoRegistroDTO movimientoRegistroDTO) {
+	@PostMapping("/deposito")
+	public String registrarMovimientoDeposito(@RequestParam("idUsuario") String idUsuario, @ModelAttribute("movimiento") MovimientoRegistroDTO movimientoRegistroDTO) {
 		Long idusuario = Long.parseLong(idUsuario);
 		movimientoRegistroDTO.setId(idusuario);
 		movimientoRegistroDTO.setTipoMovimiento("Deposito");
 		movimientoRegistroDTO.setFechaMovimiento(new Date());
 		movimientoService.guardar(movimientoRegistroDTO);
-		return "redirect:/registroMovimientoDeposito?exito";
+		return "redirect:/registroMovimiento/deposito?exito";
+	}
+	@PostMapping("/retiro")
+	public String registrarMovimientoRetiro(@RequestParam("idUsuario") String idUsuario, @ModelAttribute("movimiento") MovimientoRegistroDTO movimientoRegistroDTO) {
+		Long idusuario = Long.parseLong(idUsuario);
+		movimientoRegistroDTO.setId(idusuario);
+		movimientoRegistroDTO.setTipoMovimiento("Retiro");
+		movimientoRegistroDTO.setFechaMovimiento(new Date());
+		movimientoService.guardar(movimientoRegistroDTO);
+		return "redirect:/registroMovimiento/retiro?exito";
 	}
 }

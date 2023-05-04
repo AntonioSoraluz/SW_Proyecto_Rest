@@ -54,11 +54,11 @@ public class UsuarioServiceImpl implements UsuarioService {
 		this.usuarioRepository = usuarioRepository;
 	}
 	@Override
-	public Usuario guardar(UsuarioRegistroDTO registroDTO) {
+	public Usuario guardar(UsuarioRegistroDTO registroDTO, String role) {
 		Usuario usuario = new Usuario(registroDTO.getNombres(), registroDTO.getApellidos(), registroDTO.getDni(),
 				registroDTO.getUbigeo(), registroDTO.getRuc(),registroDTO.getDireccion(), registroDTO.getTelefono(), registroDTO.getEmail(),
 				registroDTO.getEmailRecuperacion(), passwordEncoder.encode(registroDTO.getPassword()), registroDTO.getFechaIngreso(),
-				registroDTO.getEstado(), registroDTO.getRol());
+				registroDTO.getEstado(),Arrays.asList(new Rol(role)) );
 		return usuarioRepository.save(usuario);
 	} /*Arrays.asList(new Rol("ROLE_USER"))*/
 	@Override

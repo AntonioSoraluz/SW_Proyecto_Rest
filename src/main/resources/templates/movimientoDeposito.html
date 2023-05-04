@@ -46,7 +46,7 @@
 	src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"
 	integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="
 	crossorigin="anonymous"></script>
-<script src="js/registro-cuenta-bancaria.js"></script>
+<script th:src="@{/js/registro-cuenta-bancaria-deposito.js}"></script>
 <title>Crece Perú</title>
 </head>
 <body>
@@ -78,8 +78,7 @@
 		<div class="w-100">
 
 			<!-- Navbar -->
-			<nav
-				class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
 				<div class="container">
 
 					<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -131,85 +130,51 @@
 						<div class="col-lg-7">
 							<div class="p-5">
 								<div class="text-center">
-									<h1 class="h4 text-gray-900 mb-4">Mi Perfil</h1>
+									<h1 class="h4 text-gray-900 mb-4">Hacer un Depósito</h1>
 								</div>
-								<form class="user needs-validation"
-									th:action="@{/perfilUsuario}" method="post"
-									th:object="${usuario}" id="formulario" novalidate>
+								<form class="form needs-validation"
+									th:action="@{/registroMovimiento/deposito}" method="post"
+									th:object="${movimiento}" id="formulario" novalidate>
 									<div th:if=${param.exito}>
 										<div class="alert alert-info" id="alerta">Se ha
-											actualizado exitosamente su perfil</div>
+											hecho el deposito exitosamente</div>
 									</div>
-									<input type="hidden" th:field="*{id}"> <input
-										type="hidden" th:field="*{ruc}"> <input type="hidden"
-										th:field="*{email}"> <input type="hidden"
-										th:field="*{password}"> <input type="hidden"
-										th:field="*{fechaIngreso}" name="fechaIngreso"> <input
-										type="hidden" th:field="*{estado}">
+									<input type="hidden" name="idUsuario" th:value="${#authentication.principal.id}"/>
 									<div class="form-group row">
-										<div class="col-sm-6 mb-3 mb-sm-0">
-											<label class="control-label" for="nombres">Nombres :
-											</label> <input id="nombres" type="text" class="form-control"
-												th:field="*{nombres}" autofocus="autofocus" required
-												pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{2,30}">
-											<div class="invalid-feedback">Ingrese los nombres
-												correctamente.</div>
+										<div class="col-sm-7 mb-3 mb-sm-0">
+											<label for="validationCustom07" class="form-label">Cuenta Bancaria:</label>
+											<div class="col">
+												<select th:field="*{id_cuentaBancaria}" class="custom-select"
+													id="cuentaBancariaSelect" required>
+													<option selected value="" required>Seleccione...</option>
+													<option th:each="cb: ${lstCuentasBancarias}" th:value="${cb.id_cuentaBancaria}"
+														th:text="${cb.numeroCuenta}"></option>
+												</select>
+												<div class="invalid-feedback">Seleccione una Cuenta Bancaria.</div>
+											</div>
 										</div>
-										<div class="col-sm-6">
-											<label class="control-label" for="apellidos">Apellidos
-												: </label> <input id="apellidos" class="form-control"
-												th:field="*{apellidos}" autofocus="autofocus" required
-												pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{2,30}">
-											<div class="invalid-feedback">Ingrese los apellidos
-												correctamente.</div>
+										<div class="col-sm-5">
+											<label class="control-label" for="monto">Monto : </label> <input
+												id="monto" type="text" class="form-control"
+												th:field="*{monto}" autofocus="autofocus" required
+												pattern="^(?:[1-9]\d{0,2}(?:,\d{3}){0,2}|[1-9]\d{0,3}(?:\.\d{1,2})?|10000(?:\.00)?)$">
+											<div class="invalid-feedback">Ingrese un monto
+												correctamente. Máximo 10,000.00</div>
 										</div>
-									</div>
-									<div class="form-group row">
-										<div class="col-sm-6 mb-3 mb-sm-0">
-											<label class="control-label" for="dni">DNI : </label> <input
-												id="dni" type="text" class="form-control" th:field="*{dni}"
-												readonly>
-										</div>
-										<div class="col-sm-6">
-											<label class="control-label" for="ubigeo">Ubigeo : </label> <input
-												id="ubigeo" type="text" class="form-control"
-												th:field="*{ubigeo}" autofocus="autofocus" readonly>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label" for="direccion">Dirección
-											: </label> <input id="direccion" type="text" class="form-control"
-											th:field="*{direccion}" autofocus="autofocus" readonly>
-									</div>
-									<div class="form-group">
-										<label class="control-label" for="telefono">Teléfono :
-										</label> <input id="telefono" type="text" class="form-control"
-											th:field="*{telefono}" autofocus="autofocus" required
-											pattern="[0-9]{9}">
-										<div class="invalid-feedback">Ingrese el teléfono
-											correctamente.</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label" for="emailRecuperacion">Email
-											de Recuperación: </label> <input id="emailRecuperacion" type="email"
-											class="form-control" th:field="*{emailRecuperacion}"
-											autofocus="autofocus" required
-											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
-										<div class="invalid-feedback">Ingrese el email de
-											recuperación correctamente.</div>
 									</div>
 									<div class="form-group">
 										<label></label>
 										<div class="text-center">
 											<button type="submit" class="btn btn-success btn-block"
-												name="actualizar-submit" id="submit" value="Guardar">Guardar</button>
+												name="registroMovimientoDesposito-submit" id="submit"
+												value="Depositar">Depositar</button>
 										</div>
 									</div>
 								</form>
 							</div>
 						</div>
 						<div class="col-lg-5 d-none d-lg-block bg-register-image">
-							<img class="img-fluid" th:src="@{/img/perfil_img.jpg}">
+							<img class="img-fluid" th:src="@{/img/deposito-img.jpg}">
 						</div>
 					</div>
 				</section>

@@ -1,7 +1,6 @@
 setTimeout(function(){
 	document.getElementById('alerta').remove();
 }, 5000);
-
 (function() {
   'use strict';
   window.addEventListener('load', function() {

@@ -1,20 +1,15 @@
 package com.creceperu.app.controller;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
 import java.util.Date;
-import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.creceperu.app.controller.dto.UsuarioRegistroDTO;
-import com.creceperu.app.model.Rol;
-import com.creceperu.app.model.Usuario;
 import com.creceperu.app.service.UsuarioService;
 
 @Controller
@@ -39,12 +34,11 @@ public class RegistroUsuarioController {
 	}
 	
 	@PostMapping
-	public String registrarCuentaDeUsuario(@ModelAttribute("usuario") UsuarioRegistroDTO registroDTO) {
+	public String registrarCuentaDeUsuario(@ModelAttribute("usuario") UsuarioRegistroDTO registroDTO,@RequestParam("role") String role) {
 		registroDTO.setRuc(registroDTO.getRuc());
 		registroDTO.setFechaIngreso(new Date());
 		registroDTO.setEstado(1);
-		registroDTO.setRol(registroDTO.getRol());
-		usuarioService.guardar(registroDTO);
+		usuarioService.guardar(registroDTO, role);
 		return "redirect:/registro?exito";
 	}
 }
