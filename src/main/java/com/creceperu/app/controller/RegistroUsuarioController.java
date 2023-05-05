@@ -2,6 +2,7 @@ package com.creceperu.app.controller;
 
 import java.util.Date;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +17,7 @@ import com.creceperu.app.service.UsuarioService;
 @RequestMapping("/registro")
 public class RegistroUsuarioController {
 
+	@Autowired
 	private UsuarioService usuarioService;
 
 	public RegistroUsuarioController(UsuarioService usuarioService) {

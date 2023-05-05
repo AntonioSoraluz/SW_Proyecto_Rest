@@ -16,8 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.creceperu.app.controller.dto.MovimientoRegistroDTO;
 import com.creceperu.app.model.CuentaBancaria;
+import com.creceperu.app.model.Movimiento;
 import com.creceperu.app.model.Usuario;
 import com.creceperu.app.repository.CuentaBancariaRepository;
+import com.creceperu.app.repository.MovimientoRepository;
 import com.creceperu.app.repository.UsuarioRepository;
 import com.creceperu.app.service.MovimientoService;
 import com.creceperu.app.service.UsuarioServiceImpl.CustomUserDetails;
@@ -26,13 +28,14 @@ import com.creceperu.app.service.UsuarioServiceImpl.CustomUserDetails;
 @RequestMapping("/registroMovimiento")
 public class MovimientoController {
 	
+	@Autowired
 	private MovimientoService movimientoService;
 	
 	@Autowired
-	private UsuarioRepository usuarioRepository;
+	private CuentaBancariaRepository cuentaBancariaRepository;
 	
 	@Autowired
-	private CuentaBancariaRepository cuentaBancariaRepository;
+	private MovimientoRepository movimientoRepository;
 	
 	public MovimientoController(MovimientoService movimientoService) {
 		super();
@@ -44,35 +47,28 @@ public class MovimientoController {
 		return new MovimientoRegistroDTO();
 	}
 	
-	/*@GetMapping
-	public String mostrarFormularioDeRegistroMovimiento(Model model) {
-		model.addAttribute("lstCuentasBancarias", cuentaBancariaRepository.findAll());
-		return "movimiento";
-	}*/
+	@GetMapping("/movimientos")
+	public String mostrarListaDeMovimientos(Model model, Authentication authentication) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+		List<Movimiento> movimientos = movimientoRepository.findByObjUsuarioId(customUserDetails.getId());
+		model.addAttribute("lstMovimientos", movimientos);
+		return "movimientos";
+	}
+	
 	@GetMapping("/deposito")
 	public String mostrarFormularioDeRegistroMovimientoDeposito(Model model, Authentication authentication) {
 		
 		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-		
-	    // buscar todas las cuentas bancarias del usuario
 	    List<CuentaBancaria> cuentasBancarias = cuentaBancariaRepository.findByObjUsuarioId(customUserDetails.getId());
-
-	    // agregar la lista de cuentas bancarias al modelo
 	    model.addAttribute("lstCuentasBancarias", cuentasBancarias);
-	    
 	    return "movimientoDeposito";
 	}
 	@GetMapping("/retiro")
 	public String mostrarFormularioDeRegistroMovimientoRetiro(Model model, Authentication authentication) {
 		
 		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-		
-	    // buscar todas las cuentas bancarias del usuario
 	    List<CuentaBancaria> cuentasBancarias = cuentaBancariaRepository.findByObjUsuarioId(customUserDetails.getId());
-
-	    // agregar la lista de cuentas bancarias al modelo
 	    model.addAttribute("lstCuentasBancarias", cuentasBancarias);
-	    
 	    return "movimientoRetiro";
 	}
 	

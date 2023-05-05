@@ -22,6 +22,7 @@ import com.creceperu.app.service.UsuarioServiceImpl.CustomUserDetails;
 @RequestMapping("/registroCuentaBancaria")
 public class RegistroCuentaBancariaController {
 	
+	@Autowired
 	private CuentaBancariaService cuentaBancariaService;
 	
 	/*private CustomUserDetails usuarioTemporal;*/

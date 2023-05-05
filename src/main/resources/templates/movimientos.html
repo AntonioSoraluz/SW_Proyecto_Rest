@@ -78,8 +78,7 @@
 		<div class="w-100">
 
 			<!-- Navbar -->
-			<nav
-				class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
 				<div class="container">
 
 					<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -127,90 +126,24 @@
 			<!-- Page Content -->
 			<div id="content" class="bg-grey w-100">
 				<section class="bg-light py-3">
-					<div class="row">
-						<div class="col-lg-7">
-							<div class="p-5">
-								<div class="text-center">
-									<h1 class="h4 text-gray-900 mb-4">Mi Perfil</h1>
-								</div>
-								<form class="user needs-validation"
-									th:action="@{/perfilUsuario}" method="post"
-									th:object="${usuario}" id="formulario" novalidate>
-									<div th:if=${param.exito}>
-										<div class="alert alert-info" id="alerta">Se ha
-											actualizado exitosamente su perfil</div>
-									</div>
-									<input type="hidden" th:field="*{id}"> <input
-										type="hidden" th:field="*{ruc}"> <input type="hidden"
-										th:field="*{email}"> <input type="hidden"
-										th:field="*{password}"> <input type="hidden"
-										th:field="*{fechaIngreso}" name="fechaIngreso"> <input
-										type="hidden" th:field="*{estado}">
-									<div class="form-group row">
-										<div class="col-sm-6 mb-3 mb-sm-0">
-											<label class="control-label" for="nombres">Nombres :
-											</label> <input id="nombres" type="text" class="form-control"
-												th:field="*{nombres}" autofocus="autofocus" required
-												pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{2,30}">
-											<div class="invalid-feedback">Ingrese los nombres
-												correctamente.</div>
-										</div>
-										<div class="col-sm-6">
-											<label class="control-label" for="apellidos">Apellidos
-												: </label> <input id="apellidos" class="form-control"
-												th:field="*{apellidos}" autofocus="autofocus" required
-												pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{2,30}">
-											<div class="invalid-feedback">Ingrese los apellidos
-												correctamente.</div>
-										</div>
-									</div>
-									<div class="form-group row">
-										<div class="col-sm-6 mb-3 mb-sm-0">
-											<label class="control-label" for="dni">DNI : </label> <input
-												id="dni" type="text" class="form-control" th:field="*{dni}"
-												readonly>
-										</div>
-										<div class="col-sm-6">
-											<label class="control-label" for="ubigeo">Ubigeo : </label> <input
-												id="ubigeo" type="text" class="form-control"
-												th:field="*{ubigeo}" autofocus="autofocus" readonly>
-										</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label" for="direccion">Dirección
-											: </label> <input id="direccion" type="text" class="form-control"
-											th:field="*{direccion}" autofocus="autofocus" readonly>
-									</div>
-									<div class="form-group">
-										<label class="control-label" for="telefono">Teléfono :
-										</label> <input id="telefono" type="text" class="form-control"
-											th:field="*{telefono}" autofocus="autofocus" required
-											pattern="[0-9]{9}">
-										<div class="invalid-feedback">Ingrese el teléfono
-											correctamente.</div>
-									</div>
-									<div class="form-group">
-										<label class="control-label" for="emailRecuperacion">Email
-											de Recuperación: </label> <input id="emailRecuperacion" type="email"
-											class="form-control" th:field="*{emailRecuperacion}"
-											autofocus="autofocus" required
-											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
-										<div class="invalid-feedback">Ingrese el email de
-											recuperación correctamente.</div>
-									</div>
-									<div class="form-group">
-										<label></label>
-										<div class="text-center">
-											<button type="submit" class="btn btn-success btn-block"
-												name="actualizar-submit" id="submit" value="Guardar">Guardar</button>
-										</div>
-									</div>
-								</form>
-							</div>
-						</div>
-						<div class="col-lg-5 d-none d-lg-block bg-register-image">
-							<img class="img-fluid" th:src="@{/img/perfil_img.jpg}">
-						</div>
+					<div class="container">
+						<div class="row">
+						    <!-- Iterar por cada movimiento y crear una card para cada uno -->
+						    <th:block th:each="movimiento : ${lstMovimientos}">
+						      <div class="col-sm-6 col-md-4 col-lg-3 mb-4">
+						        <div class="card">
+						          <div class="card-body">
+						            <h5 class="card-title">Movimiento  #<span th:text="${movimiento.id_movimiento}"></span></h5>
+						            <p class="card-text">Banco: <span th:text="${movimiento.objCuentaBancaria.objBanco.nombre_banco}"></span></p>
+						            <p class="card-text">Cuenta bancaria: <span th:text="${movimiento.objCuentaBancaria.numeroCuenta}"></span></p>
+						            <p class="card-text">Tipo: <span th:text="${movimiento.tipoMovimiento}"></span></p>
+						            <p class="card-text">Monto: <span th:text=" 'S/'+ ${movimiento.monto}"></span></p>
+						            <p class="card-text">Fecha: <span th:text="${movimiento.fechaMovimiento}"></span></p>
+						          </div>
+						        </div>
+						      </div>
+						    </th:block>
+					  	</div>
 					</div>
 				</section>
 			</div>
