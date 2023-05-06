@@ -55,6 +55,8 @@ public class EmpresaDTO {
 		this.fecha_registro = fecha_registro;
 		this.estado = estado;
 	}
-	
+
+	public EmpresaDTO() {
+	}
 	
 }

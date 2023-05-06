@@ -12,6 +12,8 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+import javax.persistence.PostPersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -65,6 +67,17 @@ public class Usuario {
 	
 	@Column(name = "estado")
 	private int estado;
+	
+	@OneToOne(mappedBy = "usuario", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private Saldo objSaldo;
+	
+	@PostPersist
+    public void crearSaldo() {
+        Saldo nuevoSaldo = new Saldo();
+        nuevoSaldo.setUsuario(this);
+        nuevoSaldo.setSaldo(0.0);
+        this.objSaldo = nuevoSaldo;
+    }
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
@@ -106,7 +119,7 @@ public class Usuario {
 		this.estado = estado;
 		this.roles = roles;
 	}
-
+	
 	public Usuario() {
 
 	}

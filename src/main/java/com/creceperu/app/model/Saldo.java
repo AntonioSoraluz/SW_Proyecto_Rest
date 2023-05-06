@@ -2,11 +2,14 @@ package com.creceperu.app.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.MapsId;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import lombok.Data;
@@ -15,17 +18,35 @@ import lombok.Data;
 @Entity
 @Table( name = "saldo")
 public class Saldo {
-	@Id
+	/*@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id_saldo;
+	private Integer id_saldo;*/
+	@Id
+	private Long id;
+	
+	/*@OneToOne
+	*/
+	@OneToOne(fetch = FetchType.LAZY)
+	@MapsId
+	private Usuario usuario;
 	
 	@Column(name = "saldo")
 	private Double saldo;
-	
-	private Long id;
-	@ManyToOne
-	@JoinColumn(name = "id", insertable = false, updatable = false)
-	private Usuario objUsuario;
-	
+
+	public Saldo(Long id, Usuario usuario, Double saldo) {
+		super();
+		this.id = id;
+		this.usuario = usuario;
+		this.saldo = saldo;
+	}
+
+	public Saldo(Usuario usuario, Double saldo) {
+		super();
+		this.usuario = usuario;
+		this.saldo = saldo;
+	}
+
+	public Saldo() {
+	}
 	
 }

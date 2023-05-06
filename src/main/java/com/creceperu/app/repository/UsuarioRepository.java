@@ -9,4 +9,5 @@ import com.creceperu.app.model.Usuario;
 public interface UsuarioRepository extends JpaRepository<Usuario, Long>{
 
 	public Usuario findByEmail(String email);
+	public Usuario findByDni(String dni);
 }

@@ -59,17 +59,20 @@
 			<div class="menu">
 				<a th:href="@{/}" class="d-block text-light p-3 border-0"><i
 					class="icon ion-md-apps lead mr-2"></i> Inicio</a> <a
-					th:href="@{/registroMovimiento/movimientos}" class="d-block text-light p-3 border-0"><i
+					th:href="@{/registroMovimiento/movimientos}"
+					class="d-block text-light p-3 border-0"><i
 					class="icon ion-md-people lead mr-2"></i> Mis movimientos</a> <a
 					th:href="@{/estado-cuenta}" class="d-block text-light p-3 border-0"><i
 					class="icon ion-md-person lead mr-2"></i> Estado de cuenta</a> <a
 					th:href="@{/registroCuentaBancaria}"
 					class="d-block text-light p-3 border-0"><i
 					class="icon ion-md-stats lead mr-2"></i> Cuentas Bancarias </a> <a
-					th:href="@{/registroMovimiento/deposito}" class="d-block text-light p-3 border-0"><i
+					th:href="@{/registroMovimiento/deposito}"
+					class="d-block text-light p-3 border-0"><i
 					class="icon ion-md-person lead mr-2"></i> Depósitos</a> <a
-					th:href="@{/registroMovimiento/retiro}" class="d-block text-light p-3 border-0"><i
-					class="icon ion-md-person lead mr-2"></i> Retiros</a><a
+					th:href="@{/registroMovimiento/retiro}"
+					class="d-block text-light p-3 border-0"><i
+					class="icon ion-md-person lead mr-2"></i> Retiros</a> <a
 					th:href="@{/registroEmpresa}"
 					class="d-block text-light p-3 border-0"><i
 					class="icon ion-md-person lead mr-2"></i> Empresa</a>
@@ -81,7 +84,8 @@
 		<div class="w-100">
 
 			<!-- Navbar -->
-			<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+			<nav
+				class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
 				<div class="container">
 
 					<button class="navbar-toggler" type="button" data-toggle="collapse"
@@ -109,7 +113,8 @@
 
 								<div class="dropdown-menu dropdown-menu-right"
 									aria-labelledby="navbarDropdown">
-									<a class="btn btn-link link-info" th:href="@{/perfilUsuario}">Mi perfil</a>
+									<a class="btn btn-link link-info" th:href="@{/perfilUsuario}">Mi
+										perfil</a>
 									<div class="dropdown-divider"></div>
 									<form sec:authorize="isAuthenticated()" th:action="@{/logout}"
 										method="post" th:method="post">
@@ -133,51 +138,104 @@
 						<div class="col-lg-7">
 							<div class="p-5">
 								<div class="text-center">
-									<h1 class="h4 text-gray-900 mb-4">Hacer un Depósito</h1>
+									<h1 class="h4 text-gray-900 mb-4">Registrar una Empresa</h1>
 								</div>
 								<form class="form needs-validation"
-									th:action="@{/registroMovimiento/deposito}" method="post"
-									th:object="${movimiento}" id="formulario" novalidate>
+									th:action="@{/registroEmpresa}" method="post"
+									th:object="${empresa}" id="formulario" novalidate>
 									<div th:if=${param.exito}>
-										<div class="alert alert-info" id="alerta">Se ha
-											hecho el deposito exitosamente</div>
+										<div class="alert alert-info" id="alerta">Se ha añadido
+											exitosamente una Empresa</div>
 									</div>
-									<input type="hidden" name="idUsuario" th:value="${#authentication.principal.id}"/>
+
 									<div class="form-group row">
-										<div class="col-sm-7 mb-3 mb-sm-0">
-											<label for="validationCustom07" class="form-label">Cuenta Bancaria:</label>
-											<div class="col">
-												<select th:field="*{id_cuentaBancaria}" class="custom-select"
-													id="cuentaBancariaSelect" required>
-													<option selected value="" required>Seleccione...</option>
-													<option th:each="cb: ${lstCuentasBancarias}" th:value="${cb.id_cuentaBancaria}"
-														th:text="${cb.numeroCuenta}"></option>
-												</select>
-												<div class="invalid-feedback">Seleccione una Cuenta Bancaria.</div>
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<label class="control-label" for="ruc">RUC Empresa :
+											</label> <input id="ruc" type="text" class="form-control"
+												th:field="*{ruc}" autofocus="autofocus" pattern="[0-9]{11}"
+												required>
+											<div class="invalid-feedback">Ingrese el ruc
+												correctamente.</div>
+										</div>
+										<div class="col-sm-6">
+											<label class="control-label" for="razonSocial">Razon
+												Social : </label> <input id="razonSocial" type="text"
+												class="form-control" th:field="*{razon_social}"
+												autofocus="autofocus" required
+												pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s\.]{2,50}">
+											<div class="invalid-feedback">Ingrese la razon social
+												correctamente.</div>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<label class="control-label" for="nombreComercial">Nombre
+												Comercial : </label> <input id="nombreComercial" type="text"
+												class="form-control" th:field="*{nombre_comercial}"
+												autofocus="autofocus" required
+												pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s\.]{2,50}">
+											<div class="invalid-feedback">Ingrese el nombre comercial
+												correctamente.</div>
+										</div>
+
+										<div class="col-sm-6">
+											<label class="control-label" for="actividadEconomica">Actividad
+												Economica : </label> <input id="actividadEconomica"
+												class="form-control" th:field="*{actividad_economica}"
+												autofocus="autofocus" required
+												pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{5,30}">
+											<div class="invalid-feedback">Ingrese la actividad
+												economica correctamente.</div>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<label class="control-label" for="direcFiscal">Dirección
+												Fiscal : </label> <input id="direcFiscal" class="form-control"
+												th:field="*{direc_fiscal}" autofocus="autofocus" required
+												pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s#0-9\.\()]{5,100}">
+											<div class="invalid-feedback">Ingrese la dirección
+												fiscal correctamente.</div>
+										</div>
+										<div class="col-sm-6">
+											<label class="control-label" for="repLegal">Representante
+												Legal : </label> <input id="repLegal" class="form-control"
+												th:field="*{rep_legal}" autofocus="autofocus" required
+												pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{5,50}">
+											<div class="invalid-feedback">Ingrese el representante
+												legal correctamente.</div>
+										</div>
+									</div>
+									<div class="form-group row">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<label class="control-label" for="telefono">Telefono
+												: </label> <input id="telefono" type="text" class="form-control"
+												th:field="*{telefono}" autofocus="autofocus" required
+												pattern="[0-9]{9}">
+											<div class="invalid-feedback">Ingrese el teléfono
+												correctamente.</div>
+										</div>
+										<div class="col-sm-6">
+											<label class="control-label" for="email">Email : </label> <input
+												id="email" class="form-control" th:field="*{email}"
+												autofocus="autofocus" required
+												pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+											<div class="invalid-feedback">Ingrese el email
+												correctamente.</div>
+										</div>
+									</div>
+										<div class="form-group">
+											<label></label>
+											<div class="text-center">
+												<button type="submit" class="btn btn-success btn-block"
+													name="registroEmpresa-submit" id="submit" value="Registrar">Registrar</button>
 											</div>
 										</div>
-										<div class="col-sm-5">
-											<label class="control-label" for="monto">Monto : </label> <input
-												id="monto" type="text" class="form-control"
-												th:field="*{monto}" autofocus="autofocus" required
-												pattern="^(?:[1-9]\d{0,2}(?:,\d{3}){0,2}|[1-9]\d{0,3}(?:\.\d{1,2})?|10000(?:\.00)?)$">
-											<div class="invalid-feedback">Ingrese un monto
-												correctamente. Máximo 10,000.00</div>
-										</div>
-									</div>
-									<div class="form-group">
-										<label></label>
-										<div class="text-center">
-											<button type="submit" class="btn btn-success btn-block"
-												name="registroMovimientoDesposito-submit" id="submit"
-												value="Depositar">Depositar</button>
-										</div>
-									</div>
 								</form>
 							</div>
 						</div>
 						<div class="col-lg-5 d-none d-lg-block bg-register-image">
-							<img class="img-fluid" th:src="@{/img/deposito_img.jpg}">
+							<img class="img-fluid" th:src="@{/img/empresa_img.jpg}">
 						</div>
 					</div>
 				</section>

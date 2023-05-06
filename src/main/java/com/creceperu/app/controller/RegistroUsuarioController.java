@@ -4,6 +4,7 @@ import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.creceperu.app.controller.dto.UsuarioRegistroDTO;
+import com.creceperu.app.repository.UsuarioRepository;
 import com.creceperu.app.service.UsuarioService;
 
 @Controller
@@ -19,6 +21,9 @@ public class RegistroUsuarioController {
 
 	@Autowired
 	private UsuarioService usuarioService;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 
 	public RegistroUsuarioController(UsuarioService usuarioService) {
 		super();
@@ -36,11 +41,20 @@ public class RegistroUsuarioController {
 	}
 	
 	@PostMapping
-	public String registrarCuentaDeUsuario(@ModelAttribute("usuario") UsuarioRegistroDTO registroDTO,@RequestParam("role") String role) {
-		registroDTO.setRuc(registroDTO.getRuc());
-		registroDTO.setFechaIngreso(new Date());
-		registroDTO.setEstado(1);
-		usuarioService.guardar(registroDTO, role);
-		return "redirect:/registro?exito";
+	public String registrarCuentaDeUsuario(@ModelAttribute("usuario") UsuarioRegistroDTO registroDTO, 
+			@RequestParam("role") String role, Model model) {
+		if(usuarioRepository.findByEmail(registroDTO.getEmail()) != null) {
+	        model.addAttribute("errorEmail", "El correo ya está registrado");
+	        return "registro";
+	    }
+	    if(usuarioRepository.findByDni(registroDTO.getDni()) != null) {
+	        model.addAttribute("errorDni", "El DNI ya está registrado");
+	        return "registro";
+	    }
+	    registroDTO.setRuc(registroDTO.getRuc());
+	    registroDTO.setFechaIngreso(new Date());
+	    registroDTO.setEstado(1);
+	    usuarioService.guardar(registroDTO, role);
+	    return "redirect:/registro?exito";
 	}
 }
