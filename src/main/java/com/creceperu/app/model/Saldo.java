@@ -46,6 +46,12 @@ public class Saldo {
 		this.saldo = saldo;
 	}
 
+	public Saldo(Long id, Double saldo) {
+		super();
+		this.id = id;
+		this.saldo = saldo;
+	}
+	
 	public Saldo() {
 	}
 	

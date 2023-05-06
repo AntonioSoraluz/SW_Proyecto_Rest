@@ -2,6 +2,7 @@ package com.creceperu.app.controller;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
@@ -17,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.creceperu.app.controller.dto.MovimientoRegistroDTO;
 import com.creceperu.app.model.CuentaBancaria;
 import com.creceperu.app.model.Movimiento;
+import com.creceperu.app.model.Saldo;
 import com.creceperu.app.model.Usuario;
 import com.creceperu.app.repository.CuentaBancariaRepository;
 import com.creceperu.app.repository.MovimientoRepository;
+import com.creceperu.app.repository.SaldoRepository;
 import com.creceperu.app.repository.UsuarioRepository;
 import com.creceperu.app.service.MovimientoService;
 import com.creceperu.app.service.UsuarioServiceImpl.CustomUserDetails;
@@ -36,6 +39,12 @@ public class MovimientoController {
 	
 	@Autowired
 	private MovimientoRepository movimientoRepository;
+	
+	@Autowired
+	private SaldoRepository saldoRepository;
+	
+	@Autowired
+	private UsuarioRepository usuarioRepository;
 	
 	public MovimientoController(MovimientoService movimientoService) {
 		super();
@@ -79,15 +88,37 @@ public class MovimientoController {
 		movimientoRegistroDTO.setTipoMovimiento("Deposito");
 		movimientoRegistroDTO.setFechaMovimiento(new Date());
 		movimientoService.guardar(movimientoRegistroDTO);
+	    Usuario usuario = usuarioRepository.findById(idusuario).get();
+	    Saldo saldo = usuario.getObjSaldo();
+	    Double nuevoSaldo = saldo.getSaldo() + movimientoRegistroDTO.getMonto();
+	    saldo.setSaldo(nuevoSaldo);
+	    saldoRepository.save(saldo);
+
 		return "redirect:/registroMovimiento/deposito?exito";
 	}
 	@PostMapping("/retiro")
 	public String registrarMovimientoRetiro(@RequestParam("idUsuario") String idUsuario, @ModelAttribute("movimiento") MovimientoRegistroDTO movimientoRegistroDTO) {
-		Long idusuario = Long.parseLong(idUsuario);
-		movimientoRegistroDTO.setId(idusuario);
-		movimientoRegistroDTO.setTipoMovimiento("Retiro");
-		movimientoRegistroDTO.setFechaMovimiento(new Date());
-		movimientoService.guardar(movimientoRegistroDTO);
-		return "redirect:/registroMovimiento/retiro?exito";
+	    Long idusuario = Long.parseLong(idUsuario);
+	    movimientoRegistroDTO.setId(idusuario);
+	    movimientoRegistroDTO.setTipoMovimiento("Retiro");
+	    movimientoRegistroDTO.setFechaMovimiento(new Date());
+
+	    Optional<Saldo> optionalSaldo = saldoRepository.findById(idusuario);
+	    if (optionalSaldo.isPresent()) {
+	        Saldo saldo = optionalSaldo.get();
+	        Double saldoActual = saldo.getSaldo();
+
+	        if (movimientoRegistroDTO.getMonto() > saldoActual) {
+	            return "redirect:/registroMovimiento/retiro?error";
+	        }
+
+	        Double nuevoSaldo = saldoActual - movimientoRegistroDTO.getMonto();
+	        saldo.setSaldo(nuevoSaldo);
+	        saldoRepository.save(saldo);
+	        movimientoService.guardar(movimientoRegistroDTO);
+	        return "redirect:/registroMovimiento/retiro?exito";
+	    }
+
+	    return "redirect:/registroMovimiento/retiro?error";
 	}
 }

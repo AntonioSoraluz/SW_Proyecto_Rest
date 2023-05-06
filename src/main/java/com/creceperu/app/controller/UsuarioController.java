@@ -44,7 +44,10 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/")
-	public String verPaginaDeInicio(Model modelo) {
+	public String verPaginaDeInicio(Model model, Authentication authentication) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+		Saldo saldo = saldoRepository.findById(customUserDetails.getId()).orElse(new Saldo(customUserDetails.getId(), 0.0));
+		model.addAttribute("saldo", saldo.getSaldo());
 		return "principal";
 	}
 	@GetMapping("/perfilUsuario")
