@@ -17,9 +17,9 @@ public class MovimientoRegistroDTO {
 		super();
 		this.id_movimiento = id_movimiento;
 		this.monto = monto;
-		this.tipoMovimiento = tipoMovimiento;/**/
-		this.fechaMovimiento = fechaMovimiento;/**/
-		this.id = id;/**/
+		this.tipoMovimiento = tipoMovimiento;
+		this.fechaMovimiento = fechaMovimiento;
+		this.id = id;
 		this.id_cuentaBancaria = id_cuentaBancaria;
 	}
 	

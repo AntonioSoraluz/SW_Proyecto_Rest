@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 import com.creceperu.app.model.Empresa;
 
 @Repository
-public interface EmpresaReposoitory extends JpaRepository<Empresa, Integer>{
-
+public interface EmpresaRepository extends JpaRepository<Empresa, Integer>{
+	boolean existsByRuc(String ruc);
+    boolean existsByRazonsocial(String razonsocial);
 }

@@ -37,14 +37,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider());
 	}
-	
+	/*(/admin/**)*/
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers(
+		http.authorizeRequests().
+		antMatchers("/registroEmpresa").hasRole("ADMIN").antMatchers(
 				"/registro**",
 				"/js/**",
 				"/css/**",
-				"/img/**","/CuentaBancaria").permitAll()
+				"/img/**").permitAll()
 		.anyRequest().authenticated()
 		.and()
 		.formLogin()

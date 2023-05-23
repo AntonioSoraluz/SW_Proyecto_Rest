@@ -87,15 +87,30 @@ public class MovimientoController {
 		movimientoRegistroDTO.setId(idusuario);
 		movimientoRegistroDTO.setTipoMovimiento("Deposito");
 		movimientoRegistroDTO.setFechaMovimiento(new Date());
-		movimientoService.guardar(movimientoRegistroDTO);
-	    Usuario usuario = usuarioRepository.findById(idusuario).get();
-	    Saldo saldo = usuario.getObjSaldo();
-	    Double nuevoSaldo = saldo.getSaldo() + movimientoRegistroDTO.getMonto();
-	    saldo.setSaldo(nuevoSaldo);
-	    saldoRepository.save(saldo);
+		
+		Integer idCuenta = movimientoRegistroDTO.getId_cuentaBancaria();
+		Optional<CuentaBancaria> optionalCuenta = cuentaBancariaRepository.findById(idCuenta);
+		if(optionalCuenta.isPresent()) {
+			CuentaBancaria cuentaBancaria = optionalCuenta.get();
+			Double fondo = cuentaBancaria.getMonto();
+			if (movimientoRegistroDTO.getMonto() > fondo) {
+				return "redirect:/registroMovimiento/deposito?error";
+			}
+			Double nuevoFondo = fondo - movimientoRegistroDTO.getMonto();
+			cuentaBancaria.setMonto(nuevoFondo);
+			cuentaBancariaRepository.save(cuentaBancaria);
+			movimientoService.guardar(movimientoRegistroDTO);
+		    Usuario usuario = usuarioRepository.findById(idusuario).get();
+		    Saldo saldo = usuario.getObjSaldo();
+		    Double nuevoSaldo = saldo.getSaldo() + movimientoRegistroDTO.getMonto();
+		    saldo.setSaldo(nuevoSaldo);
+		    saldoRepository.save(saldo);
+		    return "redirect:/registroMovimiento/deposito?exito";
+		}
 
-		return "redirect:/registroMovimiento/deposito?exito";
+		return "redirect:/registroMovimiento/deposito?error";
 	}
+	
 	@PostMapping("/retiro")
 	public String registrarMovimientoRetiro(@RequestParam("idUsuario") String idUsuario, @ModelAttribute("movimiento") MovimientoRegistroDTO movimientoRegistroDTO) {
 	    Long idusuario = Long.parseLong(idUsuario);

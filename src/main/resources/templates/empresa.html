@@ -1,134 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-<!-- Bootstrap CSS -->
-<link rel="stylesheet"
-	href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-	integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-	crossorigin="anonymous">
-
-<!-- Styles -->
-<link rel="stylesheet" href="assets/css/style.css">
-
-<!-- Google fonts -->
-<link
-	href="https://fonts.googleapis.com/css?family=Muli:300,700&display=swap"
-	rel="stylesheet">
-
-
-<!-- Ionic icons -->
-<link
-	href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css"
-	rel="stylesheet">
-
-<link rel="stylesheet" href="/css/index.css">
-
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-	crossorigin="anonymous"></script>
-<script
-	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-	crossorigin="anonymous"></script>
-<script
-	src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"
-	integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="
-	crossorigin="anonymous"></script>
-<script th:src="@{/js/registro-cuenta-bancaria-deposito.js}"></script>
-<title>Crece Perú</title>
-</head>
+<head th:replace="layout::head"></head>
 <body>
+<script th:src="@{/js/registro-cuenta-bancaria-deposito.js}"></script>
 	<div class="d-flex" id="content-wrapper">
 		<!-- Sidebar -->
-		<div id="sidebar-container" class="bg-primary" th:fragment="sidebar">
-			<div class="logo">
-				<h4 class="text-light font-weight-bold mb-0">Crece Perú</h4>
-			</div>
-			<div class="menu">
-				<a th:href="@{/}" class="d-block text-light p-3 border-0"><i
-					class="icon ion-md-apps lead mr-2"></i> Inicio</a> <a
-					th:href="@{/registroMovimiento/movimientos}"
-					class="d-block text-light p-3 border-0"><i
-					class="icon ion-md-people lead mr-2"></i> Mis movimientos</a> <a
-					th:href="@{/estado-cuenta}" class="d-block text-light p-3 border-0"><i
-					class="icon ion-md-person lead mr-2"></i> Estado de cuenta</a> <a
-					th:href="@{/registroCuentaBancaria}"
-					class="d-block text-light p-3 border-0"><i
-					class="icon ion-md-stats lead mr-2"></i> Cuentas Bancarias </a> <a
-					th:href="@{/registroMovimiento/deposito}"
-					class="d-block text-light p-3 border-0"><i
-					class="icon ion-md-person lead mr-2"></i> Depósitos</a> <a
-					th:href="@{/registroMovimiento/retiro}"
-					class="d-block text-light p-3 border-0"><i
-					class="icon ion-md-person lead mr-2"></i> Retiros</a> <a
-					th:href="@{/registroEmpresa}"
-					class="d-block text-light p-3 border-0"><i
-					class="icon ion-md-person lead mr-2"></i> Empresa</a>
-			</div>
-
-		</div>
+		<div th:replace="layout::sidebar"></div>
 		<!-- Fin sidebar -->
 
 		<div class="w-100">
 
 			<!-- Navbar -->
-			<nav
-				class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
-				<div class="container">
-
-					<button class="navbar-toggler" type="button" data-toggle="collapse"
-						data-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent" aria-expanded="false"
-						aria-label="Toggle navigation">
-						<span class="navbar-toggler-icon"></span>
-					</button>
-
-					<div class="collapse navbar-collapse" id="navbarSupportedContent">
-						<form class="form-inline position-relative d-inline-block my-2">
-							<input class="form-control" type="search" placeholder="Buscar"
-								aria-label="Buscar">
-							<button class="btn position-absolute btn-search" type="submit">
-								<i class="icon ion-md-search"></i>
-							</button>
-						</form>
-						<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-							<li class="nav-item dropdown"><a
-								class="nav-link text-dark dropdown-toggle" href="#"
-								id="navbarDropdown" role="button" data-toggle="dropdown"
-								aria-haspopup="true" aria-expanded="false"> <span
-									class="text-dark" sec:authentication="principal.nombres"></span></a>
-
-
-								<div class="dropdown-menu dropdown-menu-right"
-									aria-labelledby="navbarDropdown">
-									<a class="btn btn-link link-info" th:href="@{/perfilUsuario}">Mi
-										perfil</a>
-									<div class="dropdown-divider"></div>
-									<form sec:authorize="isAuthenticated()" th:action="@{/logout}"
-										method="post" th:method="post">
-										<input type="hidden" name="_csrf" th:value="${_csrf.token}" />
-										<button type="submit" class="btn btn-link link-info">Cerrar
-											sesión</button>
-									</form>
-
-
-								</div></li>
-						</ul>
-					</div>
-				</div>
-			</nav>
+			<nav th:replace="layout::navbar"></nav>
 			<!-- Fin Navbar -->
 
 			<!-- Page Content -->
@@ -147,12 +31,18 @@
 										<div class="alert alert-info" id="alerta">Se ha añadido
 											exitosamente una Empresa</div>
 									</div>
-
+									<div th:if=${errorRuc}>
+										<div class="alert alert-danger" id="alerta"><span th:text="${errorRuc}"></span></div>
+									</div>
+									<div th:if=${errorRazSoc}>
+										<div class="alert alert-danger" id="alerta"><span th:text="${errorRazSoc}"></span></div>
+									</div>
 									<div class="form-group row">
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<label class="control-label" for="ruc">RUC Empresa :
 											</label> <input id="ruc" type="text" class="form-control"
-												th:field="*{ruc}" autofocus="autofocus" pattern="[0-9]{11}"
+												th:field="*{ruc}" autofocus="autofocus" 
+												pattern="^(20[0-9]{9}|10[0-9]{11})"
 												required>
 											<div class="invalid-feedback">Ingrese el ruc
 												correctamente.</div>
@@ -160,7 +50,7 @@
 										<div class="col-sm-6">
 											<label class="control-label" for="razonSocial">Razon
 												Social : </label> <input id="razonSocial" type="text"
-												class="form-control" th:field="*{razon_social}"
+												class="form-control" th:field="*{razonsocial}"
 												autofocus="autofocus" required
 												pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s\.]{2,50}">
 											<div class="invalid-feedback">Ingrese la razon social
@@ -193,7 +83,7 @@
 											<label class="control-label" for="direcFiscal">Dirección
 												Fiscal : </label> <input id="direcFiscal" class="form-control"
 												th:field="*{direc_fiscal}" autofocus="autofocus" required
-												pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s#0-9\.\()]{5,100}">
+												pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s#0-9\.\-\/\()]{5,100}">
 											<div class="invalid-feedback">Ingrese la dirección
 												fiscal correctamente.</div>
 										</div>
@@ -211,7 +101,7 @@
 											<label class="control-label" for="telefono">Telefono
 												: </label> <input id="telefono" type="text" class="form-control"
 												th:field="*{telefono}" autofocus="autofocus" required
-												pattern="[0-9]{9}">
+												pattern="^(9[0-9]{8}|[2-7][0-9]{6})">
 											<div class="invalid-feedback">Ingrese el teléfono
 												correctamente.</div>
 										</div>
@@ -219,7 +109,7 @@
 											<label class="control-label" for="email">Email : </label> <input
 												id="email" class="form-control" th:field="*{email}"
 												autofocus="autofocus" required
-												pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+												pattern="[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
 											<div class="invalid-feedback">Ingrese el email
 												correctamente.</div>
 										</div>
