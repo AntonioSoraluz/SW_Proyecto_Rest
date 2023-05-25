@@ -53,22 +53,7 @@ public class OportunidadController {
 		model.addAttribute("lstEmpresa", empresaRepository.findAll());
 		return "oportunidad";
 	}
-	/*@PostMapping("/buscarFactura")
-    public String buscarFactura(@RequestParam("empresaRuc") String empresaRuc, Model model) {
-		
-        model.addAttribute("lstFacturas", facturasListadas);
-        model.addAttribute("lstEmpresa", empresaRepository.findAll());
-        return "oportunidad";
-    }*/
-	/*@GetMapping("/buscarFacturas")
-	@ResponseBody
-	public List<Factura> consulta(String empresaRuc){
-		List<Factura> facturas = facturaRepository.findByRuc(empresaRuc);
-		/*List<Factura> facturasListadas = facturas.stream()
-	            .filter(factura -> factura.getEstado().equals("Listada"))
-	            .collect(Collectors.toList());*/
-		/*return facturas;
-	}*/
+	
 	@GetMapping("/facturas")
     @ResponseBody
     public List<Object[]> getInvoiceDataByRuc(@RequestParam("ruc") String ruc) {
