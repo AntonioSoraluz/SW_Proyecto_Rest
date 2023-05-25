@@ -1,28 +1,29 @@
 package com.creceperu.app.model;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.DateTimeFormat.ISO;
 
 import lombok.Data;
 
 @Data
 @Entity
 @Table(name = "factura")
-public class Factura {
+public class Factura{
 	@Id
 	private String id_factura;
 	
@@ -42,6 +43,9 @@ public class Factura {
 	@Column(name = "monto")
 	private double monto;
 	
+	@Column(name = "estado")
+	private String estado;
+	
 	private String ruc;
 	@ManyToOne
 	@JoinColumn(name = "ruc", referencedColumnName = "ruc", insertable = false, updatable = false)
@@ -52,25 +56,33 @@ public class Factura {
 	@JoinColumn(name = "id", insertable = false, updatable = false)
 	private Usuario objUsuario;
 	
+	@ManyToMany
+	@JoinTable(name = "oportunidad_factura",
+		joinColumns = @JoinColumn(name = "id_factura"),
+		inverseJoinColumns = @JoinColumn(name = "id_oportunidad"))
+	private Set<Oportunidad> oportunidades = new HashSet<>();
+	
 	public Factura(String id_factura, String desc_factura, Date fecharegistro, Date fechavencimiento,
-			double monto, String ruc, Long id) {
+			double monto, String estado, String ruc, Long id) {
 		super();
 		this.id_factura = id_factura;
 		this.desc_factura = desc_factura;
 		this.fecharegistro = fecharegistro;
 		this.fechavencimiento = fechavencimiento;
 		this.monto = monto;
+		this.estado = estado;
 		this.ruc = ruc;
 		this.id = id;
 	}
 
 	public Factura(String desc_factura, Date fecharegistro, Date fechavencimiento, String ruc,
-			double monto, Long id) {
+			double monto, String estado, Long id) {
 		super();
 		this.desc_factura = desc_factura;
 		this.fecharegistro = fecharegistro;
 		this.fechavencimiento = fechavencimiento;
 		this.monto = monto;
+		this.estado = estado;
 		this.ruc = ruc;
 		this.id = id;
 	}

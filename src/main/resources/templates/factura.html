@@ -34,6 +34,13 @@
 									</div>
 									
 									<div class="form-group">
+										<div class="col-sm-6 mb-3 mb-sm-0">
+											<label class="control-label" for="idFactura">Código de Factura : </label> <input
+												id="idFactura" type="text" class="form-control" 
+												autofocus="autofocus" th:value="${IdFactura}" readonly>
+										</div>
+									</div> 
+									<div class="form-group">
 										<div class="col-sm-12 mb-3 mb-sm-0">
 											<label class="control-label" for="descFactura">Descripción de
 												Factura : </label> <textarea  id="descFactura" type="text"
@@ -61,9 +68,9 @@
 											<label class="control-label" for="fechaVencimiento">Fecha
 												de Vencimiento : </label> <input id="fechaVencimiento" type="text"
 												class="form-control" th:field="*{fechavencimiento}"
-												autofocus="autofocus" placeholder="Día/Mes/Año" required>
+												autofocus="autofocus" placeholder="Mes/Día/Año" required>
 											<div class="invalid-feedback">Ingrese una fecha en el 
-											formato correcto (DD/MM/AAAA). La fecha debe ser posterior 
+											formato correcto (MM/DD/AAAA). La fecha debe ser posterior 
 											al día de hoy.</div>
 										</div>
 									</div>
@@ -99,7 +106,6 @@
 </body>
 <script type="text/javascript">
 	const fechaVencimientoInput = document.getElementById('fechaVencimiento');
-	//Auto agregar los "/"
 	fechaVencimientoInput.addEventListener('input', function(e) {
 	  let inputValue = e.target.value;
 	  inputValue = inputValue.replace(/\D/g, ''); 
@@ -111,18 +117,20 @@
 	    inputValue = inputValue.replace(/(\d{2})(\d{0,2})/, '$1/$2');
 	  }
 	  e.target.value = inputValue;
-	  
-	// Validar formato de fecha
-	  const dateRegex = /^\d{2}\/\d{2}\/\d{4}$/;
+	
+	  // Validar formato de fecha
+	  const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
 	  const isDateValid = dateRegex.test(inputValue);
-
+	
 	  if (!isDateValid) {
 	    e.target.setCustomValidity('Ingrese una fecha en el formato correcto (DD/MM/AAAA).');
 	  } else {
 	    // Validar fecha
 	    const currentDate = new Date();
 	    const selectedDate = new Date(inputValue);
-
+	
+	    currentDate.setHours(0, 0, 0, 0); // Establecer la hora a 00:00:00 para comparar solo las fechas
+	
 	    if (selectedDate <= currentDate) {
 	      e.target.setCustomValidity('La fecha debe ser posterior al día de hoy.');
 	    } else {

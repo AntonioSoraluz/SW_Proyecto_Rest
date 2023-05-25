@@ -1,5 +1,6 @@
 package com.creceperu.app.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,7 +15,7 @@ import lombok.Data;
 @Data
 @Entity
 @Table( name = "empresa")
-public class Empresa {
+public class Empresa implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id_empresa;

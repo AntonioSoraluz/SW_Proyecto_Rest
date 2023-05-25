@@ -46,7 +46,10 @@ public class RegistroFacturaController {
 	
 	@GetMapping
 	public String mostrarFomularioDeRegistroFactura(Model model) {
+		String lastCode = facturaRepository.getLastGeneratedCode();
+        String nextCode = generateNextCode(lastCode);
 		model.addAttribute("lstEmpresa", empresaRepository.findAll());
+		model.addAttribute("IdFactura", nextCode);
 		return "factura";
 	}
 	
@@ -58,6 +61,7 @@ public class RegistroFacturaController {
 		facturaDTO.setId_factura(nextCode);
 		facturaDTO.setId(customUserDetails.getId());
 		facturaDTO.setFecharegistro(new Date());
+		facturaDTO.setEstado("Listada");
 		facturaService.guardar(facturaDTO);
 		return "redirect:/registroFactura?exito";
 	}

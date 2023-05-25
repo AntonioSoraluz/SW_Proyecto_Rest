@@ -17,7 +17,7 @@ public class FaturaServiceImpl implements FacturaService{
 	@Override
 	public Factura guardar(FacturaDTO facturaDTO) {
 		Factura factura = new Factura(facturaDTO.getId_factura(), facturaDTO.getDesc_factura(), facturaDTO.getFecharegistro(),
-				facturaDTO.getFechavencimiento(), facturaDTO.getMonto(), facturaDTO.getRuc(), facturaDTO.getId());
+				facturaDTO.getFechavencimiento(), facturaDTO.getMonto(), facturaDTO.getEstado(),facturaDTO.getRuc(), facturaDTO.getId());
 		return facturaRepository.save(factura);
 	}
 	

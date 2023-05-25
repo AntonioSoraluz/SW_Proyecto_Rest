@@ -58,6 +58,10 @@
 			src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"
 			integrity="sha256-R4pqcOYV8lt7snxMQO/HSbVCFRPMdrhAFMH+vr9giYI="
 			crossorigin="anonymous"></script>
+	<script type="text/javascript" th:src="@{/js/jquery.dataTables.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/global.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/dataTables.bootstrap.min.js}"></script>
 	<title>Crece Perú</title>
 </head>
 <body>
@@ -73,7 +77,7 @@
 			<a th:href="@{/registroCuentaBancaria}" class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead mr-2"></i> Cuentas Bancaria</a>
 			<a th:href="@{/registroMovimiento/deposito}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Depósito</a>
 			<a th:href="@{/registroMovimiento/retiro}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Retiro</a>
-			<a th:href="@{/registroOportunidad/oportunidad}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Oportunidad</a>
+			<a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/oportunidad/registroOportunidad}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Oportunidad</a>
 			<a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/registroEmpresa}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Empresa</a>
 			<a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/registroFactura}"class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Factura </a>
 		</div>

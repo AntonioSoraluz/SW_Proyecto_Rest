@@ -2,6 +2,9 @@ package com.creceperu.app.model;
 
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -82,6 +85,12 @@ public class Usuario {
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
 	private Collection<Rol> roles;
+	
+	@ManyToMany
+	@JoinTable(name = "oportunidad_usuario",
+		joinColumns = @JoinColumn(name = "id"),
+		inverseJoinColumns = @JoinColumn(name = "id_oportunidad"))
+	private Set<Oportunidad> oportunidad = new HashSet<>();
 
 	public Usuario(Long id, String nombres, String apellidos, String dni, String ubigeo, String ruc, String direccion, String telefono,
 			String email, String emailRecuperacion, String password, Date fechaIngreso, int estado, Collection<Rol> roles) {
