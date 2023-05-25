@@ -26,53 +26,37 @@
 										Oportunidad</h1>
 								</div>
 								<div th:if=${param.exito}>
-										<div class="alert alert-info" id="alerta">Se ha
-											añadido exitosamente la Factura</div>
-									</div>
-								<div class="form-inline">
-									<div class="form-group mb-2">
-										<label for="validationCustom07" class="form-label">Empresa:</label>
-									</div>
-									<div class="form-group mx-sm-3 mb-2">
-										<select class="custom-select" name="empresaSelect"
-											id="empresaSelect" required>
-											<option selected value="" required>Seleccione...</option>
-											<option th:each="e: ${lstEmpresa}" th:value="${e.ruc}"
-													th:text="${e.razonsocial}"></option>
-										</select>
-									</div>
-									<div class="form-group mx-sm-5 mb-2">
-										<button type="submit" class="btn btn-primary btn-block"
-										name="buscarFactura-submit" id="id_btn_filtro">Buscar</button>
-									</div>
+									<div class="alert alert-info" id="alerta">Se ha
+										ñadido exitosamente la Factura</div>
 								</div>
-								<div class="container">
-							        <table id="tblfactura" class="table">
-							            <thead>
-							            <tr>
-							                <th scope="col">Código</th>
-							                <th scope="col">Fecha de Registro</th>
-							                <th scope="col">Fecha de Vencimiento</th>
-							                <th scope="col">Monto</th>
-							                <th scope="col"></th>
-							            </tr>
-							            </thead>
-							            <tbody>
-							            <!--  
-							            <tr th:each="f :${lstFacturas}">
-							                <td th:text="${f.id_factura}"></td>
-							                <td th:text="${f.fecharegistro}"></td>
-							                <td th:text="${f.fechavencimiento}"></td>
-							                <td th:text="'S/'+ ${f.monto}"></td>
-							                <td>
-							                    <button type="button" class="btn btn-info btndetalle">
-							                    Detalle</button>
-							                </td>
-							            </tr>
-							            -->
-							            </tbody>
-							        </table>
+								<div class="form-inline">
+							    <div class="form-group mb-2">
+							        <label for="validationCustom07" class="form-label">Empresa:</label>
 							    </div>
+							    <div class="form-group mx-sm-3 mb-2">
+							        <select class="custom-select" name="empresaSelect" id="empresaSelect" required>
+							            <option selected value="">Seleccione...</option>
+							            <option th:each="e: ${lstEmpresa}" th:value="${e.ruc}" th:text="${e.razonsocial}"></option>
+							        </select>
+							    </div>
+							    <div class="form-group mx-sm-5 mb-2">
+							        <button type="button" class="btn btn-primary btn-block" id="buscarFactura-btn">Buscar</button>
+							    </div>
+							</div>
+							<div class="container">
+							    <table id="tblfactura" class="table">
+							        <thead>
+							        <tr>
+							            <th scope="col">Código</th>
+							            <th scope="col">Fecha de Registro</th>
+							            <th scope="col">Fecha de Vencimiento</th>
+							            <th scope="col">Monto</th>
+							            <th scope="col"></th>
+							        </tr>
+							        </thead>
+							        <tbody></tbody>
+							    </table>
+							</div>		    
 							</div>
 						</div>
 						<div class="col-lg-5 d-none d-lg-block bg-register-image">
@@ -85,37 +69,35 @@
 	</div>
 </body>
 <script type="text/javascript">
-$("#id_btn_filtro").click(function() {
-    var vfiltro = $("#empresaRuc").val();
-    $.getJSON("buscarFacturas", {"empresaRuc":vfiltro}, function(data) {
-        agregarGrilla(data);
-    });
-});
-function agregarGrilla(lista){
-	 $('#tblfactura').DataTable().clear();
-	 $('#tblfactura').DataTable().destroy();
-	 $('#tblfactura').DataTable({
-			data: lista,
-			searching: true,
-			ordering: true,
-			processing: true,
-			pageLength: 10,
-			lengthChange: false,
-			info:true,
-			scrollY: 305,
-	        scroller: {
-	            loadingIndicator: true
-	        },
-			columns:[
-				{data: "id_factura",className:'text-center'},
-				{data: "fecharegistro",className:'text-center'},
-               {data: "fechavencimiento",className:'text-center'},
-               {data: "monto",className:'text-center'},
-				{data: function(row, type, val, meta){
-					return '<button type="button" class="btn btn-info btn-sm" onClick="verFormularioActualiza(\'' + row.id_factura +'\');">Detalles</button>';  
-				},className:'text-center'},
-			]                                     
+	$(document).ready(function() {
+	    $("#buscarFactura-btn").click(function() {
+	        var empresaRuc = $("#empresaSelect").val();
+	
+	        $.ajax({
+	            url: "/oportunidad/facturas",
+	            type: "GET",
+	            data: { ruc: empresaRuc },
+	            success: function(data) {
+	                $("#tblfactura tbody").empty();
+	
+	                // Agregar los datos de las facturas a la tabla
+	                data.forEach(function(factura) {
+	                    var row = "<tr>";
+	                    row += "<td>" + factura[0] + "</td>";
+	                    row += "<td>" + factura[1] + "</td>";
+	                    row += "<td>" + factura[2] + "</td>";
+	                    row += "<td>" + "S/" + factura[3] + "</td>";
+	                    row += "<td></td>";
+	                    row += "</tr>";
+	                    $("#tblfactura tbody").append(row);
+	                });
+	            },
+	            error: function(xhr, status, error) {
+	                console.log(error);
+	            }
+	        });
 	    });
-}
+	});
 </script>
+
 </html>
