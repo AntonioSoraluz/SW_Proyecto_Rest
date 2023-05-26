@@ -1,7 +1,10 @@
 package com.creceperu.app.controller;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -56,7 +59,36 @@ public class OportunidadController {
 	
 	@GetMapping("/facturas")
     @ResponseBody
-    public List<Object[]> getInvoiceDataByRuc(@RequestParam("ruc") String ruc) {
-        return facturaRepository.findFacturaDataByRuc(ruc);
+    public List<Object[]> getFacturaDataByRuc(@RequestParam("id_empresa") Integer id_empresa) {
+        return facturaRepository.findFacturaDataById_empresa(id_empresa);
+    }
+    
+    @PostMapping("/registrarOportunidad")
+    public String registrarOportunidad(@RequestParam("empresaId") String empresaId, 
+    		@RequestParam("total") double total,  @RequestParam("codigoList") List<String> codigoList,
+    		@ModelAttribute("oportunidad") OportunidadDTO oportunidadDTO, EntityManager entityManager) {
+    	Integer IDEMPRESA = Integer.parseInt(empresaId);
+    	Oportunidad oportunidad = new Oportunidad();
+    	oportunidadDTO.setPartes(0);
+    	oportunidadDTO.setMonto(total);
+    	oportunidadDTO.setFecharegistro(new Date());
+    	oportunidadDTO.setId_empresa(IDEMPRESA);
+    	oportunidadDTO.setCalificacion("Disponible");  
+    	// Persistir la oportunidad en la base de datos
+        entityManager.persist(oportunidad);
+
+        // Iterar sobre la lista de códigos y realizar la inserción en la tabla oportunidad_factura
+        for (String codigoFactura : codigoList) {
+            // Obtener la entidad Factura correspondiente al código actual
+            Factura factura = entityManager.find(Factura.class, codigoFactura);
+
+            // Verificar si la factura existe
+            if (factura != null) {
+                // Asociar la factura con la oportunidad
+                oportunidad.getFacturas().add(factura);
+                factura.getOportunidades().add(oportunidad);
+            }
+        }
+    	return "redirect:/oportunidad/registroOportunidad?exito";
     }
 }

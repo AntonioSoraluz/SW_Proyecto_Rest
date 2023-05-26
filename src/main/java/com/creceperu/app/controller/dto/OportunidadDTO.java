@@ -21,11 +21,12 @@ public class OportunidadDTO {
 	private Date fechaPago;
 	private Date fecharegistro;
 	private Integer id_empresa;
+	private String estado;
 	private Set<Factura> facturas = new HashSet<>();
 	private Set<Usuario> usuario = new HashSet<>();
 	
 	public OportunidadDTO(Integer id_oportunidad, String calificacion, double rendimiento, int total_partes, int partes,
-			double monto, Date fechaPago, Date fecharegistro, Integer id_empresa, Set<Factura> facturas, Set<Usuario> usuario) {
+			double monto, Date fechaPago, Date fecharegistro, Integer id_empresa, String estado, Set<Factura> facturas, Set<Usuario> usuario) {
 		super();
 		this.id_oportunidad = id_oportunidad;
 		this.calificacion = calificacion;
@@ -36,12 +37,13 @@ public class OportunidadDTO {
 		this.fechaPago = fechaPago;
 		this.fecharegistro = fecharegistro;
 		this.id_empresa = id_empresa;
+		this.estado = estado;
 		this.facturas = facturas;
 		this.usuario = usuario;
 	}
 	
 	public OportunidadDTO(String calificacion, double rendimiento, int total_partes, int partes, double monto,
-			Date fechaPago, Date fecharegistro, Integer id_empresa, Set<Factura> facturas, Set<Usuario> usuario) {
+			Date fechaPago, Date fecharegistro, Integer id_empresa, String estado, Set<Factura> facturas, Set<Usuario> usuario) {
 		super();
 		this.calificacion = calificacion;
 		this.rendimiento = rendimiento;
@@ -51,8 +53,24 @@ public class OportunidadDTO {
 		this.fechaPago = fechaPago;
 		this.fecharegistro = fecharegistro;
 		this.id_empresa = id_empresa;
+		this.estado = estado;
 		this.facturas = facturas;
 		this.usuario = usuario;
+	}
+	
+	public OportunidadDTO(String calificacion, double rendimiento, int total_partes, int partes, double monto,
+			Date fechaPago, Date fecharegistro, Integer id_empresa, String estado, Set<Factura> facturas) {
+		super();
+		this.calificacion = calificacion;
+		this.rendimiento = rendimiento;
+		this.total_partes = total_partes;
+		this.partes = partes;
+		this.monto = monto;
+		this.fechaPago = fechaPago;
+		this.fecharegistro = fecharegistro;
+		this.id_empresa = id_empresa;
+		this.estado = estado;
+		this.facturas = facturas;
 	}
 	
 	public OportunidadDTO() {

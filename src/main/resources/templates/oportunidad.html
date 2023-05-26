@@ -19,8 +19,8 @@
 			<div id="content" class="bg-grey w-100">
 				<section class="bg-light py-3">
 					<div class="row">
-						<div class="col-lg-7">
-							<div class="p-5">
+						<div class="col-lg-9">
+							<div class="p-8">
 								<div class="text-center">
 									<h1 class="h4 text-gray-900 mb-4">Añadir una 
 										Oportunidad</h1>
@@ -29,6 +29,7 @@
 									<div class="alert alert-info" id="alerta">Se ha
 										ñadido exitosamente la Factura</div>
 								</div>
+								<div class="container">
 								<div class="form-inline">
 							    <div class="form-group mb-2">
 							        <label for="validationCustom07" class="form-label">Empresa:</label>
@@ -36,13 +37,17 @@
 							    <div class="form-group mx-sm-3 mb-2">
 							        <select class="custom-select" name="empresaSelect" id="empresaSelect" required>
 							            <option selected value="">Seleccione...</option>
-							            <option th:each="e: ${lstEmpresa}" th:value="${e.ruc}" th:text="${e.razonsocial}"></option>
+							            <option th:each="e: ${lstEmpresa}" th:value="${e.id_empresa}" th:text="${e.razonsocial}"></option>
 							        </select>
 							    </div>
 							    <div class="form-group mx-sm-5 mb-2">
 							        <button type="button" class="btn btn-primary btn-block" id="buscarFactura-btn">Buscar</button>
 							    </div>
-							</div>
+							     <div class="form-group mb-2">
+							        <a th:href="@{/oportunidad/registroOportunidad}"class="btn btn-secondary btn-block">Limpiar </a>
+							    </div>
+								</div>
+								</div>
 							<div class="container">
 							    <table id="tblfactura" class="table">
 							        <thead>
@@ -50,16 +55,102 @@
 							            <th scope="col">Código</th>
 							            <th scope="col">Fecha de Registro</th>
 							            <th scope="col">Fecha de Vencimiento</th>
-							            <th scope="col">Monto</th>
+							            <th scope="col">Monto(S/)</th>
+							            <th scope="col"></th>
 							            <th scope="col"></th>
 							        </tr>
 							        </thead>
 							        <tbody></tbody>
 							    </table>
-							</div>		    
+								</div>
+								<br>
+								<div class="dropdown-divider"></div>
+								<div class="container">
+								<div class="text-left">
+									<h2 class="h4 text-gray-900 mb-4">Facturas 
+										Selecionadas:</h2>
+								</div>
+								<form class="form needs-validation"
+									th:action="@{/oportunidad/registrarOportunidad}" method="post"
+									th:object="${oportunidad}" id="formulario" novalidate>
+							    <table id="tabladestino" class="table">
+							        <thead>
+							        <tr>
+							            <th scope="col">Código</th>
+							            <th scope="col">Fecha de Registro</th>
+							            <th scope="col">Fecha de Vencimiento</th>
+							            <th scope="col">Monto(S/)</th>
+							            <th scope="col"></th>
+							        </tr>
+							        </thead>
+							        <tbody></tbody>
+							    </table>
+							    <div class="form-group row">
+							    	<div class="col-sm-6 mb-3 mb-sm-0">
+										<label for="validationCustom07" class="form-label">Calificación :</label>
+										<div class="col">
+											<select th:field="*{calificacion}" class="custom-select"
+													id="calificacionSelect" required>
+												<option selected value="" required>Seleccione...</option>
+												<option selected value="A">A</option>
+												<option selected value="B">B</option>
+												<option selected value="C">C</option>
+												<option selected value="D">D</option>
+												<option selected value="E">E</option>
+											</select>
+											<div class="invalid-feedback">Seleccione una calificacion.</div>
+										</div>
+									</div>
+									<div class="col-sm-6">
+											<label class="control-label" for="rendimiento">Rendimiento(%) :</label> 
+											<input id="rendimiento" type="text"
+												class="form-control" th:field="*{rendimiento}"
+												autofocus="autofocus" required
+												pattern="^(?!0+(\.0{1,2})?$)(100(\.0{1,2})?|[1-9]?\d(\.\d{1,2})?)$">
+											<div class="invalid-feedback">Ingrese un rendimiento
+											para la oportunidad.</div>
+									</div>
+							    </div>
+							    <div class="form-group row">
+								    <div class="col-sm-6 mb-3 mb-sm-0">
+								    	<label class="control-label" for="total_partes">Partes :</label> 
+											<input id="total_partes" type="text"
+												class="form-control" th:field="*{total_partes}"
+												autofocus="autofocus" required
+												pattern="[1-9]{1,20}">
+											<div class="invalid-feedback">Determine en cuantas
+											partes se dividirá la oportunidad, debe ser minimo 1. Maximo en 20 partes.</div>
+								    </div>
+								    <div class="col-sm-6">
+								    	<label class="control-label" for="fechaPago">Fecha
+												de Pago : </label> <input id="fechaPago" type="text"
+												class="form-control" th:field="*{fechaPago}"
+												autofocus="autofocus" placeholder="Mes/Día/Año" required>
+											<div class="invalid-feedback">Ingrese una fecha en el 
+											formato correcto (MM/DD/AAAA). La fecha debe ser posterior 
+											al día de hoy.</div>
+								    </div>
+							    </div>
+							    <div class="form-group row">
+							    	<div class="col-sm-6 mb-3 mb-sm-0">
+								    	<label class="control-label" for="totalfacturas">Total Facturas
+								    	:</label> 
+											<input id="totalfacturas" type="number" name="total" class="form-control" readonly>
+								    </div>
+							    </div>
+							    <div class="form-group">
+										<label></label>
+										<div class="text-center">
+											<button type="submit" class="btn btn-success btn-block"
+												name="registroOportunidad-submit" id="submit btnRegistrarOportunidad"
+												value="Registrar">Registrar</button>
+										</div>
+									</div>
+							    </form>
+								</div>		    
 							</div>
 						</div>
-						<div class="col-lg-5 d-none d-lg-block bg-register-image">
+						<div class="col-lg-3 d-none d-lg-block bg-register-image">
 							<img class="img-fluid" th:src="@{/img/factura_img.jpg}">
 						</div>
 					</div>
@@ -69,35 +160,198 @@
 	</div>
 </body>
 <script type="text/javascript">
-	$(document).ready(function() {
-	    $("#buscarFactura-btn").click(function() {
-	        var empresaRuc = $("#empresaSelect").val();
-	
-	        $.ajax({
-	            url: "/oportunidad/facturas",
-	            type: "GET",
-	            data: { ruc: empresaRuc },
-	            success: function(data) {
-	                $("#tblfactura tbody").empty();
-	
-	                // Agregar los datos de las facturas a la tabla
-	                data.forEach(function(factura) {
-	                    var row = "<tr>";
-	                    row += "<td>" + factura[0] + "</td>";
-	                    row += "<td>" + factura[1] + "</td>";
-	                    row += "<td>" + factura[2] + "</td>";
-	                    row += "<td>" + "S/" + factura[3] + "</td>";
-	                    row += "<td></td>";
-	                    row += "</tr>";
-	                    $("#tblfactura tbody").append(row);
-	                });
-	            },
-	            error: function(xhr, status, error) {
-	                console.log(error);
-	            }
-	        });
-	    });
-	});
+  $(document).ready(function() {
+    var facturaData = []; // Array para almacenar los datos de las facturas seleccionadas
+
+    function calcularTotalFacturas() {
+      var total = 0;
+      $("#tabladestino tbody tr").each(function() {
+        var monto = parseFloat($(this).find("td:nth-child(4)").text());
+        if (!isNaN(monto)) {
+          total += monto;
+        }
+      });
+      $("#totalfacturas").val(total.toFixed(2));
+    }
+
+    $("#buscarFactura-btn").click(function() {
+      var empresaId = $("#empresaSelect").val();
+      $("#empresaSelect").prop("disabled", false);
+      $("#buscarFactura-btn").prop("disabled", true);
+      $.ajax({
+        url: "/oportunidad/facturas",
+        type: "GET",
+        data: { id_empresa: empresaId },
+        success: function(data) {
+          // Limpiar la tabla de facturas
+          $("#tblfactura").DataTable().clear().destroy();
+
+          // Reiniciar el arreglo de datos de facturas
+          facturaData = [];
+
+          // Agregar los datos de las facturas al arreglo
+          data.forEach(function(factura) {
+            var row = [
+              factura[0],
+              factura[1],
+              factura[2],
+              factura[3],
+              "<button type='button' class='btn btn-primary enviarBtn'>Enviar</button>"
+            ];
+            facturaData.push(row);
+          });
+
+          // Mostrar las filas en grupos de 5 en la tabla de facturas
+          $("#tblfactura").DataTable({
+            data: facturaData,
+            searching: false,
+            ordering: true,
+            processing: true,
+            pageLength: 5,
+            lengthChange: false,
+            columns: [
+              { title: "Código" },
+              { title: "Fecha de Registro" },
+              { title: "Fecha de Vencimiento" },
+              { title: "Monto(S/)" },
+              { title: "" }
+            ],
+            drawCallback: function() {
+              $(".enviarBtn").click(function() {
+                var enviarBtn = $(this);
+                var facturaRow = enviarBtn.closest("tr");
+
+                // Verificar si el botón ya ha sido clicado previamente
+                if (enviarBtn.data("clicked")) {
+                  return; // Salir del evento click
+                }
+
+                var id_factura = facturaRow.find("td:nth-child(1)").text();
+                var fecharegistro = facturaRow.find("td:nth-child(2)").text();
+                var fechavencimiento = facturaRow.find("td:nth-child(3)").text();
+                var monto = facturaRow.find("td:nth-child(4)").text();
+
+                var newRow = "<tr>";
+                newRow += "<td>" + id_factura + "</td>";
+                newRow += "<td>" + fecharegistro + "</td>";
+                newRow += "<td>" + fechavencimiento + "</td>";
+                newRow += "<td>" + monto + "</td>";
+                newRow += "<td><button type='button' class='btn btn-danger eliminarBtn'>Eliminar</button></td>";
+                newRow += "</tr>";
+
+                $("#tabladestino tbody").append(newRow);
+
+                enviarBtn.removeClass("btn-primary").addClass("btn-success").text("Enviado");
+                enviarBtn.prop("disabled", true); // Desactivar el botón
+
+                enviarBtn.data("clicked", true); // Establecer la bandera a true
+
+                // Llamar a la función para recalcular el total
+                calcularTotalFacturas();
+              });
+            }
+          });
+        },
+        error: function(xhr, status, error) {
+          console.log(error);
+        }
+      });
+    });
+
+    $("#tabladestino").on("click", ".eliminarBtn", function() {
+      var eliminarBtn = $(this);
+      var filaEliminar = eliminarBtn.closest("tr");
+      var id_factura = filaEliminar.find("td:nth-child(1)").text();
+
+      // Eliminar la fila de la tabla destino
+      filaEliminar.remove();
+
+      // Habilitar el botón "Enviar" correspondiente en la tabla de facturas
+      var enviarBtn = $("#tblfactura").find("td:contains(" + id_factura + ")").siblings().find(".enviarBtn");
+      enviarBtn.prop("disabled", false);
+      enviarBtn.removeClass("btn-success").addClass("btn-primary").text("Enviar");
+      enviarBtn.data("clicked", false); // Restablecer la bandera a false
+
+      // Llamar a la función para recalcular el total
+      calcularTotalFacturas();
+    });
+
+    const fechaPagoInput = document.getElementById('fechaPago');
+    fechaPagoInput.addEventListener('input', function(e) {
+      let inputValue = e.target.value;
+      inputValue = inputValue.replace(/\D/g, '');
+      inputValue = inputValue.substring(0, 8);
+
+      if (inputValue.length > 4) {
+        inputValue = inputValue.replace(/(\d{2})(\d{2})(\d{0,4})/, '$1/$2/$3');
+      } else if (inputValue.length > 2) {
+        inputValue = inputValue.replace(/(\d{2})(\d{0,2})/, '$1/$2');
+      }
+      e.target.value = inputValue;
+
+      // Validar formato de fecha
+      const dateRegex = /^(0[1-9]|1[0-2])\/(0[1-9]|1\d|2\d|3[01])\/(19|20)\d{2}$/;
+      const isDateValid = dateRegex.test(inputValue);
+
+      if (!isDateValid) {
+        e.target.setCustomValidity('Ingrese una fecha en el formato correcto (DD/MM/AAAA).');
+      } else {
+        // Validar fecha
+        const currentDate = new Date();
+        const selectedDate = new Date(inputValue);
+
+        currentDate.setHours(0, 0, 0, 0); // Establecer la hora a 00:00:00 para comparar solo las fechas
+
+        if (selectedDate <= currentDate) {
+          e.target.setCustomValidity('La fecha debe ser posterior al día de hoy.');
+        } else {
+          e.target.setCustomValidity('');
+        }
+      }
+    });
+
+    function calcularTotalFacturas() {
+      var total = 0;
+      $("#tabladestino tbody tr").each(function() {
+        var monto = parseFloat($(this).find("td:nth-child(4)").text());
+        if (!isNaN(monto)) {
+          total += monto;
+        }
+      });
+      $("#totalfacturas").val(total.toFixed(2));
+    }
+
+    $("#btnRegistrarOportunidad").click(function() {
+      var empresaId = $("#empresaSelect").val();
+      var total = parseFloat($("#totalfacturas").val());
+      var codigoList = [];
+
+      $("#tabladestino tbody tr").each(function() {
+        var codigo = $(this).find("td:nth-child(1)").text();
+        codigoList.push(codigo);
+      });
+
+      $.ajax({
+        url: "/oportunidad/registrarOportunidad",
+        type: "POST",
+        data: {
+        	empresaId: empresaId,
+          total: total,
+          codigoList: codigoList
+        },
+        success: function(response) {
+          // Redirigir a la página de éxito
+          window.location.href = "/oportunidad/registroOportunidad?exito";
+        },
+        error: function(xhr, status, error) {
+          console.log(error);
+        }
+      });
+    });
+
+    // Llamar a la función al cargar la página
+    calcularTotalFacturas();
+  });
 </script>
 
 </html>

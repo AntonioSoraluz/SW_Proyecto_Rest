@@ -18,7 +18,7 @@ public class OportunidadServiceImpl implements OportunidadService{
 	public Oportunidad guardar(OportunidadDTO oportunidadDTO) {
 		Oportunidad oportunidad = new Oportunidad(oportunidadDTO.getCalificacion(), oportunidadDTO.getRendimiento(), oportunidadDTO.getTotal_partes(),
 				oportunidadDTO.getPartes(), oportunidadDTO.getMonto(), oportunidadDTO.getFechaPago(), oportunidadDTO.getFecharegistro(),
-				oportunidadDTO.getId_empresa(), oportunidadDTO.getFacturas(), oportunidadDTO.getUsuario());
+				oportunidadDTO.getId_empresa(), oportunidadDTO.getEstado(), oportunidadDTO.getFacturas());
 		return oportunidadRepository.save(oportunidad);
 	}
 	

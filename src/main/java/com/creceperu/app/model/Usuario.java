@@ -87,10 +87,10 @@ public class Usuario {
 	private Collection<Rol> roles;
 	
 	@ManyToMany
-	@JoinTable(name = "oportunidad_usuario",
+	@JoinTable(name = "oportunidad_factura",
 		joinColumns = @JoinColumn(name = "id"),
 		inverseJoinColumns = @JoinColumn(name = "id_oportunidad"))
-	private Set<Oportunidad> oportunidad = new HashSet<>();
+	private Set<Oportunidad> oportunidad;
 
 	public Usuario(Long id, String nombres, String apellidos, String dni, String ubigeo, String ruc, String direccion, String telefono,
 			String email, String emailRecuperacion, String password, Date fechaIngreso, int estado, Collection<Rol> roles) {

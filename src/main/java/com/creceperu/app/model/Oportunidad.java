@@ -59,6 +59,8 @@ public class Oportunidad {
 	@JoinColumn(name = "id_empresa", insertable = false, updatable = false)
 	private Empresa objEmpresa;
 	
+	private String estado;
+	
 	@ManyToMany(mappedBy = "oportunidades")
 	private Set<Factura> facturas = new HashSet<>();
 	
@@ -66,7 +68,7 @@ public class Oportunidad {
 	private Set<Usuario> usuario = new HashSet<>();
 
 	public Oportunidad(Integer id_oportunidad, String calificacion, double rendimiento, int total_partes, int partes,
-			double monto, Date fechaPago, Date fecharegistro, Integer id_empresa, Set<Factura> facturas, Set<Usuario> usuario) {
+			double monto, Date fechaPago, Date fecharegistro, Integer id_empresa, String estado, Set<Factura> facturas, Set<Usuario> usuario) {
 		super();
 		this.id_oportunidad = id_oportunidad;
 		this.calificacion = calificacion;
@@ -77,12 +79,13 @@ public class Oportunidad {
 		this.fechaPago = fechaPago;
 		this.fecharegistro = fecharegistro;
 		this.id_empresa = id_empresa;
+		this.estado = estado;
 		this.facturas = facturas;
 		this.usuario = usuario;
 	}
 
 	public Oportunidad(String calificacion, double rendimiento, int total_partes, int partes, double monto,
-			Date fechaPago, Date fecharegistro, Integer id_empresa, Set<Factura> facturas, Set<Usuario> usuario) {
+			Date fechaPago, Date fecharegistro, Integer id_empresa, String estado, Set<Factura> facturas, Set<Usuario> usuario) {
 		super();
 		this.calificacion = calificacion;
 		this.rendimiento = rendimiento;
@@ -92,8 +95,24 @@ public class Oportunidad {
 		this.fechaPago = fechaPago;
 		this.fecharegistro = fecharegistro;
 		this.id_empresa = id_empresa;
+		this.estado = estado;
 		this.facturas = facturas;
 		this.usuario = usuario;
+	}
+	
+	public Oportunidad(String calificacion, double rendimiento, int total_partes, int partes, double monto,
+			Date fechaPago, Date fecharegistro, Integer id_empresa, String estado, Set<Factura> facturas) {
+		super();
+		this.calificacion = calificacion;
+		this.rendimiento = rendimiento;
+		this.total_partes = total_partes;
+		this.partes = partes;
+		this.monto = monto;
+		this.fechaPago = fechaPago;
+		this.fecharegistro = fecharegistro;
+		this.id_empresa = id_empresa;
+		this.estado = estado;
+		this.facturas = facturas;
 	}
 
 	public Oportunidad() {

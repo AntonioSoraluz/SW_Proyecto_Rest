@@ -112,12 +112,6 @@
 
 							<div class="dropdown-menu dropdown-menu-right"
 								 aria-labelledby="navbarDropdown" >
-								<!--   <form th:action="@{/perfilUsuario}"
-									 method="post" th:method="post">
-									<input type="hidden" name="idPerfil" th:value="${#authentication.principal.id}"/>
-									<button type="submit" class="btn btn-link link-info">
-									Mi perfil</button>
-								</form> -->
 								<a class="btn btn-link link-info" th:href="@{/perfilUsuario}">Mi perfil</a>
 								<div class="dropdown-divider"></div>
 								<form sec:authorize="isAuthenticated()" th:action="@{/logout}"
