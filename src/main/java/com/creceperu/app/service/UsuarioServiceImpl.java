@@ -1,8 +1,7 @@
 package com.creceperu.app.service;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.Collection;import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +15,17 @@ import org.springframework.stereotype.Service;
 import com.creceperu.app.controller.dto.UsuarioRegistroDTO;
 import com.creceperu.app.model.Rol;
 import com.creceperu.app.model.Usuario;
+import com.creceperu.app.repository.RolRepository;
 import com.creceperu.app.repository.UsuarioRepository;
 
 @Service
 public class UsuarioServiceImpl implements UsuarioService {
 
+	@Autowired
 	private UsuarioRepository usuarioRepository;
+	
+	@Autowired
+	private RolRepository rolRepository;
 
 	public class CustomUserDetails extends User {
 	    public final String nombres;
@@ -55,12 +59,14 @@ public class UsuarioServiceImpl implements UsuarioService {
 	}
 	@Override
 	public Usuario guardar(UsuarioRegistroDTO registroDTO, String role) {
+		Rol rol = rolRepository.findByNombre(role);
 		Usuario usuario = new Usuario(registroDTO.getNombres(), registroDTO.getApellidos(), registroDTO.getDni(),
 				registroDTO.getUbigeo(), registroDTO.getRuc(),registroDTO.getDireccion(), registroDTO.getTelefono(), registroDTO.getEmail(),
 				registroDTO.getEmailRecuperacion(), passwordEncoder.encode(registroDTO.getPassword()), registroDTO.getFechaIngreso(),
-				registroDTO.getEstado(),Arrays.asList(new Rol(role)) );
+				registroDTO.getEstado());
+		usuario.getRoles().add(rol);
 		return usuarioRepository.save(usuario);
-	} /*Arrays.asList(new Rol("ROLE_USER"))*/
+	} 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Usuario usuario = usuarioRepository.findByEmail(username);

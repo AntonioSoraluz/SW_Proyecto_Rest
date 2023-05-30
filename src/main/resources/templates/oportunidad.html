@@ -27,7 +27,7 @@
 								</div>
 								<div th:if=${param.exito}>
 									<div class="alert alert-info" id="alerta">Se ha
-										ñadido exitosamente la Factura</div>
+										ñadido exitosamente la Oportunidad</div>
 								</div>
 								<div class="container">
 								<div class="form-inline">
@@ -73,6 +73,7 @@
 								<form class="form needs-validation"
 									th:action="@{/oportunidad/registrarOportunidad}" method="post"
 									th:object="${oportunidad}" id="formulario" novalidate>
+								<input type="hidden" id="codigoEmpresaEscondido" name="codigoEmpresaEscondido" th:field="*{id_empresa}"/>
 							    <table id="tabladestino" class="table">
 							        <thead>
 							        <tr>
@@ -103,9 +104,10 @@
 									</div>
 									<div class="col-sm-6">
 											<label class="control-label" for="rendimiento">Rendimiento(%) :</label> 
-											<input id="rendimiento" type="text"
+											<input id="rendimiento" type="number"
 												class="form-control" th:field="*{rendimiento}"
 												autofocus="autofocus" required
+												oninput="removeHyphen(this)" step="0.01" min="0.01" max="51.00"
 												pattern="^(?!0+(\.0{1,2})?$)(100(\.0{1,2})?|[1-9]?\d(\.\d{1,2})?)$">
 											<div class="invalid-feedback">Ingrese un rendimiento
 											para la oportunidad.</div>
@@ -114,7 +116,7 @@
 							    <div class="form-group row">
 								    <div class="col-sm-6 mb-3 mb-sm-0">
 								    	<label class="control-label" for="total_partes">Partes :</label> 
-											<input id="total_partes" type="text"
+											<input id="total_partes" type="number"
 												class="form-control" th:field="*{total_partes}"
 												autofocus="autofocus" required
 												pattern="[1-9]{1,20}">
@@ -135,14 +137,18 @@
 							    	<div class="col-sm-6 mb-3 mb-sm-0">
 								    	<label class="control-label" for="totalfacturas">Total Facturas
 								    	:</label> 
-											<input id="totalfacturas" type="number" name="total" class="form-control" readonly>
+											<input id="totalfacturas" type="number" name="total" class="form-control" 
+											th:field="*{monto}" readonly>
+								    </div>
+								    <div class="col-sm-6">
+								    	<input type="hidden" id="codigosHidden" name="codigos" />
 								    </div>
 							    </div>
 							    <div class="form-group">
 										<label></label>
 										<div class="text-center">
 											<button type="submit" class="btn btn-success btn-block"
-												name="registroOportunidad-submit" id="submit btnRegistrarOportunidad"
+												name="registroOportunidad-submit" id="registrarOportunidad-btn"
 												value="Registrar">Registrar</button>
 										</div>
 									</div>
@@ -176,8 +182,10 @@
 
     $("#buscarFactura-btn").click(function() {
       var empresaId = $("#empresaSelect").val();
+      var inputCodigoEmpresa = document.getElementById('codigoEmpresaEscondido');
       $("#empresaSelect").prop("disabled", false);
       $("#buscarFactura-btn").prop("disabled", true);
+      inputCodigoEmpresa.value = empresaId;
       $.ajax({
         url: "/oportunidad/facturas",
         type: "GET",
@@ -321,33 +329,23 @@
       $("#totalfacturas").val(total.toFixed(2));
     }
 
-    $("#btnRegistrarOportunidad").click(function() {
-      var empresaId = $("#empresaSelect").val();
-      var total = parseFloat($("#totalfacturas").val());
-      var codigoList = [];
+    document.getElementById('formulario').addEventListener('submit', function(event) {
+        // Obtener todos los códigos de la columna "Código"
+        var codigos = [];
+        var tabla = document.getElementById('tabladestino');
+        var filas = tabla.getElementsByTagName('tr');
 
-      $("#tabladestino tbody tr").each(function() {
-        var codigo = $(this).find("td:nth-child(1)").text();
-        codigoList.push(codigo);
-      });
-
-      $.ajax({
-        url: "/oportunidad/registrarOportunidad",
-        type: "POST",
-        data: {
-        	empresaId: empresaId,
-          total: total,
-          codigoList: codigoList
-        },
-        success: function(response) {
-          // Redirigir a la página de éxito
-          window.location.href = "/oportunidad/registroOportunidad?exito";
-        },
-        error: function(xhr, status, error) {
-          console.log(error);
+        for (var i = 1; i < filas.length; i++) { // Comenzar en 1 para omitir la fila de encabezado
+          var codigo = filas[i].getElementsByTagName('td')[0].innerText;
+          codigos.push(codigo);
         }
+
+        // Agregar los códigos al campo oculto en el formulario
+        document.getElementById('codigosHidden').value = codigos.join(',');
+
+        // Continuar con el envío del formulario
+        return true;
       });
-    });
 
     // Llamar a la función al cargar la página
     calcularTotalFacturas();

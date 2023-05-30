@@ -24,10 +24,10 @@ public class UsuarioRegistroDTO {
 	private String password;
 	private Date fechaIngreso;
 	private int estado;
-	private Collection<Rol> rol;
-
+	private Collection<Rol> roles;
+	
 	public UsuarioRegistroDTO(String nombres, String apellidos, String dni, String ruc, String ubigeo, String direccion, String telefono,
-			String email, String emailRecuperacion, String password, Date fechaIngreso, int estado, Collection<Rol> rol) {
+			String email, String emailRecuperacion, String password, Date fechaIngreso, int estado) {
 		super();
 		this.nombres = nombres;
 		this.apellidos = apellidos;
@@ -41,7 +41,6 @@ public class UsuarioRegistroDTO {
 		this.password = password;
 		this.fechaIngreso = fechaIngreso;
 		this.estado = estado;
-		this.rol = rol;
 	}
 
 	public UsuarioRegistroDTO() {

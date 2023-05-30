@@ -1,9 +1,8 @@
 package com.creceperu.app.model;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -84,16 +83,10 @@ public class Usuario {
 
 	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	@JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
-	private Collection<Rol> roles;
-	
-	@ManyToMany
-	@JoinTable(name = "oportunidad_factura",
-		joinColumns = @JoinColumn(name = "id"),
-		inverseJoinColumns = @JoinColumn(name = "id_oportunidad"))
-	private Set<Oportunidad> oportunidad;
+	private Collection<Rol> roles = new ArrayList<>();
 
 	public Usuario(Long id, String nombres, String apellidos, String dni, String ubigeo, String ruc, String direccion, String telefono,
-			String email, String emailRecuperacion, String password, Date fechaIngreso, int estado, Collection<Rol> roles) {
+			String email, String emailRecuperacion, String password, Date fechaIngreso, int estado) {
 		super();
 		this.id = id;
 		this.nombres = nombres;
@@ -108,11 +101,10 @@ public class Usuario {
 		this.password = password;
 		this.fechaIngreso = fechaIngreso;
 		this.estado = estado;
-		this.roles = roles;
 	}
-
+	
 	public Usuario(String nombres, String apellidos, String dni, String ubigeo, String ruc, String direccion, String telefono, String email,
-			String emailRecuperacion, String password, Date fechaIngreso, int estado, Collection<Rol> roles) {
+			String emailRecuperacion, String password, Date fechaIngreso, int estado) {
 		super();
 		this.nombres = nombres;
 		this.apellidos = apellidos;
@@ -126,7 +118,6 @@ public class Usuario {
 		this.password = password;
 		this.fechaIngreso = fechaIngreso;
 		this.estado = estado;
-		this.roles = roles;
 	}
 	
 	public Usuario() {

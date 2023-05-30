@@ -38,8 +38,7 @@
 												de Cuenta : </label> <input id="numeroCuenta" type="text"
 												class="form-control" th:field="*{numeroCuenta}"
 												autofocus="autofocus" required pattern="[0-9]{14,18}">
-											<div class="invalid-feedback">Ingrese el número de
-												cuenta correctamente.</div>
+											<div class="invalid-feedback">Cuenta debe tener minimo 14 digitos y un maximo de 18 digitos.</div>
 										</div>
 									</div>
 									<input type="hidden" name="idUsuario" th:value="${#authentication.principal.id}"/>
@@ -58,11 +57,10 @@
 										</div>
 										<div class="col-sm-6">
 											<label class="control-label" for="monto">Monto : </label> <input
-												id="monto" type="text" class="form-control"
-												th:field="*{monto}" autofocus="autofocus" required
-												pattern="^(?:[1-9]\d{0,2}(?:,\d{3}){0,2}|[1-9]\d{0,3}(?:\.\d{1,2})?|10000(?:\.00)?)$">
-											<div class="invalid-feedback">Ingrese un monto
-												correctamente. Máximo 10,000.00</div>
+												id="monto" type="number" class="form-control"
+												th:field="*{monto}" autofocus="autofocus" oninput="removeHyphen(this)" step="0.01" min="100" max="10000"
+												required pattern="^(?:[1-9]\d{0,2}(?:,\d{3}){0,2}|[1-9]\d{0,3}(?:\.\d{1,2})?|10000(?:\.00)?)$">
+											<div class="invalid-feedback">Monto minimo para crear cuenta es 100 hasta 10000</div>
 										</div>
 									</div>
 									<div class="form-group">

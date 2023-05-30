@@ -37,11 +37,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter{
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth.authenticationProvider(authenticationProvider());
 	}
-	/*(/admin/**)*/
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().
-		antMatchers("/registroEmpresa").hasRole("ADMIN").antMatchers(
+		antMatchers("/registroEmpresa", 
+				"/registroFactura",
+				"/oportunidad/registroOportunidad").hasRole("ADMIN").antMatchers(
 				"/registro**",
 				"/js/**",
 				"/css/**",

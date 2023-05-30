@@ -79,3 +79,39 @@ a:hover {
         border: 0;
     }
 }
+
+.title {
+    color: #111B54;
+    padding: 40px 0px;
+    font: 40px Muli, sans-serif;
+    line-height: 1.2;
+    font-weight: 700!important;
+}
+.col-lg-6{
+    margin: auto;
+}
+
+.oportunidades-container {
+    margin-top: 20px;
+}
+
+.oportunidad {
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+    height: 100%;
+}
+
+.card-title {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.card-text {
+    font-size: 16px;
+}
+
+.espacio-vertical {
+    margin-bottom: 40px;
+}

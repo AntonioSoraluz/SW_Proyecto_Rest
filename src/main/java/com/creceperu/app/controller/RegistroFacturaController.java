@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import com.creceperu.app.controller.dto.FacturaDTO;
 import com.creceperu.app.repository.EmpresaRepository;
 import com.creceperu.app.repository.FacturaRepository;
-import com.creceperu.app.repository.UsuarioRepository;
 import com.creceperu.app.service.FacturaService;
 import com.creceperu.app.service.UsuarioServiceImpl.CustomUserDetails;
 
@@ -24,9 +23,6 @@ public class RegistroFacturaController {
 	
 	@Autowired
 	private FacturaService facturaService;
-	
-	@Autowired
-	private UsuarioRepository usuarioRepository;
 	
 	@Autowired
 	private FacturaRepository facturaRepository;

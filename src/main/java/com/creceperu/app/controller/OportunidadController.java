@@ -1,13 +1,12 @@
 package com.creceperu.app.controller;
 
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.stream.Collectors;
-
-import javax.persistence.EntityManager;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -15,13 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.view.RedirectView;
 
 import com.creceperu.app.controller.dto.OportunidadDTO;
-import com.creceperu.app.model.Factura;
-import com.creceperu.app.model.Oportunidad;
 import com.creceperu.app.repository.EmpresaRepository;
 import com.creceperu.app.repository.FacturaRepository;
+import com.creceperu.app.repository.OportunidadFacturaRepository;
 import com.creceperu.app.repository.OportunidadRepository;
 import com.creceperu.app.service.OportunidadService;
 
@@ -33,7 +30,10 @@ public class OportunidadController {
 	private OportunidadService oportunidadService;
 	
 	@Autowired
-	private OportunidadRepository oportinudadRepository;
+	private OportunidadRepository oportunidadRepository;
+	
+	@Autowired
+	private OportunidadFacturaRepository oportunidadFacturaRepository;
 	
 	@Autowired
 	private EmpresaRepository empresaRepository;
@@ -63,11 +63,11 @@ public class OportunidadController {
         return facturaRepository.findFacturaDataById_empresa(id_empresa);
     }
     
-    @PostMapping("/registrarOportunidad")
-    public String registrarOportunidad(@RequestParam("empresaId") String empresaId, 
+    /*@PostMapping("/registrarOportunidad")
+    public String registrarOportunidad(@RequestParam("empresaID") String empresaID, 
     		@RequestParam("total") double total,  @RequestParam("codigoList") List<String> codigoList,
     		@ModelAttribute("oportunidad") OportunidadDTO oportunidadDTO, EntityManager entityManager) {
-    	Integer IDEMPRESA = Integer.parseInt(empresaId);
+    	Integer IDEMPRESA = Integer.parseInt(empresaID);
     	Oportunidad oportunidad = new Oportunidad();
     	oportunidadDTO.setPartes(0);
     	oportunidadDTO.setMonto(total);
@@ -90,5 +90,34 @@ public class OportunidadController {
             }
         }
     	return "redirect:/oportunidad/registroOportunidad?exito";
+    }*/
+    @PostMapping("/registrarOportunidad")
+    @Transactional
+    public String registrarOportunidad(@RequestParam("codigos") String codigos,
+    		@ModelAttribute("oportunidad") OportunidadDTO oportunidadDTO) {
+    	String lastCode = oportunidadRepository.getLastGeneratedCode();
+    	String nextCode = generateNextCode(lastCode);
+    	oportunidadDTO.setId_oportunidad(nextCode);
+    	oportunidadDTO.setFecharegistro(new Date());
+    	oportunidadDTO.setEstado("Disponible");
+        oportunidadService.guardar(oportunidadDTO);
+        String[] codigoArray = codigos.split(",");
+        for (String codigo : codigoArray) {
+            oportunidadFacturaRepository.insertOportunidadFactura(nextCode, codigo);
+        }
+        List<String> codigosList = Arrays.asList(codigoArray);
+        facturaRepository.actualizarEstadoFacturas(codigosList);
+    	return "redirect:/oportunidad/registroOportunidad?exito";
     }
+    
+    private String generateNextCode(String lastCode) {
+        if (lastCode == null) {
+            return "O000001";
+        }
+        int lastNumber = Integer.parseInt(lastCode.substring(1));
+        int nextNumber = lastNumber + 1;
+        String nextNumberWithPadding = String.format("%06d", nextNumber);
+        return "O" + nextNumberWithPadding;
+    }
+    
 }

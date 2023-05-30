@@ -41,7 +41,7 @@
 											class="form-check-input" type="radio" name="role"
 											th:value="ROLE_USER" id="RolOption" autocomplete="off" onclick="hideShowDiv(1)"> Usuario
 										</label> <label class="btn btn-outline-success btn-lg" for="RolOption2"> <input type="radio"
-											class="form-check-input" name="role" th:value="Rol_Empresario"
+											class="form-check-input" name="role" th:value="ROLE_EMPRESA"
 											id="RolOption2" autocomplete="off" onclick="hideShowDiv(2)" > Empresario
 										</label>
 										<div class="invalid-feedback">Seleccione un tipo de usuario.</div>
@@ -89,21 +89,21 @@
 									<label class="control-label" for="direccion">Dirección
 										: </label> <input id="direccion" type="text" class="form-control"
 										th:field="*{direccion}" autofocus="autofocus"
-										required pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s#0-9]{5,100}">
+										required pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s#0-9\.\-\/\()]{5,100}">
 										<div class="invalid-feedback">Ingrese la dirección correctamente.</div>
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="telefono">Teléfono :
 									</label> <input id="telefono" type="text" class="form-control"
 										th:field="*{telefono}" autofocus="autofocus"
-										required pattern="[0-9]{9}">
+										required pattern="^(9[0-9]{8}|[2-7][0-9]{6})">
 										<div class="invalid-feedback">Ingrese el teléfono correctamente.</div>
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="email">Email : </label> <input
 										id="email" type="email" class="form-control"
 										th:field="*{email}" autofocus="autofocus"
-										required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+										required pattern="[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
 										<div class="invalid-feedback">Ingrese el email correctamente.</div>
 								</div>
 								<div class="form-group row">
@@ -125,7 +125,7 @@
 										de Recuperación: </label> <input id="emailRecuperacion" type="email"
 										class="form-control" th:field="*{emailRecuperacion}"
 										autofocus="autofocus"
-										required pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+										required pattern="[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
 										<div class="invalid-feedback">Ingrese el email de recuperación correctamente.</div>
 								</div>
 								<div class="form-group">

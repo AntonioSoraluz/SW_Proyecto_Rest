@@ -1,18 +1,13 @@
 package com.creceperu.app.controller.dto;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
-
-import com.creceperu.app.model.Factura;
-import com.creceperu.app.model.Usuario;
 
 import lombok.Data;
 
 @Data
 public class OportunidadDTO {
 	
-	private Integer id_oportunidad;
+	private String id_oportunidad;
 	private String calificacion;
 	private double rendimiento;
 	private int total_partes;
@@ -22,11 +17,9 @@ public class OportunidadDTO {
 	private Date fecharegistro;
 	private Integer id_empresa;
 	private String estado;
-	private Set<Factura> facturas = new HashSet<>();
-	private Set<Usuario> usuario = new HashSet<>();
 	
-	public OportunidadDTO(Integer id_oportunidad, String calificacion, double rendimiento, int total_partes, int partes,
-			double monto, Date fechaPago, Date fecharegistro, Integer id_empresa, String estado, Set<Factura> facturas, Set<Usuario> usuario) {
+	public OportunidadDTO(String id_oportunidad, String calificacion, double rendimiento, int total_partes, int partes,
+			double monto, Date fechaPago, Date fecharegistro, Integer id_empresa, String estado) {
 		super();
 		this.id_oportunidad = id_oportunidad;
 		this.calificacion = calificacion;
@@ -38,12 +31,10 @@ public class OportunidadDTO {
 		this.fecharegistro = fecharegistro;
 		this.id_empresa = id_empresa;
 		this.estado = estado;
-		this.facturas = facturas;
-		this.usuario = usuario;
 	}
 	
 	public OportunidadDTO(String calificacion, double rendimiento, int total_partes, int partes, double monto,
-			Date fechaPago, Date fecharegistro, Integer id_empresa, String estado, Set<Factura> facturas, Set<Usuario> usuario) {
+			Date fechaPago, Date fecharegistro, Integer id_empresa, String estado) {
 		super();
 		this.calificacion = calificacion;
 		this.rendimiento = rendimiento;
@@ -54,23 +45,6 @@ public class OportunidadDTO {
 		this.fecharegistro = fecharegistro;
 		this.id_empresa = id_empresa;
 		this.estado = estado;
-		this.facturas = facturas;
-		this.usuario = usuario;
-	}
-	
-	public OportunidadDTO(String calificacion, double rendimiento, int total_partes, int partes, double monto,
-			Date fechaPago, Date fecharegistro, Integer id_empresa, String estado, Set<Factura> facturas) {
-		super();
-		this.calificacion = calificacion;
-		this.rendimiento = rendimiento;
-		this.total_partes = total_partes;
-		this.partes = partes;
-		this.monto = monto;
-		this.fechaPago = fechaPago;
-		this.fecharegistro = fecharegistro;
-		this.id_empresa = id_empresa;
-		this.estado = estado;
-		this.facturas = facturas;
 	}
 	
 	public OportunidadDTO() {

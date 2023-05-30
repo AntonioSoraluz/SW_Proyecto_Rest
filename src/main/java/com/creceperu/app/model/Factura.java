@@ -1,15 +1,11 @@
 package com.creceperu.app.model;
 
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -54,12 +50,6 @@ public class Factura{
 	@ManyToOne
 	@JoinColumn(name = "id", insertable = false, updatable = false)
 	private Usuario objUsuario;
-	
-	@ManyToMany
-	@JoinTable(name = "oportunidad_factura",
-		joinColumns = @JoinColumn(name = "id_factura"),
-		inverseJoinColumns = @JoinColumn(name = "id_oportunidad"))
-	private Set<Oportunidad> oportunidades = new HashSet<>();
 	
 	public Factura(String id_factura, String desc_factura, Date fecharegistro, Date fechavencimiento,
 			double monto, String estado, String ruc, Long id) {
