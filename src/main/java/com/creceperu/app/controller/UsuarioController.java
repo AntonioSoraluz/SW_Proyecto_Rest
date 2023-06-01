@@ -56,6 +56,15 @@ public class UsuarioController {
 		model.addAttribute("lstOportunidades", oportunidades);
 		return "principal";
 	}
+	@PostMapping("/filtrarOportunidad")
+	public String verPaginaConFiltro(Model model, Authentication authentication, @RequestParam("filtro") String filtro) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+		Saldo saldo = saldoRepository.findById(customUserDetails.getId()).orElse(new Saldo(customUserDetails.getId(), 0.0));
+		model.addAttribute("saldo", saldo.getSaldo());
+		List<Oportunidad> oportunidades = oportunidadRepository.findOportunidadesXFiltro(filtro);
+		model.addAttribute("lstOportunidades", oportunidades);
+		return "principal";
+	}
 	@ResponseBody
 	public String verSaldo(Model model, Authentication authentication) {
 		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
