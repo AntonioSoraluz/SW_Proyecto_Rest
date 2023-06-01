@@ -32,13 +32,16 @@
 										<div class="alert alert-info" id="alerta">Se ha
 											añadido exitosamente la Cuenta Bancaria</div>
 									</div>
+									<div th:if=${errorNumeroDeCuenta}>
+										<div class="alert alert-danger" id="alerta"><span th:text="${errorNumeroDeCuenta}"></span></div>
+									</div>
 									<div class="form-group">
 										<div class="col-sm-12 mb-3 mb-sm-0">
 											<label class="control-label" for="numeroCuenta">Número
 												de Cuenta : </label> <input id="numeroCuenta" type="text"
 												class="form-control" th:field="*{numeroCuenta}"
-												autofocus="autofocus" required pattern="[0-9]{14,18}">
-											<div class="invalid-feedback">Cuenta debe tener minimo 14 digitos y un maximo de 18 digitos.</div>
+												autofocus="autofocus" required pattern="^(?! )(?!.*(\d)\1{5})([0-9]{16})">
+											<div class="invalid-feedback">Cuenta debe tener 16 digitos.</div>
 										</div>
 									</div>
 									<input type="hidden" name="idUsuario" th:value="${#authentication.principal.id}"/>

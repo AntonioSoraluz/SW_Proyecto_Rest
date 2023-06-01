@@ -10,4 +10,5 @@ import com.creceperu.app.model.CuentaBancaria;
 @Repository
 public interface CuentaBancariaRepository extends JpaRepository<CuentaBancaria,Integer>{
 	List<CuentaBancaria> findByObjUsuarioId(Long id);
+	boolean existsByNumeroCuenta(String numeroCuenta);
 }

@@ -15,10 +15,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.creceperu.app.model.Oportunidad;
 import com.creceperu.app.model.Rol;
 import com.creceperu.app.model.Saldo;
 import com.creceperu.app.model.Usuario;
+import com.creceperu.app.repository.OportunidadRepository;
 import com.creceperu.app.repository.RolRepository;
 import com.creceperu.app.repository.SaldoRepository;
 import com.creceperu.app.repository.UsuarioRepository;
@@ -36,6 +39,9 @@ public class UsuarioController {
 	@Autowired
 	private SaldoRepository saldoRepository;
 	
+	@Autowired
+	private OportunidadRepository oportunidadRepository;
+	
 	@GetMapping("/login")
 	public String iniciarSesion() {
 		return "login";
@@ -46,7 +52,16 @@ public class UsuarioController {
 		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 		Saldo saldo = saldoRepository.findById(customUserDetails.getId()).orElse(new Saldo(customUserDetails.getId(), 0.0));
 		model.addAttribute("saldo", saldo.getSaldo());
+		List<Oportunidad> oportunidades = oportunidadRepository.findAllOportunidades();
+		model.addAttribute("lstOportunidades", oportunidades);
 		return "principal";
+	}
+	@ResponseBody
+	public String verSaldo(Model model, Authentication authentication) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+		Saldo saldo = saldoRepository.findById(customUserDetails.getId()).orElse(new Saldo(customUserDetails.getId(), 0.0));
+		model.addAttribute("saldo", saldo.getSaldo());
+		return "layout";
 	}
 	@GetMapping("/perfilUsuario")
 	public String cargarUsuario(@ModelAttribute Usuario usuario, Model model, Authentication authentication) {

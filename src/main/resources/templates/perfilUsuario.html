@@ -42,7 +42,7 @@
 											<label class="control-label" for="nombres">Nombres :
 											</label> <input id="nombres" type="text" class="form-control"
 												th:field="*{nombres}" autofocus="autofocus" required
-												pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{2,30}">
+												pattern="^(?! )([a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,10})( [a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,10}){0,2}$">
 											<div class="invalid-feedback">Ingrese los nombres
 												correctamente.</div>
 										</div>
@@ -50,7 +50,7 @@
 											<label class="control-label" for="apellidos">Apellidos
 												: </label> <input id="apellidos" class="form-control"
 												th:field="*{apellidos}" autofocus="autofocus" required
-												pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚ\s]{2,30}">
+												pattern="^(?! )([a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,10})( [a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,10}){0,2}$">
 											<div class="invalid-feedback">Ingrese los apellidos
 												correctamente.</div>
 										</div>
@@ -76,7 +76,7 @@
 										<label class="control-label" for="telefono">Teléfono :
 										</label> <input id="telefono" type="text" class="form-control"
 											th:field="*{telefono}" autofocus="autofocus" required
-											pattern="[0-9]{9}">
+											pattern="^(?! )(?!.*(\d)\1{4})(9[0-9]{8}|[2-7][0-9]{6})">
 										<div class="invalid-feedback">Ingrese el teléfono
 											correctamente.</div>
 									</div>
@@ -85,7 +85,7 @@
 											de Recuperación: </label> <input id="emailRecuperacion" type="email"
 											class="form-control" th:field="*{emailRecuperacion}"
 											autofocus="autofocus" required
-											pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+											pattern="^(?! )[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
 										<div class="invalid-feedback">Ingrese el email de
 											recuperación correctamente.</div>
 									</div>

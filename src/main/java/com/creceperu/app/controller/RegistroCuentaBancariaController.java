@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.creceperu.app.controller.dto.CuentaBancariaRegistroDTO;
 import com.creceperu.app.repository.BancoRepository;
+import com.creceperu.app.repository.CuentaBancariaRepository;
 import com.creceperu.app.service.CuentaBancariaService;
 
 @Controller
@@ -22,10 +23,11 @@ public class RegistroCuentaBancariaController {
 	@Autowired
 	private CuentaBancariaService cuentaBancariaService;
 	
-	/*private CustomUserDetails usuarioTemporal;*/
-	
 	@Autowired
 	private BancoRepository bancoRepository;
+	
+	@Autowired
+	private CuentaBancariaRepository cuentaBancariaRepository;
 	
 	public RegistroCuentaBancariaController(CuentaBancariaService cuentaBancariaService) {
 		super();
@@ -44,7 +46,11 @@ public class RegistroCuentaBancariaController {
 	}
 	
 	@PostMapping
-	public String registrarCuentaBancaria(@RequestParam("idUsuario") String idUsuario, @ModelAttribute("cuentaBancaria") CuentaBancariaRegistroDTO cuentaBancariaDTO) {
+	public String registrarCuentaBancaria(Model model, @RequestParam("idUsuario") String idUsuario, @ModelAttribute("cuentaBancaria") CuentaBancariaRegistroDTO cuentaBancariaDTO) {
+		if(cuentaBancariaRepository.existsByNumeroCuenta(cuentaBancariaDTO.getNumeroCuenta())) {
+	        model.addAttribute("errorNumeroDeCuenta", "El número de cuenta ya se encuentra registrado.");
+	        return "cuentaBancaria";
+	    }
 		Long idusuario = Long.parseLong(idUsuario);
 		cuentaBancariaDTO.setId(idusuario);
 		cuentaBancariaDTO.setFechaRegistro(new Date());

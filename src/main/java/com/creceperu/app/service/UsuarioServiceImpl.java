@@ -14,6 +14,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import com.creceperu.app.controller.dto.UsuarioRegistroDTO;
 import com.creceperu.app.model.Rol;
+import com.creceperu.app.model.Saldo;
 import com.creceperu.app.model.Usuario;
 import com.creceperu.app.repository.RolRepository;
 import com.creceperu.app.repository.UsuarioRepository;
