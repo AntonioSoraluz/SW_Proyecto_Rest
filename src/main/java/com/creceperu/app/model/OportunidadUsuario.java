@@ -1,6 +1,7 @@
 package com.creceperu.app.model;
 
 import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -14,25 +15,26 @@ import lombok.Data;
 @Table(name = "oportunidadUsuario")
 public class OportunidadUsuario {
 	
-	@Id
-	@Column(name = "oportunidad_id")
-	private String oportunidad_id;
+	@EmbeddedId
+	private OportunidadUsuarioId id;
+	
+	@Column(name = "partes_tomadas")
+	private int partes_tomadas;
+	
+	@Column(name = "monto_invertido")
+	private double monto_invertido;
 	
 	@ManyToOne
 	@JoinColumn(name = "oportunidad_id", referencedColumnName = "id_oportunidad",insertable = false, updatable = false)
 	private Oportunidad objOportunidad;
 	
-	@Column(name = "usuario_id")
-	private Long usuario_id;
-	
 	@ManyToOne
 	@JoinColumn(name = "usuario_id", referencedColumnName = "id", insertable = false, updatable = false)
 	private Usuario objUsuario;
 
-	public OportunidadUsuario(String oportunidad_id, Long usuario_id) {
+	public OportunidadUsuario(OportunidadUsuarioId id) {
 		super();
-		this.oportunidad_id = oportunidad_id;
-		this.usuario_id = usuario_id;
+		this.id = id;
 	}
 	
 	public OportunidadUsuario() {

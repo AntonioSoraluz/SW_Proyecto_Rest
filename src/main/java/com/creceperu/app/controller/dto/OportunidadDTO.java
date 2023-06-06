@@ -10,6 +10,7 @@ public class OportunidadDTO {
 	private String id_oportunidad;
 	private String calificacion;
 	private double rendimiento;
+	private double tasa_riesgo;
 	private int total_partes;
 	private int partes;
 	private double monto;
@@ -18,12 +19,13 @@ public class OportunidadDTO {
 	private Integer id_empresa;
 	private String estado;
 	
-	public OportunidadDTO(String id_oportunidad, String calificacion, double rendimiento, int total_partes, int partes,
+	public OportunidadDTO(String id_oportunidad, String calificacion, double rendimiento, double tasa_riesgo, int total_partes, int partes,
 			double monto, Date fechaPago, Date fecharegistro, Integer id_empresa, String estado) {
 		super();
 		this.id_oportunidad = id_oportunidad;
 		this.calificacion = calificacion;
 		this.rendimiento = rendimiento;
+		this.tasa_riesgo = tasa_riesgo;
 		this.total_partes = total_partes;
 		this.partes = partes;
 		this.monto = monto;
@@ -33,11 +35,12 @@ public class OportunidadDTO {
 		this.estado = estado;
 	}
 	
-	public OportunidadDTO(String calificacion, double rendimiento, int total_partes, int partes, double monto,
+	public OportunidadDTO(String calificacion, double rendimiento, double tasa_riesgo, int total_partes, int partes, double monto,
 			Date fechaPago, Date fecharegistro, Integer id_empresa, String estado) {
 		super();
 		this.calificacion = calificacion;
 		this.rendimiento = rendimiento;
+		this.tasa_riesgo = tasa_riesgo;
 		this.total_partes = total_partes;
 		this.partes = partes;
 		this.monto = monto;

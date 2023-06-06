@@ -7,6 +7,7 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -111,6 +112,7 @@ public class MovimientoController {
 	}
 	
 	@PostMapping("/retiro")
+	@Transactional
 	public String registrarMovimientoRetiro(@RequestParam("idUsuario") String idUsuario, @ModelAttribute("movimiento") MovimientoRegistroDTO movimientoRegistroDTO) {
 	    Long idusuario = Long.parseLong(idUsuario);
 	    movimientoRegistroDTO.setId(idusuario);
@@ -129,6 +131,7 @@ public class MovimientoController {
 	        Double nuevoSaldo = saldoActual - movimientoRegistroDTO.getMonto();
 	        saldo.setSaldo(nuevoSaldo);
 	        saldoRepository.save(saldo);
+	        cuentaBancariaRepository.actualizarMontoCuentaBancaria(movimientoRegistroDTO.getId_cuentaBancaria(), movimientoRegistroDTO.getMonto());
 	        movimientoService.guardar(movimientoRegistroDTO);
 	        return "redirect:/registroMovimiento/retiro?exito";
 	    }

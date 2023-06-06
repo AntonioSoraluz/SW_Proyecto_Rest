@@ -29,6 +29,9 @@ public class Oportunidad {
 	@Column(name = "rendimiento")
 	private double rendimiento;
 	
+	@Column(name = "tasa_riesgo")
+	private double tasa_riesgo;
+	
 	@Column(name = "total_partes")
 	private int total_partes;
 	
@@ -55,12 +58,13 @@ public class Oportunidad {
 	
 	private String estado;
 
-	public Oportunidad(String id_oportunidad, String calificacion, double rendimiento, int total_partes, int partes,
+	public Oportunidad(String id_oportunidad, String calificacion, double rendimiento, double tasa_riesgo, int total_partes, int partes,
 			double monto, Date fechaPago, Date fecharegistro, Integer id_empresa, String estado) {
 		super();
 		this.id_oportunidad = id_oportunidad;
 		this.calificacion = calificacion;
 		this.rendimiento = rendimiento;
+		this.tasa_riesgo = tasa_riesgo;
 		this.total_partes = total_partes;
 		this.partes = partes;
 		this.monto = monto;
@@ -70,11 +74,12 @@ public class Oportunidad {
 		this.estado = estado;
 	}
 
-	public Oportunidad(String calificacion, double rendimiento, int total_partes, int partes, double monto,
+	public Oportunidad(String calificacion, double rendimiento, double tasa_riesgo, int total_partes, int partes, double monto,
 			Date fechaPago, Date fecharegistro, Integer id_empresa, String estado) {
 		super();
 		this.calificacion = calificacion;
 		this.rendimiento = rendimiento;
+		this.tasa_riesgo = tasa_riesgo;
 		this.total_partes = total_partes;
 		this.partes = partes;
 		this.monto = monto;

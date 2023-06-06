@@ -52,14 +52,14 @@
 										<label class="control-label" for="nombres">Nombres : </label>
 										<input id="nombres" type="text" class="form-control"
 											th:field="*{nombres}" autofocus="autofocus"
-											required pattern="^(?! )([a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,10})( [a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,10}){0,2}$">
+											required pattern="^(?! )([A-Z][a-zA-ZñÑáéíóúÁÉÍÓÚ']{1,9})( [A-Z][a-zA-ZñÑáéíóúÁÉÍÓÚ]{1,9}){0,2}$">
 											<div class="invalid-feedback">Ingrese los nombres correctamente.</div>
 									</div>
 									<div class="col-sm-6">
 										<label class="control-label" for="apellidos">Apellidos
 											: </label> <input id="apellidos" class="form-control"
 											th:field="*{apellidos}" autofocus="autofocus"
-											required pattern="^(?! )([a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,10})( [a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,10}){0,2}$">
+											required pattern="^(?! )([A-Z][a-zA-ZñÑáéíóúÁÉÍÓÚ]{1,9})( [A-Z][a-zA-ZñÑáéíóúÁÉÍÓÚ]{1,9}){0,2}$">
 											<div class="invalid-feedback">Ingrese los apellidos correctamente.</div>
 									</div>
 								</div>
@@ -89,7 +89,7 @@
 									<label class="control-label" for="direccion">Dirección
 										: </label> <input id="direccion" type="text" class="form-control"
 										th:field="*{direccion}" autofocus="autofocus"
-										required pattern="^(?! )(?:[a-zA-ZñÑáéíóúÁÉÍÓÚ#0-9.\-\/\()]+ ){0,4}[a-zA-ZñÑáéíóúÁÉÍÓÚ#0-9.\-\/\()]{5,100}$">
+										required pattern="^(?! )([A-Z#][a-zA-ZñÑáéíóúÁÉÍÓÚ'0-9#]{1,20})( [A-Z#][a-zA-ZñÑáéíóúÁÉÍÓÚ'0-9#]{1,20}){0,6}$">
 										<div class="invalid-feedback">Ingrese la dirección correctamente.</div>
 								</div>
 								<div class="form-group">

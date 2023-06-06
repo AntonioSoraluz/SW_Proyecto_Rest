@@ -62,39 +62,14 @@ public class OportunidadController {
     public List<Object[]> getFacturaDataByRuc(@RequestParam("id_empresa") Integer id_empresa) {
         return facturaRepository.findFacturaDataById_empresa(id_empresa);
     }
-    
-    /*@PostMapping("/registrarOportunidad")
-    public String registrarOportunidad(@RequestParam("empresaID") String empresaID, 
-    		@RequestParam("total") double total,  @RequestParam("codigoList") List<String> codigoList,
-    		@ModelAttribute("oportunidad") OportunidadDTO oportunidadDTO, EntityManager entityManager) {
-    	Integer IDEMPRESA = Integer.parseInt(empresaID);
-    	Oportunidad oportunidad = new Oportunidad();
-    	oportunidadDTO.setPartes(0);
-    	oportunidadDTO.setMonto(total);
-    	oportunidadDTO.setFecharegistro(new Date());
-    	oportunidadDTO.setId_empresa(IDEMPRESA);
-    	oportunidadDTO.setCalificacion("Disponible");  
-    	// Persistir la oportunidad en la base de datos
-        entityManager.persist(oportunidad);
-
-        // Iterar sobre la lista de códigos y realizar la inserción en la tabla oportunidad_factura
-        for (String codigoFactura : codigoList) {
-            // Obtener la entidad Factura correspondiente al código actual
-            Factura factura = entityManager.find(Factura.class, codigoFactura);
-
-            // Verificar si la factura existe
-            if (factura != null) {
-                // Asociar la factura con la oportunidad
-                oportunidad.getFacturas().add(factura);
-                factura.getOportunidades().add(oportunidad);
-            }
-        }
-    	return "redirect:/oportunidad/registroOportunidad?exito";
-    }*/
+   
     @PostMapping("/registrarOportunidad")
     @Transactional
     public String registrarOportunidad(@RequestParam("codigos") String codigos,
     		@ModelAttribute("oportunidad") OportunidadDTO oportunidadDTO) {
+    	if (codigos == null || codigos.isEmpty()) {
+            return "redirect:/oportunidad/registroOportunidad?error";
+        }
     	String lastCode = oportunidadRepository.getLastGeneratedCode();
     	String nextCode = generateNextCode(lastCode);
     	oportunidadDTO.setId_oportunidad(nextCode);

@@ -50,8 +50,8 @@
 											<label class="control-label" for="razonSocial">Razon
 												Social : </label> <input id="razonSocial" type="text"
 												class="form-control" th:field="*{razonsocial}"
-												autofocus="autofocus" required
-												pattern="^(?! )[a-zA-ZñÑáéíóúÁÉÍÓÚ]{1}[a-zA-ZñÑáéíóúÁÉÍÓÚ\d\. ]{0,48}[a-zA-ZñÑáéíóúÁÉÍÓÚ\d\.]$">
+												autofocus="autofocus" maxlength="80" required
+												pattern="^(?! )([A-Z][a-zA-ZñÑáéíóúÁÉÍÓÚ'0-9.]{1,15})( [A-Z][a-zA-ZñÑáéíóúÁÉÍÓÚ'0-9.]{1,15}){0,4}$">
 											<div class="invalid-feedback">Ingrese la razon social
 												correctamente.</div>
 										</div>
@@ -61,8 +61,8 @@
 											<label class="control-label" for="nombreComercial">Nombre
 												Comercial : </label> <input id="nombreComercial" type="text"
 												class="form-control" th:field="*{nombre_comercial}"
-												autofocus="autofocus" required
-												pattern="^(?! )[a-zA-ZñÑáéíóúÁÉÍÓÚ]{1}[a-zA-ZñÑáéíóúÁÉÍÓÚ\d\. ]{0,48}[a-zA-ZñÑáéíóúÁÉÍÓÚ\d\.]$">
+												autofocus="autofocus" maxlength="80" required
+												pattern="^(?! )([A-Z][a-zA-ZñÑáéíóúÁÉÍÓÚ'0-9.]{1,15})( [A-Z][a-zA-ZñÑáéíóúÁÉÍÓÚ'0-9.]{1,15}){0,4}$">
 											<div class="invalid-feedback">Ingrese el nombre comercial
 												correctamente.</div>
 										</div>
@@ -71,8 +71,8 @@
 											<label class="control-label" for="actividadEconomica">Actividad
 												Economica : </label> <input id="actividadEconomica"
 												class="form-control" th:field="*{actividad_economica}"
-												autofocus="autofocus" required
-												pattern="^(?! )[a-zA-ZñÑáéíóúÁÉÍÓÚ]{1}[a-zA-ZñÑáéíóúÁÉÍÓÚ\d\. ]{0,48}[a-zA-ZñÑáéíóúÁÉÍÓÚ\d\.]$">
+												autofocus="autofocus" maxlength="30" required
+												pattern="^(?! )([A-Z][a-zA-ZñÑáéíóúÁÉÍÓÚ'0-9.]{1,15})( [A-Z][a-zA-ZñÑáéíóúÁÉÍÓÚ'0-9.]{1,15}){0,4}$">
 											<div class="invalid-feedback">Ingrese la actividad
 												economica correctamente.</div>
 										</div>
@@ -81,16 +81,16 @@
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<label class="control-label" for="direcFiscal">Dirección
 												Fiscal : </label> <input id="direcFiscal" class="form-control"
-												th:field="*{direc_fiscal}" autofocus="autofocus" required
-												pattern="^(?! )(?:[a-zA-ZñÑáéíóúÁÉÍÓÚ#0-9.\-\/\()]+ ){0,4}[a-zA-ZñÑáéíóúÁÉÍÓÚ#0-9.\-\/\()]{5,100}$">
+												th:field="*{direc_fiscal}" autofocus="autofocus" maxlength="150" required
+												pattern="^(?! )([A-Z#][a-zA-ZñÑáéíóúÁÉÍÓÚ'0-9#]{1,20})( [A-Z#][a-zA-ZñÑáéíóúÁÉÍÓÚ'0-9#]{1,20}){0,6}$">
 											<div class="invalid-feedback">Ingrese la dirección
 												fiscal correctamente.</div>
 										</div>
 										<div class="col-sm-6">
 											<label class="control-label" for="repLegal">Representante
 												Legal : </label> <input id="repLegal" class="form-control"
-												th:field="*{rep_legal}" autofocus="autofocus" required maxlength="60"
-												pattern="^(?! )([a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,10})( [a-zA-ZñÑáéíóúÁÉÍÓÚ]{2,10}){0,2}$">
+												th:field="*{rep_legal}" autofocus="autofocus" maxlength="60" required 
+												pattern="^(?! )([A-Z][a-zA-ZñÑáéíóúÁÉÍÓÚ']{1,9})( [A-Z][a-zA-ZñÑáéíóúÁÉÍÓÚ']{1,9}){0,4}$">
 											<div class="invalid-feedback">Ingrese el representante
 												legal correctamente.</div>
 										</div>
@@ -107,7 +107,7 @@
 										<div class="col-sm-6">
 											<label class="control-label" for="email">Email : </label> <input
 												id="email" class="form-control" th:field="*{email}"
-												autofocus="autofocus" required
+												autofocus="autofocus" type="email" required 
 												pattern="^(?! )[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
 											<div class="invalid-feedback">Ingrese el email
 												correctamente.</div>

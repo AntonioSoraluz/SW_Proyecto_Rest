@@ -81,6 +81,7 @@
 			                <h5 class="card-header"><span class="text-dark font-weight-bold mb-0" th:text="${o.objEmpresa.razonsocial}"></span> | <span class="text-dark font-weight-bold mb-0" th:text="'Calificación: '+${o.calificacion}"></span></h5>
 			                <div class="card-body">
 			                  <p class="card-title"><span th:text="'Monto: '+'S/'+${o.monto}"></span> | <span th:text="'Rendimiento: '+${o.rendimiento + '%'}"></span></p>
+			                  <p class="card-text">Tasa de Riesgo: <span th:text="${o.tasa_riesgo + '%'}"></span></p>
 			                  <p class="card-text">Fecha de Pago: <span th:text="${o.fechaPago}"></span></p>
 			                  <p class="card-text">Partes Disponibles: <span th:text="${o.total_partes}"></span></p>
 			                  <a href="#" class="btn btn-primary mt-3">Invertir</a>

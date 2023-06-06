@@ -10,4 +10,5 @@ import com.creceperu.app.model.Movimiento;
 @Repository
 public interface MovimientoRepository extends JpaRepository<Movimiento, Integer>{
 	List<Movimiento> findByObjUsuarioId(Long id);
+
 }

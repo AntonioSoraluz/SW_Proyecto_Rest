@@ -30,6 +30,10 @@
 									<div class="alert alert-info" id="alerta">Se ha
 										ñadido exitosamente la Oportunidad</div>
 								</div>
+								<div th:if=${param.error}>
+									<div class="alert alert-danger" id="alerta">No se
+										ha seleccionado ninguna factura para la Oportunidad</div>
+								</div>
 								<div class="container">
 								<div class="form-inline">
 							    <div class="form-group mb-2">
@@ -142,6 +146,13 @@
 								    </div>
 								    <div class="col-sm-6">
 								    	<input type="hidden" id="codigosHidden" name="codigos" />
+								    	<label class="control-label" for="rendimiento">Tasa de Riesgo(%) :</label> 
+											<input id="rendimiento" type="number"
+												class="form-control" th:field="*{tasa_riesgo}"
+												autofocus="autofocus" required oninput="removeHyphen(this)" step="0.01" min="1.00" max="100"
+												pattern="^(?!0(\.0{1,2})?$)(100(\.0{1,2})?|[1-9]\d?(\.\d{1,2})?)$">
+											<div class="invalid-feedback">Ingrese una tasa
+											de riesgo.</div>
 								    </div>
 							    </div>
 							    <div class="form-group">
