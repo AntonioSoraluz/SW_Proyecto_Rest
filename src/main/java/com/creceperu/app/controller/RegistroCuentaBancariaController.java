@@ -48,8 +48,7 @@ public class RegistroCuentaBancariaController {
 	@PostMapping
 	public String registrarCuentaBancaria(Model model, @RequestParam("idUsuario") String idUsuario, @ModelAttribute("cuentaBancaria") CuentaBancariaRegistroDTO cuentaBancariaDTO) {
 		if(cuentaBancariaRepository.existsByNumeroCuenta(cuentaBancariaDTO.getNumeroCuenta())) {
-	        model.addAttribute("errorNumeroDeCuenta", "El número de cuenta ya se encuentra registrado.");
-	        return "cuentaBancaria";
+	        return "redirect:/registroCuentaBancaria?error";
 	    }
 		Long idusuario = Long.parseLong(idUsuario);
 		cuentaBancariaDTO.setId(idusuario);

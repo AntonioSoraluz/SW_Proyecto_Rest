@@ -32,8 +32,9 @@
 										<div class="alert alert-info" id="alerta">Se ha
 											añadido exitosamente la Cuenta Bancaria</div>
 									</div>
-									<div th:if=${errorNumeroDeCuenta}>
-										<div class="alert alert-danger" id="alerta"><span th:text="${errorNumeroDeCuenta}"></span></div>
+									<div th:if=${param.error}>
+										<div class="alert alert-danger" id="alerta">El número 
+											de cuenta ya se encuentra registrado</div>
 									</div>
 									<div class="form-group">
 										<div class="col-sm-12 mb-3 mb-sm-0">
