@@ -82,7 +82,7 @@
 											<label class="control-label" for="direcFiscal">Dirección
 												Fiscal : </label> <input id="direcFiscal" class="form-control"
 												th:field="*{direc_fiscal}" autofocus="autofocus" maxlength="150" required
-												pattern="^(?! )([A-Z#][a-zA-ZñÑáéíóúÁÉÍÓÚ'0-9#]{1,20})( [A-Z#][a-zA-ZñÑáéíóúÁÉÍÓÚ'0-9#]{1,20}){0,6}$">
+												pattern="^(?! )([A-Z#0-9][a-zA-ZñÑáéíóúÁÉÍÓÚ'0-9#]{1,20})( [A-Z#0-9][a-zA-ZñÑáéíóúÁÉÍÓÚ'0-9#]{1,20}){0,6}$">
 											<div class="invalid-feedback">Ingrese la dirección
 												fiscal correctamente.</div>
 										</div>

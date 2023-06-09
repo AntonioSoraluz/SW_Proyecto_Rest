@@ -1,5 +1,7 @@
 package com.creceperu.app.controller;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,10 +19,15 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.creceperu.app.model.Empresa;
 import com.creceperu.app.model.Oportunidad;
+import com.creceperu.app.model.OportunidadesDisponiblesResult;
+import com.creceperu.app.model.OportunidadesPagadasResult;
+import com.creceperu.app.model.OportunidadesTomadasResult;
 import com.creceperu.app.model.Rol;
 import com.creceperu.app.model.Saldo;
 import com.creceperu.app.model.Usuario;
+import com.creceperu.app.repository.EmpresaRepository;
 import com.creceperu.app.repository.OportunidadRepository;
 import com.creceperu.app.repository.RolRepository;
 import com.creceperu.app.repository.SaldoRepository;
@@ -41,6 +48,9 @@ public class UsuarioController {
 	
 	@Autowired
 	private OportunidadRepository oportunidadRepository;
+	
+	@Autowired
+	private EmpresaRepository empresaRepository;
 	
 	@GetMapping("/login")
 	public String iniciarSesion() {
@@ -106,4 +116,50 @@ public class UsuarioController {
 	    return "redirect:/perfilUsuario?exito";
 	}
 	
+	@GetMapping("/verOportunidad")
+	public String verOportunidadDetalle(@RequestParam("idOportunidad") String idOportunidad, 
+			@RequestParam("razonsocial") String razonsocial,Model model, Authentication authentication) {
+		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+		Saldo saldo = saldoRepository.findById(customUserDetails.getId()).orElse(new Saldo(customUserDetails.getId(), 0.0));
+		model.addAttribute("saldo", saldo.getSaldo());
+		Oportunidad oportunidad = oportunidadRepository.findByOportunidadId(idOportunidad);
+		model.addAttribute("oportunidadSelecionada", oportunidad);
+		Empresa empresa = empresaRepository.findByRazonsocial(razonsocial);
+		model.addAttribute("empresaSeleccionada", empresa);
+		List<Object[]> results = oportunidadRepository.getOportunidadesDisponibles(razonsocial);
+		List<OportunidadesDisponiblesResult> oportunidadesDisponibles = new ArrayList<>();
+
+		for (Object[] result : results) {
+		    int count = ((BigInteger) result[0]).intValue();
+		    Double sum = ((Number) result[1]).doubleValue();
+		    OportunidadesDisponiblesResult oportunidadDR = new OportunidadesDisponiblesResult(count, sum);
+		    oportunidadesDisponibles.add(oportunidadDR);
+		}
+		model.addAttribute("oportunidadesDisponibles", oportunidadesDisponibles);
+		
+		List<Object[]> results2 = oportunidadRepository.getOportunidadesTomadas(razonsocial);
+		List<OportunidadesTomadasResult> oportunidadesTomadas = new ArrayList<>();
+
+		for (Object[] result : results2) {
+		    int count = ((BigInteger) result[0]).intValue();
+		    Double sum = ((Number) result[1]).doubleValue();
+		    OportunidadesTomadasResult oportunidadTR = new OportunidadesTomadasResult(count, sum);
+		    oportunidadesTomadas.add(oportunidadTR);
+		}
+
+		model.addAttribute("oportunidadesTomadas", oportunidadesTomadas);
+		
+		List<Object[]> results3 = oportunidadRepository.getOportunidadesPagadas(razonsocial);
+		List<OportunidadesPagadasResult> oportunidadesPagadas = new ArrayList<>();
+
+		for (Object[] result : results3) {
+		    int count = ((BigInteger) result[0]).intValue();
+		    Double sum = ((Number) result[1]).doubleValue();
+		    OportunidadesPagadasResult oportunidadPR = new OportunidadesPagadasResult(count, sum);
+		    oportunidadesPagadas.add(oportunidadPR);
+		}
+
+		model.addAttribute("oportunidadesPagadas", oportunidadesPagadas);
+		return "verOportunidad";
+	}
 }

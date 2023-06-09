@@ -1,5 +1,7 @@
 package com.creceperu.app.model;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -18,11 +20,11 @@ public class OportunidadUsuario {
 	@EmbeddedId
 	private OportunidadUsuarioId id;
 	
-	@Column(name = "partes_tomadas")
-	private int partes_tomadas;
-	
 	@Column(name = "monto_invertido")
 	private double monto_invertido;
+	
+	@Column(name = "fecha_registro")
+	private Date fecha_registro;
 	
 	@ManyToOne
 	@JoinColumn(name = "oportunidad_id", referencedColumnName = "id_oportunidad",insertable = false, updatable = false)

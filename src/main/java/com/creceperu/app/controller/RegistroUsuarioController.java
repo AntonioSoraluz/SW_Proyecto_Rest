@@ -41,8 +41,7 @@ public class RegistroUsuarioController {
 	}
 	
 	@PostMapping
-	public String registrarCuentaDeUsuario(@ModelAttribute("usuario") UsuarioRegistroDTO registroDTO, 
-			@RequestParam("role") String role, Model model) {
+	public String registrarCuentaDeUsuario(@ModelAttribute("usuario") UsuarioRegistroDTO registroDTO, Model model) {
 		if(usuarioRepository.findByEmail(registroDTO.getEmail()) != null) {
 	        model.addAttribute("errorEmail", "El correo ya está registrado");
 	        return "registro";
@@ -54,7 +53,7 @@ public class RegistroUsuarioController {
 	    registroDTO.setRuc(registroDTO.getRuc());
 	    registroDTO.setFechaIngreso(new Date());
 	    registroDTO.setEstado(1);
-	    usuarioService.guardar(registroDTO, role);
+	    usuarioService.guardar(registroDTO, "ROLE_USER");
 	    return "redirect:/registro?exito";
 	}
 }

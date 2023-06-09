@@ -13,4 +13,5 @@ import com.creceperu.app.model.Empresa;
 public interface EmpresaRepository extends JpaRepository<Empresa, Integer>{
 	boolean existsByRuc(String ruc);
     boolean existsByRazonsocial(String razonsocial);
+    Empresa findByRazonsocial(String razonsocial);
 }

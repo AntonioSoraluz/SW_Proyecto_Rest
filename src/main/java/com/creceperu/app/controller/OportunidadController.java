@@ -75,6 +75,7 @@ public class OportunidadController {
     	oportunidadDTO.setId_oportunidad(nextCode);
     	oportunidadDTO.setFecharegistro(new Date());
     	oportunidadDTO.setEstado("Disponible");
+    	oportunidadDTO.setMonto_disponible(oportunidadDTO.getMonto());
         oportunidadService.guardar(oportunidadDTO);
         String[] codigoArray = codigos.split(",");
         for (String codigo : codigoArray) {
