@@ -203,9 +203,11 @@ public class UsuarioController {
 	        oportunidadUsuario.setUsuario_id(customUserDetails.getId());
 	        oportunidadUsuario.setFecha_registro(new Date());
 	        oportunidadUsuarioRepository.save(oportunidadUsuario);
-	        return "redirect:/?exito";
+	        String exitoUrl = "/verOportunidad?idOportunidad=" + Id_Oportunidad + "&razonsocial=" + RazonSocial + "&exito";
+	        return "redirect:" + exitoUrl;
 	    }
-	    return "redirect:/verOportunidad?error";
+	    String errorUrl = "/verOportunidad?idOportunidad=" + Id_Oportunidad + "&razonsocial=" + RazonSocial + "&error";
+        return "redirect:" + errorUrl;
 	}
 
 }

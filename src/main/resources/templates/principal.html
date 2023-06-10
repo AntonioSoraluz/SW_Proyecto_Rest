@@ -38,8 +38,6 @@
 								id="navbarDropdown" role="button" data-toggle="dropdown"
 								aria-haspopup="true" aria-expanded="false"> <span
 								class="text-dark font-weight-bold mb-0" sec:authentication="principal.nombres"></span></a>
-
-
 							<div class="dropdown-menu dropdown-menu-right"
 								 aria-labelledby="navbarDropdown" >
 								<a class="btn btn-link link-info" th:href="@{/perfilUsuario}">Mi perfil</a>
@@ -50,8 +48,6 @@
 									<button type="submit" class="btn btn-link link-info">Cerrar
 										sesión</button>
 								</form>
-
-
 							</div></li>
 					</ul>
 				</div>
@@ -67,10 +63,6 @@
 						<div class="col-lg-12 col-md-8">
 							<h1 class="title">Oportunidades de Negocio</h1>
 						</div>
-					</div>
-					<div th:if=${param.exito}>
-						<div class="alert alert-info" id="alerta">Se ha realizado
-						la inversión exitosamente</div>
 					</div>
 				</div>
 			</section>
