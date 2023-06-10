@@ -7,5 +7,4 @@ import com.creceperu.app.model.OportunidadUsuario;
 
 @Repository
 public interface OportunidadUsuarioRepository extends JpaRepository<OportunidadUsuario, String>{
-
 }

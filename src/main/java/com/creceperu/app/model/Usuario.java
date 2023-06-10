@@ -45,9 +45,6 @@ public class Usuario {
 
 	@Column(name = "ubigeo")
 	private String ubigeo;
-	
-	@Column(name = "ruc")
-	private String ruc;
 
 	@Column(name = "direccion")
 	private String direccion;
@@ -85,7 +82,7 @@ public class Usuario {
 	@JoinTable(name = "usuario_rol", joinColumns = @JoinColumn(name = "usuario_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "rol_id", referencedColumnName = "id"))
 	private Collection<Rol> roles = new ArrayList<>();
 
-	public Usuario(Long id, String nombres, String apellidos, String dni, String ubigeo, String ruc, String direccion, String telefono,
+	public Usuario(Long id, String nombres, String apellidos, String dni, String ubigeo, String direccion, String telefono,
 			String email, String emailRecuperacion, String password, Date fechaIngreso, int estado) {
 		super();
 		this.id = id;
@@ -93,7 +90,6 @@ public class Usuario {
 		this.apellidos = apellidos;
 		this.dni = dni;
 		this.ubigeo = ubigeo;
-		this.ruc = ruc;
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.email = email;
@@ -103,14 +99,13 @@ public class Usuario {
 		this.estado = estado;
 	}
 	
-	public Usuario(String nombres, String apellidos, String dni, String ubigeo, String ruc, String direccion, String telefono, String email,
+	public Usuario(String nombres, String apellidos, String dni, String ubigeo, String direccion, String telefono, String email,
 			String emailRecuperacion, String password, Date fechaIngreso, int estado) {
 		super();
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.dni = dni;
 		this.ubigeo = ubigeo;
-		this.ruc = ruc;
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.email = email;

@@ -68,6 +68,10 @@
 							<h1 class="title">Oportunidades de Negocio</h1>
 						</div>
 					</div>
+					<div th:if=${param.exito}>
+						<div class="alert alert-info" id="alerta">Se ha realizado
+						la inversión exitosamente</div>
+					</div>
 				</div>
 			</section>
 			<section class="bg-light py-3">
@@ -98,6 +102,11 @@
 
 	</div>
 </div>
+<script type="text/javascript">
+setTimeout(function(){
+	  document.getElementById('alerta').remove();
+	}, 5000);
+</script>
 </body>
 </html>
 

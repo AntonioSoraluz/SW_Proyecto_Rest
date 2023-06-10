@@ -50,7 +50,6 @@ public class RegistroUsuarioController {
 	        model.addAttribute("errorDni", "El DNI ya está registrado");
 	        return "registro";
 	    }
-	    registroDTO.setRuc(registroDTO.getRuc());
 	    registroDTO.setFechaIngreso(new Date());
 	    registroDTO.setEstado(1);
 	    usuarioService.guardar(registroDTO, "ROLE_USER");

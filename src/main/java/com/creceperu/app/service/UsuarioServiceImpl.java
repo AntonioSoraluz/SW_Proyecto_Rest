@@ -62,7 +62,7 @@ public class UsuarioServiceImpl implements UsuarioService {
 	public Usuario guardar(UsuarioRegistroDTO registroDTO, String role) {
 		Rol rol = rolRepository.findByNombre(role);
 		Usuario usuario = new Usuario(registroDTO.getNombres(), registroDTO.getApellidos(), registroDTO.getDni(),
-				registroDTO.getUbigeo(), registroDTO.getRuc(),registroDTO.getDireccion(), registroDTO.getTelefono(), registroDTO.getEmail(),
+				registroDTO.getUbigeo(),registroDTO.getDireccion(), registroDTO.getTelefono(), registroDTO.getEmail(),
 				registroDTO.getEmailRecuperacion(), passwordEncoder.encode(registroDTO.getPassword()), registroDTO.getFechaIngreso(),
 				registroDTO.getEstado());
 		usuario.getRoles().add(rol);

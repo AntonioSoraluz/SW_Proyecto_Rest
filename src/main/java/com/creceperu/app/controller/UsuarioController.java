@@ -8,10 +8,12 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -21,6 +23,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.creceperu.app.model.Empresa;
 import com.creceperu.app.model.Oportunidad;
+import com.creceperu.app.model.OportunidadUsuario;
 import com.creceperu.app.model.OportunidadesDisponiblesResult;
 import com.creceperu.app.model.OportunidadesPagadasResult;
 import com.creceperu.app.model.OportunidadesTomadasResult;
@@ -29,6 +32,7 @@ import com.creceperu.app.model.Saldo;
 import com.creceperu.app.model.Usuario;
 import com.creceperu.app.repository.EmpresaRepository;
 import com.creceperu.app.repository.OportunidadRepository;
+import com.creceperu.app.repository.OportunidadUsuarioRepository;
 import com.creceperu.app.repository.RolRepository;
 import com.creceperu.app.repository.SaldoRepository;
 import com.creceperu.app.repository.UsuarioRepository;
@@ -51,6 +55,9 @@ public class UsuarioController {
 	
 	@Autowired
 	private EmpresaRepository empresaRepository;
+	
+	@Autowired
+	private OportunidadUsuarioRepository oportunidadUsuarioRepository;
 	
 	@GetMapping("/login")
 	public String iniciarSesion() {
@@ -116,6 +123,11 @@ public class UsuarioController {
 	    return "redirect:/perfilUsuario?exito";
 	}
 	
+	@ModelAttribute("OportunidadUsuario")
+	public OportunidadUsuario retornarOportunidadUsuario() {
+		return new OportunidadUsuario();
+	}
+	
 	@GetMapping("/verOportunidad")
 	public String verOportunidadDetalle(@RequestParam("idOportunidad") String idOportunidad, 
 			@RequestParam("razonsocial") String razonsocial,Model model, Authentication authentication) {
@@ -162,4 +174,38 @@ public class UsuarioController {
 		model.addAttribute("oportunidadesPagadas", oportunidadesPagadas);
 		return "verOportunidad";
 	}
+	
+	@PostMapping("/verOportunidad")
+	@Transactional
+	public String tomarOportunidad(@RequestParam("Id_Oportunidad") String Id_Oportunidad, @RequestParam("RazonSocial") String RazonSocial,
+			@ModelAttribute("OportunidadUsuario") OportunidadUsuario oportunidadUsuario, Authentication authentication, Model model) {
+	    CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+	    Optional<Saldo> optionalSaldo = saldoRepository.findById(customUserDetails.getId());
+	    if (optionalSaldo.isPresent()) {
+	        Saldo saldo = optionalSaldo.get();
+	        Double saldoActual = saldo.getSaldo();
+
+	        /*if (oportunidadUsuario.getMonto_invertido() > saldoActual) {
+	            return "redirect:/verOportunidad?error";
+	        }*/
+	        /*if (oportunidadUsuario.getMonto_invertido() > saldoActual) {
+	            model.addAttribute("errorSaldo","El monto a invertir es mayor al saldo disponible de la cuenta");
+	            return "verOportunidad";
+	        }*/
+	        if (oportunidadUsuario.getMonto_invertido() > saldoActual) {
+	            String errorUrl = "/verOportunidad?idOportunidad=" + Id_Oportunidad + "&razonsocial=" + RazonSocial + "&error";
+	            return "redirect:" + errorUrl;
+	        }
+	        double nuevoSaldo = saldoActual - oportunidadUsuario.getMonto_invertido();
+	        saldo.setSaldo(nuevoSaldo);
+	        saldoRepository.save(saldo);
+	        oportunidadUsuario.setOportunidad_id(Id_Oportunidad);
+	        oportunidadUsuario.setUsuario_id(customUserDetails.getId());
+	        oportunidadUsuario.setFecha_registro(new Date());
+	        oportunidadUsuarioRepository.save(oportunidadUsuario);
+	        return "redirect:/?exito";
+	    }
+	    return "redirect:/verOportunidad?error";
+	}
+
 }
