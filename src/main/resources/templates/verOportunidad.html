@@ -158,6 +158,7 @@
 							</div>
 							<input id="montoTotalOportunidad" type="hidden" class="form-control" th:value="${oportunidadSelecionada.monto}">
 							<input id="montoDisponibleOportunidad" type="hidden" class="form-control" th:value="${oportunidadSelecionada.monto_disponible}">
+							<input id="tasaRiesgo" type="hidden" class="form-control" th:value="${oportunidadSelecionada.tasa_riesgo}">
 							<input id="tasaAnual" type="hidden" class="form-control" th:value="${oportunidadSelecionada.rendimiento}">
 							<input id="tasaMensual" type="hidden" class="form-control">
 							<input id="fechaInicio" type="hidden" class="form-control">
@@ -182,11 +183,10 @@
 											<div id="montoInvalidoFeedback" class="invalid-feedback">Ingrese un monto valido.
 												La inversión no puede ser mayor a lo disponible a invertir.</div>
 										</div>
-
 										<div class="col-sm-6">
-											<label class="control-label" for="ganancia">Ganancia
-												de la Inversión(S/) : </label> <input id="ganancia" type="text" 
-												class="form-control" th:field="*{ganancia_esperada}" readonly>
+											<label class="control-label" for="bonificacion">Bonificación
+												por Tasa de Riesgo(S/) : </label> <input id="bonificacion" type="text" 
+												class="form-control" readonly>
 										</div>
 									</div>
 									<div class="form-group row">
@@ -195,7 +195,11 @@
 												de la Oportunidad(%) : </label> <input id="porcentajeOportunidad" type="text" 
 												class="form-control" th:field="*{porcentaje_oportunidad}" readonly>
 										</div>
-										
+										<div class="col-sm-6">
+											<label class="control-label" for="ganancia">Ganancia
+												de la Inversión(S/) : </label> <input id="ganancia" type="text" 
+												class="form-control" th:field="*{ganancia_esperada}" readonly>
+										</div>
 									</div>
 									<div class="form-group row d-none">
 										<div class="col-sm-6 mb-3 mb-sm-0">
@@ -250,6 +254,7 @@
      $("#inversion").keyup(function() {
        var montoTotal = parseFloat($("#montoTotalOportunidad").val());
        var montoInvertido = parseFloat($("#inversion").val());
+       var tasaRiesgo = parseFloat($("#tasaRiesgo").val());
 
        if (montoInvertido > montoDisponible) {
        } else {
@@ -258,10 +263,22 @@
 
          var dias = $("#dias").val();
          var ganancia = montoInvertido * (Math.pow(1 + tasaDiaria / 100, dias) - 1);
-         var gananciaRedondeada = ganancia.toFixed(2);
-         $("#ganancia").val(gananciaRedondeada);
+         var bonificacion = 0;
+ 	    if (tasaRiesgo > 5 && tasaRiesgo <= 20) {
+ 	      bonificacion = ganancia * 1.5;
+ 	    } else if (tasaRiesgo > 20 && tasaRiesgo <= 50) {
+ 	      bonificacion = ganancia * 2;
+ 	    } else if (tasaRiesgo > 50) {
+ 	      bonificacion = ganancia * 3;
+ 	    }
+ 	   var gananciaTotal = ganancia + bonificacion;
+ 	   
+         var gananciaTotalRedondeada = gananciaTotal.toFixed(2);
+         $("#ganancia").val(gananciaTotalRedondeada);
+         $("#bonificacion").val(bonificacion.toFixed(2));
        }
      });
+
    
 		(() => {
 			  'use strict';

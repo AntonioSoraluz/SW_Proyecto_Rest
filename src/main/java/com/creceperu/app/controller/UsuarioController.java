@@ -184,14 +184,6 @@ public class UsuarioController {
 	    if (optionalSaldo.isPresent()) {
 	        Saldo saldo = optionalSaldo.get();
 	        Double saldoActual = saldo.getSaldo();
-
-	        /*if (oportunidadUsuario.getMonto_invertido() > saldoActual) {
-	            return "redirect:/verOportunidad?error";
-	        }*/
-	        /*if (oportunidadUsuario.getMonto_invertido() > saldoActual) {
-	            model.addAttribute("errorSaldo","El monto a invertir es mayor al saldo disponible de la cuenta");
-	            return "verOportunidad";
-	        }*/
 	        if (oportunidadUsuario.getMonto_invertido() > saldoActual) {
 	            String errorUrl = "/verOportunidad?idOportunidad=" + Id_Oportunidad + "&razonsocial=" + RazonSocial + "&error";
 	            return "redirect:" + errorUrl;
@@ -199,6 +191,14 @@ public class UsuarioController {
 	        double nuevoSaldo = saldoActual - oportunidadUsuario.getMonto_invertido();
 	        saldo.setSaldo(nuevoSaldo);
 	        saldoRepository.save(saldo);
+	        Oportunidad oportunidad = oportunidadRepository.findByOportunidadId(Id_Oportunidad);
+	        double nuevoMontoOportunidad = oportunidad.getMonto_disponible() - oportunidadUsuario.getMonto_invertido();
+	        oportunidad.setMonto_disponible(nuevoMontoOportunidad);
+	        
+	        if (nuevoMontoOportunidad == 0) {
+	            oportunidad.setEstado("Tomada");
+	        }
+	        oportunidadRepository.save(oportunidad);
 	        oportunidadUsuario.setOportunidad_id(Id_Oportunidad);
 	        oportunidadUsuario.setUsuario_id(customUserDetails.getId());
 	        oportunidadUsuario.setFecha_registro(new Date());

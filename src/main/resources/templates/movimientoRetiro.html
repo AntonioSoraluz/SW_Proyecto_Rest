@@ -29,7 +29,7 @@
 									th:object="${movimiento}" id="formulario" novalidate>
 									<div th:if=${param.exito}>
 										<div class="alert alert-info" id="alerta">Se ha
-											hecho el retiro exitosamente</div>
+											realizado el retiro exitosamente</div>
 									</div>
 									<div th:if=${param.error}>
 										<div class="alert alert-danger" id="alerta">El saldo 
@@ -44,7 +44,7 @@
 													id="cuentaBancariaSelect" required>
 													<option selected value="" required>Seleccione...</option>
 													<option th:each="cb: ${lstCuentasBancarias}" th:value="${cb.id_cuentaBancaria}"
-														th:text="${cb.numeroCuenta}"></option>
+														th:text="${cb.objBanco.nombre_banco}+' | '+${cb.numeroCuenta}"></option>
 												</select>
 												<div class="invalid-feedback">Seleccione una Cuenta Bancaria.</div>
 											</div>
