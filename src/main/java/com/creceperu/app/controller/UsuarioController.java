@@ -26,7 +26,7 @@ import com.creceperu.app.model.Oportunidad;
 import com.creceperu.app.model.OportunidadUsuario;
 import com.creceperu.app.model.OportunidadesDisponiblesResult;
 import com.creceperu.app.model.OportunidadesPagadasResult;
-import com.creceperu.app.model.OportunidadesTomadasResult;
+import com.creceperu.app.model.OportunidadesRetrasadasResult;
 import com.creceperu.app.model.Rol;
 import com.creceperu.app.model.Saldo;
 import com.creceperu.app.model.Usuario;
@@ -149,17 +149,17 @@ public class UsuarioController {
 		}
 		model.addAttribute("oportunidadesDisponibles", oportunidadesDisponibles);
 		
-		List<Object[]> results2 = oportunidadRepository.getOportunidadesTomadas(razonsocial);
-		List<OportunidadesTomadasResult> oportunidadesTomadas = new ArrayList<>();
+		List<Object[]> results2 = oportunidadRepository.getOportunidadesRetrasadas(razonsocial);
+		List<OportunidadesRetrasadasResult> oportunidadesRetrasadas = new ArrayList<>();
 
 		for (Object[] result : results2) {
 		    int count = ((BigInteger) result[0]).intValue();
 		    Double sum = ((Number) result[1]).doubleValue();
-		    OportunidadesTomadasResult oportunidadTR = new OportunidadesTomadasResult(count, sum);
-		    oportunidadesTomadas.add(oportunidadTR);
+		    OportunidadesRetrasadasResult oportunidadTR = new OportunidadesRetrasadasResult(count, sum);
+		    oportunidadesRetrasadas.add(oportunidadTR);
 		}
 
-		model.addAttribute("oportunidadesTomadas", oportunidadesTomadas);
+		model.addAttribute("oportunidadesRetrasadas", oportunidadesRetrasadas);
 		
 		List<Object[]> results3 = oportunidadRepository.getOportunidadesPagadas(razonsocial);
 		List<OportunidadesPagadasResult> oportunidadesPagadas = new ArrayList<>();

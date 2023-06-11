@@ -100,7 +100,7 @@
 														    <tr>
 														      <th scope="col"></th>
 														      <th scope="col">Disponibles</th>
-														      <th scope="col">Tomadas</th>
+														      <th scope="col">Restrasadas</th>
 														      <th scope="col">Pagadas</th>
 														    </tr>
 														 </thead>
@@ -108,13 +108,13 @@
 														 	<tr>
 														      <th scope="row">Oportunidades</th>
 														      <td class="card-text font-weight-bold" th:each="od : ${oportunidadesDisponibles}" th:text="${od.oportunidadesDisponibles}"></td>
-														      <td class="card-text font-weight-bold" th:each="ot : ${oportunidadesTomadas}" th:text="${ot.oportunidadesTomadas}"></td>
+														      <td class="card-text font-weight-bold" th:each="ot : ${oportunidadesRetrasadas}" th:text="${ot.oportunidadesRetrasadas}"></td>
 														      <td class="card-text font-weight-bold" th:each="op : ${oportunidadesPagadas}" th:text="${op.oportunidadesPagadas}"></td>
 														    </tr>
 														    <tr>
 														      <th scope="row">Monto</th>
 														      <td class="card-text font-weight-bold" th:each="od : ${oportunidadesDisponibles}" th:text="'S/'+${od.montoOportunidadesDisponibles}"></td>
-														      <td class="card-text font-weight-bold" th:each="ot : ${oportunidadesTomadas}" th:text="'S/'+${ot.montoOportunidadesTomadas}"></td>
+														      <td class="card-text font-weight-bold" th:each="ot : ${oportunidadesRetrasadas}" th:text="'S/'+${ot.montoOportunidadesRetrasadas}"></td>
 														      <td class="card-text font-weight-bold" th:each="op : ${oportunidadesPagadas}" th:text="'S/'+${op.montoOportunidadesPagadas}"></td>
 														    </tr>
 														 </tbody>
