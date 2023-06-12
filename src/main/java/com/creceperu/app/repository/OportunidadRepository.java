@@ -8,9 +8,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import com.creceperu.app.model.Oportunidad;
-import com.creceperu.app.model.OportunidadesDisponiblesResult;
-import com.creceperu.app.model.OportunidadesPagadasResult;
-import com.creceperu.app.model.OportunidadesRetrasadasResult;
 
 @Repository
 public interface OportunidadRepository extends JpaRepository<Oportunidad, String>{
