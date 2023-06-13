@@ -1,3 +1,6 @@
+setTimeout(function(){
+	document.getElementById('alerta').remove();
+}, 5000);
 (() => {
   'use strict'
 

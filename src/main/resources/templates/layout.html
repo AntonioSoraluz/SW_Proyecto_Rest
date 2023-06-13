@@ -52,6 +52,7 @@
 			<a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/oportunidad/registroOportunidad}" class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead mr-2"></i> Oportunidad</a>
 			<a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/registroEmpresa}" class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead mr-2"></i> Empresa</a>
 			<a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/registroFactura}"class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead mr-2"></i> Factura </a>
+			<a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/dashboard}"class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Dashboard </a>
 		</div>
 	</div>
 	<!-- Fin sidebar -->
