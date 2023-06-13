@@ -123,10 +123,12 @@
 										<div class="invalid-feedback">Ingrese una contraseña. La contraseña debe ser de 8 a 15 caracteres. 
 										La contraseña debe tener al menos una letra minuscula, una mayuscula y un número. Sin espacios en blanco.</div>
 									</div>
-									<!--  <div class="col-sm-6">
+									<div class="col-sm-6">
+										<label class="control-label" for="repeatPassword">Repita la Contraseña:</label>
                                         <input type="password" class="form-control form-control-user"
-                                            id="exampleRepeatPassword" placeholder="Repeat Password">
-                                    </div> -->
+                                            id="repeatPassword">
+                                        <div class="invalid-feedback">No coincide la contraseña.</div>    
+                                    </div>
 								</div>
 								<div class="form-group">
 									<label class="control-label" for="emailRecuperacion">Email
@@ -158,6 +160,21 @@
 
 	</div>
     <script src="js/registro.js"></script>
+    <script>
+	  const passwordInput = document.querySelector("#password");
+	  const repeatPasswordInput = document.querySelector("#repeatPassword");
+	
+	  const validatePassword = () => {
+	    if (passwordInput.value !== repeatPasswordInput.value) {
+	      repeatPasswordInput.setCustomValidity("Las contraseñas no coinciden");
+	    } else {
+	      repeatPasswordInput.setCustomValidity("");
+	    }
+	  };
+	
+	  passwordInput.addEventListener("input", validatePassword);
+	  repeatPasswordInput.addEventListener("input", validatePassword);
+	</script>
 </body>
 </html>
 
