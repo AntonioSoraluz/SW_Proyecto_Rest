@@ -1,6 +1,9 @@
 setTimeout(function(){
-	document.getElementById('alerta').remove();
-}, 5000);
+    var alertaElement = document.getElementById('alerta');
+    if (alertaElement) {
+        alertaElement.remove();
+    }
+}, 3000);
 (() => {
   'use strict'
 

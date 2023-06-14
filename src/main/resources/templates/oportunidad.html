@@ -53,7 +53,7 @@
 								</div>
 								</div>
 							<div class="container">
-							    <table id="tblfactura" class="table">
+							    <table id="tblfactura" class="table table-bordered table-responsive">
 							        <thead>
 							        <tr>
 							            <th scope="col">Código</th>
@@ -78,7 +78,7 @@
 									th:action="@{/oportunidad/registrarOportunidad}" method="post"
 									th:object="${oportunidad}" id="formulario" novalidate>
 								<input type="hidden" id="codigoEmpresaEscondido" name="codigoEmpresaEscondido" th:field="*{id_empresa}"/>
-							    <table id="tabladestino" class="table">
+							    <table id="tabladestino" class="table table-bordered table-responsive">
 							        <thead>
 							        <tr>
 							            <th scope="col">Código</th>

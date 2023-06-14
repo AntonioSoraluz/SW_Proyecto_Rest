@@ -34,7 +34,7 @@
 										
 										    <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordion">
 										      <div class="card-body">
-										        <p class="card-title" th:text="${oportunidadSelecionada.objEmpresa.razonsocial}+' | '+'Calificación: '+${oportunidadSelecionada.calificacion}"></p>
+										        <p class="card-title font-weight-bold text-dark" th:text="${oportunidadSelecionada.objEmpresa.razonsocial}+' | '+'Calificación: '+${oportunidadSelecionada.calificacion}"></p>
 										        <div class="row">
 										        	<div class="col-lg-6">
 										        		<p class="card-text font-weight-bold text-left" th:text="'Rendimiento: '+${oportunidadSelecionada.rendimiento}+ '%'"></p>
@@ -60,7 +60,7 @@
 										    </div>
 										    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordion">
 										      <div class="card-body">
-											       <table class="table table-bordered">
+											       <table class="table table-bordered table-responsive">
 											       		<thead>
 														    <tr>
 														      <th scope="col"></th>
