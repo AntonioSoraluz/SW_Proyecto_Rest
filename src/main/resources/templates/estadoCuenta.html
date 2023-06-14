@@ -3,20 +3,20 @@
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:replace="layout::head"></head>
 <body>
-<div class="d-flex" id="content-wrapper">
+<div class="wrapper">
 
 	<!-- Sidebar -->
-	<div th:replace="layout::sidebar"></div>
+	<nav th:replace="layout::menulateral"></nav>
 	<!-- Fin sidebar -->
 
-	<div class="w-100">
+	<div id="content">
 
 		<!-- Navbar -->
-		<nav th:replace="layout::navbar"></nav>
+		<nav th:replace="layout::navperfil"></nav>
 		<!-- Fin Navbar -->
 
 		<!-- Page Content -->
-		<div id="content" class="bg-grey w-100">
+		
 
 			<section class="bg-light py-3">
 				<div class="container">
@@ -75,8 +75,6 @@
 						</div>
 
 						<div class="col-lg-4 my-3">
-							
-							
 							<div class="card rounded-0 sticky-top">
 								<div class="card-header bg-light">
 									<h6 class="font-weight-bold mb-0">Tus inversiones</h6>
@@ -109,7 +107,7 @@
 			</section>
 
 
-		</div>
+		
 
 	</div>
 </div>

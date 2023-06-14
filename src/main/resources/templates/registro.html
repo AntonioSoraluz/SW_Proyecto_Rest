@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
+<head th:fragment="headlogin">
 <!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -24,7 +24,7 @@
 			href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css"
 			rel="stylesheet">
 
-	<link rel="stylesheet" th:href="@{/css/index.css}">
+	<link rel="stylesheet" th:href="@{/css/indexLogin.css}">
 
 	<!-- Optional JavaScript -->
 	<!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -35,6 +35,14 @@
 	<script type="text/javascript" th:src="@{/js/jquery.dataTables.min.js}"></script>
 	<title>Crece Perú</title>
 </head>
+<style>
+	body {
+    overflow: auto;
+    font-family: 'Muli', sans-serif;
+    font-weight: 300;
+    color: var(--primary);
+}
+</style>
 <body class="bg-gradient-primary">
 
 	<div class="container">

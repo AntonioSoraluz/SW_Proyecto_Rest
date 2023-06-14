@@ -3,36 +3,38 @@
 	  xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head th:replace="layout::head"></head>
 <body>
-<div class="d-flex" id="content-wrapper">
+<div class="wrapper">
 
 	<!-- Sidebar -->
-	<div th:replace="layout::sidebar"></div>
+	<nav th:replace="layout::menulateral"></nav>
 	<!-- Fin sidebar -->
 
-	<div class="w-100">
+	<div id="content">
 
 		<!-- Navbar -->
-		<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom" th:fragment="navbarPrincipal">
-			<div class="container">
+		<nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="navperfilprincipal">
+            <div class="container-fluid">
 
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-						data-target="#navbarSupportedContent"
-						aria-controls="navbarSupportedContent" aria-expanded="false"
-						aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
-
-				<div class="collapse navbar-collapse" id="navbarSupportedContent">
-					<form class="form-inline position-relative d-inline-block my-2"
+                <button type="button" id="sidebarCollapse" class="btn" style="background-color: #111B54;">
+                    <i class="icon ion-md-apps lead mr-2 text-white"></i>
+                    <span class="text-white">Menú</span>
+                </button>
+                <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                    
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                	<form class="form-inline position-relative d-inline-block my-2"
 					th:action="@{/filtrarOportunidad}" method="post">
-						<input class="form-control" type="search" placeholder="Buscar"
+						<input class="form-control ml-sm-2" type="search" placeholder="Buscar"
 							   aria-label="Buscar" name="filtro">
-						<button class="btn position-absolute btn-search" type="submit">
+						<button class="btn btn-search my-2 my-sm-0" type="submit">
 							<i class="icon ion-md-search"></i>
 						</button>
 					</form>
-					<ul class="navbar-nav ml-auto mt-2 mt-lg-0">
-						<li><span class="navbar-text text-dark font-weight-bold mb-0" th:text="'Saldo: '+ 'S/'+ ${saldo}+ ' | '"></span></li>
+                    <ul class="nav navbar-nav ml-auto">
+                        <li><span class="navbar-text text-dark font-weight-bold mb-0" th:text="'Saldo: '+ 'S/'+ ${saldo}+ ' | '"></span></li>
 						<li class="nav-item dropdown"><a
 								class="nav-link text-dark dropdown-toggle" href="#"
 								id="navbarDropdown" role="button" data-toggle="dropdown"
@@ -49,14 +51,13 @@
 										sesión</button>
 								</form>
 							</div></li>
-					</ul>
-				</div>
-			</div>
-		</nav>
+                    </ul>
+                </div>
+            </div>
+        </nav>
 		<!-- Fin Navbar -->
 
 		<!-- Page Content -->
-		<div id="content" class="bg-grey w-100">
 			<section class="bg-light py-3">
 				<div class="container">
 					<div class="row">
@@ -90,7 +91,6 @@
 			    </div>
 			  </div>
 			</section>
-		</div>
 
 	</div>
 </div>
