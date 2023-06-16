@@ -2,6 +2,8 @@ package com.creceperu.app.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -13,10 +15,10 @@ import com.creceperu.app.model.Oportunidad;
 public interface OportunidadRepository extends JpaRepository<Oportunidad, String>{
 	@Query(value = "SELECT id_oportunidad FROM Oportunidad ORDER BY id_oportunidad DESC LIMIT 1", nativeQuery = true)
 	String getLastGeneratedCode();
-	@Query(value = "SELECT * FROM oportunidad WHERE estado = 'Disponible' AND fecha_pago > CURRENT_DATE()", nativeQuery = true)
-	List<Oportunidad> findAllOportunidades();
-	@Query("SELECT o FROM Oportunidad o INNER JOIN o.objEmpresa e WHERE o.estado = 'Disponible' AND ((:filtro = '') OR (o.calificacion = :filtro OR e.razonsocial = :filtro)) AND o.fechaPago > CURRENT_DATE() ORDER BY o.fecharegistro")
-	List<Oportunidad> findOportunidadesXFiltro(@Param("filtro") String filtro);
+	@Query(value = "SELECT * FROM oportunidad WHERE estado = 'Disponible' AND fecha_pago > CURRENT_DATE() ORDER BY o.fechaPago", nativeQuery = true)
+	Page<Oportunidad> findAllOportunidades(Pageable pageable);
+	@Query("SELECT o FROM Oportunidad o INNER JOIN o.objEmpresa e WHERE o.estado = 'Disponible' AND ((:filtro = '') OR (o.calificacion = :filtro OR e.razonsocial = :filtro)) AND o.fechaPago > CURRENT_DATE() ORDER BY o.fechaPago")
+	Page<Oportunidad> findOportunidadesXFiltro(@Param("filtro") String filtro,Pageable pageable);
 
 	@Query("SELECT o FROM Oportunidad o WHERE o.id_oportunidad = :idOportunidad")
     Oportunidad findByOportunidadId(@Param("idOportunidad") String idOportunidad);

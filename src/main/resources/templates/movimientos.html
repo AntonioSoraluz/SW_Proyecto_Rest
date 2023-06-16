@@ -42,6 +42,24 @@
 						    </th:block>
 						    </div>
 					  	</div>
+					  	<div th:if="${totalPages > 1}">
+								    <nav>
+								        <ul class="pagination">
+								            <li class="page-item" th:classappend="${currentPage == 0} ? disabled">
+								                <a class="page-link" th:href="@{/registroMovimiento/movimientos(page=0)}">Primera</a>
+								            </li>
+								            <li class="page-item" th:classappend="${currentPage == 0} ? disabled">
+								                <a class="page-link" th:href="@{/registroMovimiento/movimientos(page=${currentPage - 1})}">Anterior</a>
+								            </li>
+								            <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? disabled">
+								                <a class="page-link" th:href="@{/registroMovimiento/movimientos(page=${currentPage + 1})}">Siguiente</a>
+								            </li>
+								            <li class="page-item" th:classappend="${currentPage + 1 == totalPages} ? disabled">
+								                <a class="page-link" th:href="@{/registroMovimiento/movimientos(page=${totalPages - 1})}">Última</a>
+								            </li>
+								        </ul>
+								    </nav>
+							</div>
 					</div>
 				</section>
 			</div>

@@ -9,6 +9,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -64,21 +67,30 @@ public class UsuarioController {
 	}
 	
 	@GetMapping("/")
-	public String verPaginaDeInicio(Model model, Authentication authentication) {
+	public String verPaginaDeInicio(Model model, Authentication authentication, @RequestParam(defaultValue = "0") int page) {
+		int pageSize = 6; // Número de elementos por página
 		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 		Saldo saldo = saldoRepository.findById(customUserDetails.getId()).orElse(new Saldo(customUserDetails.getId(), 0.0));
 		model.addAttribute("saldo", saldo.getSaldo());
-		List<Oportunidad> oportunidades = oportunidadRepository.findAllOportunidades();
-		model.addAttribute("lstOportunidades", oportunidades);
+		Pageable pageable = PageRequest.of(page, pageSize);
+		Page<Oportunidad> oportunidadesPage = oportunidadRepository.findOportunidadesXFiltro("", pageable);
+		model.addAttribute("lstOportunidades", oportunidadesPage.getContent());
+		model.addAttribute("currentPage", page);
+	    model.addAttribute("totalPages", oportunidadesPage.getTotalPages());
 		return "principal";
 	}
-	@PostMapping("/filtrarOportunidad")
-	public String verPaginaConFiltro(Model model, Authentication authentication, @RequestParam("filtro") String filtro) {
+	@PostMapping("/")
+	public String verPaginaConFiltro(Model model, Authentication authentication, @RequestParam("filtro") String filtro,
+			@RequestParam(defaultValue = "0") int page) {
+		int pageSize = 6; // Número de elementos por página
 		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 		Saldo saldo = saldoRepository.findById(customUserDetails.getId()).orElse(new Saldo(customUserDetails.getId(), 0.0));
 		model.addAttribute("saldo", saldo.getSaldo());
-		List<Oportunidad> oportunidades = oportunidadRepository.findOportunidadesXFiltro(filtro);
-		model.addAttribute("lstOportunidades", oportunidades);
+		Pageable pageable = PageRequest.of(page, pageSize);
+		Page<Oportunidad> oportunidadesPage = oportunidadRepository.findOportunidadesXFiltro(filtro, pageable);
+		model.addAttribute("lstOportunidades", oportunidadesPage.getContent());
+		model.addAttribute("currentPage", page);
+	    model.addAttribute("totalPages", oportunidadesPage.getTotalPages());
 		return "principal";
 	}
 	@ResponseBody

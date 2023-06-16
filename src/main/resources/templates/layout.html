@@ -48,12 +48,17 @@
         <ul class="list-unstyled components">
             <li><a th:href="@{/}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Inicio</a></li>
             <li><a th:href="@{/estadoDeCuenta}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Estado de cuenta</a></li>
-            <li><a th:href="@{/registroCuentaBancaria}" class="d-block text-light p-3 border-0"><i class="icon ion-md-person lead mr-2"></i> Cuenta Bancaria</a></li>
+            <li><a href="#cuentasSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="icon ion-md-person lead mr-2"></i> Cuentas Bancarias</a>
+                 <ul class="collapse list-unstyled" id="cuentasSubmenu">
+                  <li><a th:href="@{/cuentaBancaria/CuentasBancarias}" class="d-block text-light p-3 border-0"> Mis Cuentas Bancarias</a></li>
+                  <li><a th:href="@{/cuentaBancaria/registroCuentaBancaria}" class="d-block text-light p-3 border-0"> Nueva Cuenta Bancaria</a></li>
+                 </ul>
+            </li>
             <li><a href="#movimientosSubmenu" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="icon ion-md-person lead mr-2"></i> Movimientos</a>
                  <ul class="collapse list-unstyled" id="movimientosSubmenu">
                   <li><a th:href="@{/registroMovimiento/movimientos}" class="d-block text-light p-3 border-0"> Mis Movimientos</a></li>
-                  <li><a th:href="@{/registroMovimiento/deposito}" class="d-block text-light p-3 border-0"> Depósito</a></li>
-                  <li><a th:href="@{/registroMovimiento/retiro}" class="d-block text-light p-3 border-0"> Retiro</a></li>
+                  <li><a th:href="@{/registroMovimiento/deposito}" class="d-block text-light p-3 border-0"> Nuevo Depósito</a></li>
+                  <li><a th:href="@{/registroMovimiento/retiro}" class="d-block text-light p-3 border-0"> Nuevo Retiro</a></li>
                  </ul>
             </li>
             <li><a th:if="${#authorization.expression('hasRole(''ADMIN'')')}" th:href="@{/oportunidad/registroOportunidad}" class="d-block text-light p-3 border-0"><i class="icon ion-md-stats lead mr-2"></i> Oportunidad</a></li>

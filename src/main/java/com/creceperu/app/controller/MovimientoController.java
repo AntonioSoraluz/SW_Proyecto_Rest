@@ -14,6 +14,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import com.creceperu.app.controller.dto.MovimientoRegistroDTO;
 import com.creceperu.app.model.CuentaBancaria;
@@ -57,11 +61,16 @@ public class MovimientoController {
 	}
 	
 	@GetMapping("/movimientos")
-	public String mostrarListaDeMovimientos(Model model, Authentication authentication) {
-		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
-		List<Movimiento> movimientos = movimientoRepository.findByObjUsuarioId(customUserDetails.getId());
-		model.addAttribute("lstMovimientos", movimientos);
-		return "movimientos";
+	public String mostrarListaDeMovimientos(Model model, Authentication authentication, @RequestParam(defaultValue = "0") int page) {
+	    int pageSize = 5; // Número de elementos por página
+	    CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
+	    Sort sort = Sort.by(Sort.Direction.DESC, "fechaMovimiento");
+	    Pageable pageable = PageRequest.of(page, pageSize, sort);
+	    Page<Movimiento> movimientoPage = movimientoRepository.findByObjUsuarioId(customUserDetails.getId(), pageable);
+	    model.addAttribute("lstMovimientos", movimientoPage.getContent());
+	    model.addAttribute("currentPage", page);
+	    model.addAttribute("totalPages", movimientoPage.getTotalPages());
+	    return "movimientos";
 	}
 	
 	@GetMapping("/deposito")

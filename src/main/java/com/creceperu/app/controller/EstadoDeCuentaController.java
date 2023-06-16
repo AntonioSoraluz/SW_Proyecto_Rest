@@ -10,12 +10,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 
-import com.creceperu.app.model.CuentaBancaria;
 import com.creceperu.app.model.OportunidadUsuario;
 import com.creceperu.app.model.OportunidadesUsuarioResult;
 import com.creceperu.app.model.Saldo;
-import com.creceperu.app.repository.CuentaBancariaRepository;
 import com.creceperu.app.repository.OportunidadUsuarioRepository;
 import com.creceperu.app.repository.SaldoRepository;
 import com.creceperu.app.service.UsuarioServiceImpl.CustomUserDetails;
@@ -28,20 +30,19 @@ public class EstadoDeCuentaController {
 	private SaldoRepository saldoRepository;
 	
 	@Autowired
-	private CuentaBancariaRepository cuentaBancariaRepository;
-	
-	@Autowired
 	private OportunidadUsuarioRepository oportunidadUsuarioRepository;
 	
 	@GetMapping
-	public String verEstadoDeCuenta(Model model, Authentication authentication) {
+	public String verEstadoDeCuenta(Model model, Authentication authentication, @RequestParam(defaultValue = "0") int page) {
+		int pageSize = 4; // Número de elementos por página
 		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 		Saldo saldo = saldoRepository.findById(customUserDetails.getId()).orElse(new Saldo(customUserDetails.getId(), 0.0));
 		model.addAttribute("saldo", saldo.getSaldo());
-		List<CuentaBancaria> cuentasBancarias = cuentaBancariaRepository.findByObjUsuarioId(customUserDetails.getId());
-		model.addAttribute("cuentasBancarias", cuentasBancarias);
-		List<OportunidadUsuario> oportunidades = oportunidadUsuarioRepository.findByObjUsuarioId(customUserDetails.getId());
-		model.addAttribute("oportunidades", oportunidades);
+		Pageable pageable = PageRequest.of(page, pageSize);
+		Page<OportunidadUsuario> oportunidadesPage = oportunidadUsuarioRepository.findByObjUsuarioId(customUserDetails.getId(), pageable);
+		model.addAttribute("oportunidades", oportunidadesPage.getContent());
+		model.addAttribute("currentPage", page);
+	    model.addAttribute("totalPages", oportunidadesPage.getTotalPages());
 		List<Object[]> results = oportunidadUsuarioRepository.getOportunidadesUsuario(customUserDetails.getId());
 		List<OportunidadesUsuarioResult> oportunidadesUsuario = new ArrayList<>();
 
