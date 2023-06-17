@@ -40,11 +40,9 @@
 						          </div>
 						        </div>
 						    </th:block>
-						    </div>
-					  	</div>
 					  	<div th:if="${totalPages > 1}">
 								    <nav>
-								        <ul class="pagination">
+								        <ul class="pagination justify-content-center">
 								            <li class="page-item" th:classappend="${currentPage == 0} ? disabled">
 								                <a class="page-link" th:href="@{/registroMovimiento/movimientos(page=0)}">Primera</a>
 								            </li>
@@ -60,6 +58,8 @@
 								        </ul>
 								    </nav>
 							</div>
+							</div>
+					  	</div>
 					</div>
 				</section>
 			</div>
