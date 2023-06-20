@@ -16,11 +16,10 @@
 			<!-- Fin Navbar -->
 
 			<!-- Page Content -->
-			<div id="content" class="bg-grey w-100">
 				<section class="bg-light py-3">
 					<div class="row">
-						<div class="col-lg-7">
-							<div class="p-5">
+						<div class="col-lg-8">
+							<div class="p-2">
 								<div class="text-center">
 									<h1 class="h4 text-gray-900 mb-4">Añadir una 
 										Factura</h1>
@@ -53,10 +52,10 @@
 									</div>
 									<div class="form-group row">
 										<div class="col-sm-6 mb-3 mb-sm-0">
-											<label for="validationCustom07" class="form-label">Empresa:</label>
+											<label for="empresaSelect" class="control-label">Empresa:</label>
 											<div class="col">
 												<select th:field="*{ruc}" class="custom-select"
-													id="bancoSelect" required>
+													id="empresaSelect" required>
 													<option selected value="" required>Seleccione...</option>
 													<option th:each="e: ${lstEmpresa}" th:value="${e.ruc}"
 														th:text="${e.razonsocial}"></option>
@@ -74,8 +73,8 @@
 											al día de hoy.</div>
 										</div>
 									</div>
-									<div class="form-group row">
-										<div class="col-sm-6 mb-3 mb-sm-0">
+									<div class="form-group">
+										<div class="col-sm-6">
 											<label class="control-label" for="monto">Monto : </label> <input
 												id="monto" type="number" class="form-control"
 												th:field="*{monto}" autofocus="autofocus" 
@@ -96,12 +95,11 @@
 								</form>
 							</div>
 						</div>
-						<div class="col-lg-5 d-none d-lg-block bg-register-image">
+						<div class="col-lg-4 d-none d-lg-block bg-register-image">
 							<img class="img-fluid" th:src="@{/img/factura_img.jpg}">
 						</div>
 					</div>
 				</section>
-			</div>
 		</div>
 	</div>
 </body>

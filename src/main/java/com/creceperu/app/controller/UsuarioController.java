@@ -68,7 +68,7 @@ public class UsuarioController {
 	
 	@GetMapping("/")
 	public String verPaginaDeInicio(Model model, Authentication authentication, @RequestParam(defaultValue = "0") int page) {
-		int pageSize = 6; // Número de elementos por página
+		int pageSize = 8; // Número de elementos por página
 		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 		Saldo saldo = saldoRepository.findById(customUserDetails.getId()).orElse(new Saldo(customUserDetails.getId(), 0.0));
 		model.addAttribute("saldo", saldo.getSaldo());
@@ -82,7 +82,7 @@ public class UsuarioController {
 	@PostMapping("/")
 	public String verPaginaConFiltro(Model model, Authentication authentication, @RequestParam("filtro") String filtro,
 			@RequestParam(defaultValue = "0") int page) {
-		int pageSize = 6; // Número de elementos por página
+		int pageSize = 8; // Número de elementos por página
 		CustomUserDetails customUserDetails = (CustomUserDetails) authentication.getPrincipal();
 		Saldo saldo = saldoRepository.findById(customUserDetails.getId()).orElse(new Saldo(customUserDetails.getId(), 0.0));
 		model.addAttribute("saldo", saldo.getSaldo());

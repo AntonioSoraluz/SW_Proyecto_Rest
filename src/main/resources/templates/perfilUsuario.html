@@ -16,10 +16,18 @@
 			<!-- Fin Navbar -->
 
 			<!-- Page Content -->
+			<section class="bg-light py-3 d-block d-sm-none">
+			<nav aria-label="breadcrumb">
+			  <ol class="breadcrumb">
+			    <li class="breadcrumb-item"><a th:href="@{/}" class="text-primary">Inicio</a></li>
+			    <li class="breadcrumb-item active" aria-current="page">Mi Perfil</li>
+			  </ol>
+			</nav>
+			</section>
 				<section class="bg-light py-3">
 					<div class="row">
 						<div class="col-lg-7">
-							<div class="p-5">
+							<div class="p-2">
 								<div class="text-center">
 									<h1 class="h4 text-gray-900 mb-4">Mi Perfil</h1>
 								</div>
@@ -82,8 +90,7 @@
 										<label class="control-label" for="emailRecuperacion">Email
 											de Recuperación: </label> <input id="emailRecuperacion" type="email"
 											class="form-control" th:field="*{emailRecuperacion}"
-											autofocus="autofocus" required
-											pattern="^(?! )[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+											autofocus="autofocus" required><!-- pattern="^(?! )[a-z0-9._-]+@[a-z0-9.-]+\.[a-z]{2,4}$" -->
 										<div class="invalid-feedback">Ingrese el email de
 											recuperación correctamente.</div>
 									</div>

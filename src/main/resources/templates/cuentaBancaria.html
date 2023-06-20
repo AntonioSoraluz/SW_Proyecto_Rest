@@ -16,6 +16,15 @@
 			<!-- Fin Navbar -->
 
 			<!-- Page Content -->
+			<section class="bg-light py-3 d-block d-sm-none">
+			<nav aria-label="breadcrumb">
+			  <ol class="breadcrumb">
+			  	<li class="breadcrumb-item"><a th:href="@{/}" class="text-primary">Inicio</a></li>
+			    <li class="breadcrumb-item"><a th:href="@{/cuentaBancaria/CuentasBancarias}" class="text-primary">Mis Cuentas Bancarias</a></li>
+			    <li class="breadcrumb-item active" aria-current="page">Cuenta Bancaria</li>
+			  </ol>
+			</nav>
+			</section>
 				<section class="bg-light py-3">
 					<div class="row">
 						<div class="col-lg-7">
@@ -47,7 +56,7 @@
 									<input type="hidden" name="idUsuario" th:value="${#authentication.principal.id}"/>
 									<div class="form-group row">
 										<div class="col-sm-6 mb-3 mb-sm-0">
-											<label for="validationCustom07" class="form-label">Banco:</label>
+											<label for="bancoSelect" class="form-label">Banco:</label>
 											<div class="col">
 												<select th:field="*{id_banco}" class="custom-select"
 													id="bancoSelect" required>

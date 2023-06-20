@@ -16,6 +16,15 @@
 			<!-- Fin Navbar -->
 
 			<!-- Page Content -->
+			<section class="bg-light py-3 d-block d-sm-none">
+			<nav aria-label="breadcrumb">
+			  <ol class="breadcrumb">
+			  	<li class="breadcrumb-item"><a th:href="@{/}" class="text-primary">Inicio</a></li>
+			    <li class="breadcrumb-item"><a th:href="@{/registroMovimiento/movimientos}" class="text-primary">Mis Movimientos</a></li>
+			    <li class="breadcrumb-item active" aria-current="page">Retiro</li>
+			  </ol>
+			</nav>
+			</section>
 				<section class="bg-light py-3">
 					<div class="row">
 						<div class="col-lg-7">
@@ -37,7 +46,7 @@
 									<input type="hidden" name="idUsuario" th:value="${#authentication.principal.id}"/>
 									<div class="form-group row">
 										<div class="col-sm-7 mb-3 mb-sm-0">
-											<label for="validationCustom07" class="form-label">Cuenta Bancaria:</label>
+											<label for="cuentaBancariaSelect" class="form-label">Cuenta Bancaria:</label>
 											<div class="col">
 												<select th:field="*{id_cuentaBancaria}" class="custom-select"
 													id="cuentaBancariaSelect" required>
