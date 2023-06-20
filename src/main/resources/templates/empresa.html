@@ -99,9 +99,9 @@
 											<label class="control-label" for="telefono">Telefono
 												: </label> <input id="telefono" type="text" class="form-control"
 												th:field="*{telefono}" autofocus="autofocus" required
-												pattern="^(?! )(?!.*(\d)\1{4})(9[0-9]{8}|[2-7][0-9]{6})">
+												pattern="^(?! )(?!.*(\d)\1{4})(9[0-9]{8}|01[2-7][0-9]{6})">
 											<div class="invalid-feedback">Ingrese el teléfono
-												correctamente.</div>
+												correctamente. Si es fijo debe comenzar con 01. Sin '()', '-' ó espacios en blanco</div>
 										</div>
 										<div class="col-sm-6">
 											<label class="control-label" for="email">Email : </label> <input

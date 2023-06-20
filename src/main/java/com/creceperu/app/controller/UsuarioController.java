@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.creceperu.app.model.Empresa;
 import com.creceperu.app.model.Oportunidad;
@@ -60,6 +61,9 @@ public class UsuarioController {
 	
 	@Autowired
 	private OportunidadUsuarioRepository oportunidadUsuarioRepository;
+
+	@Autowired
+	private BCryptPasswordEncoder passwordEncoder;
 	
 	@GetMapping("/login")
 	public String iniciarSesion() {
@@ -110,7 +114,11 @@ public class UsuarioController {
 	@PostMapping("/perfilUsuario")
 	public String actualizarUsuario(@RequestParam("fechaIngreso") String fechaIngreso, 
 	    @ModelAttribute Usuario usuario, @RequestParam(value = "rolesSeleccionados", required = false) List<String> rolesSeleccionados, 
-	    Model model) throws ParseException {
+	    @RequestParam("userPassword") String userPassword, Model model) throws ParseException {
+		if (!passwordEncoder.matches(userPassword, usuario.getPassword())) {
+			model.addAttribute("error", "La contraseña ingresada no coincide con la de la sesión");
+	        return "perfilUsuario";
+		}
 	    DateFormat formatoFecha = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 	    Date fecha = formatoFecha.parse(fechaIngreso);
 	    usuario.setFechaIngreso(fecha);
