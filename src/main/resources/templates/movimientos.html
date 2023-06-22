@@ -41,9 +41,9 @@
 						<div class="col-lg-8">
 						    <th:block th:each="movimiento : ${lstMovimientos}">
 						        <div class="card mb-3">
-						        <h5 class="card-header"><span class="text-dark font-weight-bold mb-0" th:text="${movimiento.objCuentaBancaria.objBanco.nombre_banco}"></span> | <span class="text-dark font-weight-bold mb-0" th:text="${movimiento.objCuentaBancaria.numeroCuenta}"></span></h5>
+						        <h5 class="card-header"><span class="text-dark font-weight-bold mb-0" th:text="${movimiento.tipoMovimiento}"></span></h5>
 						          <div class="card-body">
-						            <p class="card-title"><span th:text="${movimiento.tipoMovimiento}"></span> de: <span th:text=" 'S/'+ ${movimiento.monto}"></span></p>
+						            <p class="card-title">Monto del movimiento: <span th:text=" 'S/'+ ${movimiento.monto}"></span></p>
 						            <p class="card-text">Fecha: <span th:text="${movimiento.fechaMovimiento}"></span></p>
 						          </div>
 						        </div>

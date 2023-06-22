@@ -53,15 +53,14 @@
 											<div class="invalid-feedback">Cuenta debe tener 16 digitos.</div>
 										</div>
 									</div>
-									<input type="hidden" name="idUsuario" th:value="${#authentication.principal.id}"/>
 									<div class="form-group row">
 										<div class="col-sm-6 mb-3 mb-sm-0">
 											<label for="bancoSelect" class="form-label">Banco:</label>
 											<div class="col">
-												<select th:field="*{id_banco}" class="custom-select"
+												<select th:field="*{nombre_banco}" class="custom-select"
 													id="bancoSelect" required>
 													<option selected value="" required>Seleccione...</option>
-													<option th:each="b: ${lstBanco}" th:value="${b.id_banco}"
+													<option th:each="b: ${lstBanco}" th:value="${b.nombre_banco}"
 														th:text="${b.nombre_banco}"></option>
 												</select>
 												<div class="invalid-feedback">Seleccione un banco.</div>

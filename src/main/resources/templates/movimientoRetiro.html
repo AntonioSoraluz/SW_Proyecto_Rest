@@ -52,7 +52,7 @@
 													id="cuentaBancariaSelect" required>
 													<option selected value="" required>Seleccione...</option>
 													<option th:each="cb: ${lstCuentasBancarias}" th:value="${cb.id_cuentaBancaria}"
-														th:text="${cb.objBanco.nombre_banco}+' | '+${cb.numeroCuenta}"></option>
+														th:text="${cb.nombre_banco}+' | '+${cb.numeroCuenta}"></option>
 												</select>
 												<div class="invalid-feedback">Seleccione una Cuenta Bancaria.</div>
 											</div>

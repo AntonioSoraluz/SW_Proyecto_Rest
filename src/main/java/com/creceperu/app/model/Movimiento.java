@@ -42,9 +42,6 @@ public class Movimiento {
 	private Usuario objUsuario;
 	
 	private Integer id_cuentaBancaria;
-	@ManyToOne
-	@JoinColumn(name = "id_cuentaBancaria", insertable = false, updatable = false)
-	private CuentaBancaria objCuentaBancaria;
 	
 	public Movimiento(Integer id_movimiento, Double monto, String tipoMovimiento, Date fechaMovimiento, Long id, Integer id_cuentaBancaria) {
 		super();
